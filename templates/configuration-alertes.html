@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration des Alertes - Système de Surveillance Dengue</title>
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/demo.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Public Sans', Arial, sans-serif;
+        }
+        
+        /* Header moderne */
+        .modern-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .header-logo:hover {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .nav-link-modern.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .btn-login {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Menu hamburger pour mobile */
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.375rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-logo {
+                font-size: 1.25rem;
+            }
+            
+            .nav-link-modern {
+                padding: 0.75rem 1rem !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 0.5rem;
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Page Content */
+        .page-content {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        
+        .page-header {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        /* Config Cards */
+        .config-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .config-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .config-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .config-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .seuil-section {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+        
+        .seuil-section:hover {
+            border-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        
+        .seuil-section h5 {
+            color: #374151;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 1px solid #93c5fd;
+            border-radius: 0.75rem;
+            color: #1e40af;
+            padding: 1.5rem;
+        }
+        
+        /* Stats Cards */
+        .stats-section {
+            margin-bottom: 2rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-label {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-action {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header moderne -->
+    <header class="modern-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container mx-auto px-4 py-3">
+                <!-- Logo -->
+                <a href="/" class="header-logo">
+                    <i class="fas fa-shield-virus me-2"></i>
+                    Surveillance Dengue
+                </a>
+                
+                <!-- Indicateur de statut -->
+                <div class="status-indicator d-none d-md-flex">
+                    <div class="status-dot"></div>
+                    <span>Système Opérationnel</span>
+                </div>
+                
+                <!-- Bouton hamburger pour mobile -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link-modern">
+                                <i class="fas fa-home me-1"></i>Accueil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/api/dashboard" class="nav-link-modern">
+                                <i class="fas fa-chart-line me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/exploration" class="nav-link-modern">
+                                <i class="fas fa-search me-1"></i>Exploration
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/mise-a-jour-form" class="nav-link-modern">
+                                <i class="fas fa-upload me-1"></i> Mise à jour
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
+                                <i class="fas fa-chart-bar me-1"></i>Indicateurs
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="/docs" class="nav-link-modern">
+                                <i class="fas fa-book me-1"></i>Documentation
+                            </a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a href="/login" class="btn-login">
+                                <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container mx-auto px-4">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-cog text-primary me-3"></i>
+                    Configuration des Alertes
+                </h1>
+                <p class="page-subtitle">
+                    Configurez vos seuils d'alerte personnalisés pour recevoir des notifications adaptées à vos besoins de surveillance épidémiologique.
+                </p>
+            </div>
+
+            <!-- Alert Info -->
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Configuration des seuils d'alerte :</strong> 
+                Définissez vos seuils personnalisés pour recevoir des alertes adaptées à vos besoins de surveillance.
+            </div>
+
+            <!-- Statistiques actuelles -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-number" id="current-positivity">--</div>
+                        <div class="stats-label">Taux de Positivité Actuel</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="current-hospitalization">--</div>
+                        <div class="stats-label">Taux d'Hospitalisation</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="current-mortality">--</div>
+                        <div class="stats-label">Taux de Mortalité</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-number" id="active-alerts">--</div>
+                        <div class="stats-label">Alertes Actives</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <!-- Configuration Form -->
+                    <div class="config-card">
+                        <div class="config-header">
+                            <h3 class="config-title">
+                                <i class="fas fa-sliders-h text-primary"></i>
+                                Seuils d'Alerte
+                            </h3>
+                        </div>
+
+                        <form id="seuilsForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="seuil-section">
+                                        <h5>
+                                            <i class="fas fa-globe text-info"></i>
+                                            Seuils Globaux
+                                        </h5>
+                                        <div class="mb-3">
+                                            <label for="seuil_positivite" class="form-label">Taux de Positivité (%)</label>
+                                            <input type="number" class="form-control" id="seuil_positivite" name="seuil_positivite" value="10" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_hospitalisation" class="form-label">Taux d'Hospitalisation (%)</label>
+                                            <input type="number" class="form-control" id="seuil_hospitalisation" name="seuil_hospitalisation" value="5" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_mortalite" class="form-label">Taux de Mortalité (%)</label>
+                                            <input type="number" class="form-control" id="seuil_mortalite" name="seuil_mortalite" value="1" min="0" max="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="seuil-section">
+                                        <h5>
+                                            <i class="fas fa-map-marker-alt text-warning"></i>
+                                            Seuils par Région
+                                        </h5>
+                                        <div class="mb-3">
+                                            <label for="region" class="form-label">Région</label>
+                                            <select class="form-control" id="region" name="region">
+                                                <option value="">Toutes les régions</option>
+                                                <option value="Centre">Centre</option>
+                                                <option value="Nord">Nord</option>
+                                                <option value="Sud">Sud</option>
+                                                <option value="Est">Est</option>
+                                                <option value="Ouest">Ouest</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_positivite_region" class="form-label">Taux de Positivité Régional (%)</label>
+                                            <input type="number" class="form-control" id="seuil_positivite_region" name="seuil_positivite_region" value="15" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_hospitalisation_region" class="form-label">Taux d'Hospitalisation Régional (%)</label>
+                                            <input type="number" class="form-control" id="seuil_hospitalisation_region" name="seuil_hospitalisation_region" value="8" min="0" max="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>
+                                    Sauvegarder les Seuils
+                                </button>
+                                <button type="button" class="btn btn-success" onclick="verifierAlertes()">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Vérifier les Alertes
+                                </button>
+                                <button type="button" class="btn btn-warning" onclick="resetSeuils()">
+                                    <i class="fas fa-undo me-2"></i>
+                                    Réinitialiser
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <!-- Actions rapides -->
+                    <div class="config-card">
+                        <div class="config-header">
+                            <h3 class="config-title">
+                                <i class="fas fa-bolt text-warning"></i>
+                                Actions Rapides
+                            </h3>
+                        </div>
+                        
+                        <div class="d-grid gap-3">
+                            <a href="/alertes-detail" class="btn-action btn btn-outline-primary">
+                                <i class="fas fa-list"></i>
+                                Voir Toutes les Alertes
+                            </a>
+                            <a href="/api/alerts/logs" class="btn-action btn btn-outline-info">
+                                <i class="fas fa-history"></i>
+                                Historique des Alertes
+                            </a>
+                            <button class="btn-action btn btn-outline-success" onclick="exporterConfig()">
+                                <i class="fas fa-download"></i>
+                                Exporter Configuration
+                            </button>
+                            <button class="btn-action btn btn-outline-warning" onclick="importerConfig()">
+                                <i class="fas fa-upload"></i>
+                                Importer Configuration
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Informations système -->
+                    <div class="config-card">
+                        <div class="config-header">
+                            <h3 class="config-title">
+                                <i class="fas fa-info-circle text-info"></i>
+                                Informations Système
+                            </h3>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Dernière vérification :</strong>
+                            <span id="last-check">--</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Prochaine vérification :</strong>
+                            <span id="next-check">--</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Statut du système :</strong>
+                            <span class="badge bg-success">Actif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/assets/js/core/bootstrap.bundle.min.js"></script>
+    <script>
+        // Charger les statistiques actuelles
+        async function loadCurrentStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+                
+                // Mettre à jour les statistiques
+                document.getElementById('current-positivity').innerText = 
+                    stats.semaine_en_cours.total_positives ? `${stats.semaine_en_cours.total_positives}%` : '--';
+                document.getElementById('current-hospitalization').innerText = 
+                    stats.semaine_en_cours.total_hospitalized ? `${stats.semaine_en_cours.total_hospitalized}%` : '--';
+                document.getElementById('current-mortality').innerText = 
+                    stats.semaine_en_cours.total_deaths ? `${stats.semaine_en_cours.total_deaths}%` : '--';
+                
+                // Charger le nombre d'alertes actives
+                const alertsResponse = await fetch('/api/alerts/logs?status=active&limit=1');
+                const alertsData = await alertsResponse.json();
+                document.getElementById('active-alerts').innerText = 
+                    alertsData.total || '--';
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des stats:', error);
+            }
+        }
+
+        // Sauvegarder les seuils
+        document.getElementById('seuilsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch('/api/alerts/thresholds', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Seuils sauvegardés avec succès !');
+                    loadCurrentStats();
+                } else {
+                    alert('Erreur lors de la sauvegarde des seuils');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la sauvegarde');
+            }
+        });
+
+        // Vérifier les alertes
+        async function verifierAlertes() {
+            try {
+                const response = await fetch('/api/alerts/verify', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    alert('Vérification des alertes terminée !');
+                    loadCurrentStats();
+                } else {
+                    alert('Erreur lors de la vérification des alertes');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la vérification');
+            }
+        }
+
+        // Réinitialiser les seuils
+        function resetSeuils() {
+            if (confirm('Êtes-vous sûr de vouloir réinitialiser tous les seuils ?')) {
+                document.getElementById('seuilsForm').reset();
+            }
+        }
+
+        // Exporter la configuration
+        function exporterConfig() {
+            const formData = new FormData(document.getElementById('seuilsForm'));
+            const data = Object.fromEntries(formData);
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'configuration-alertes.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Importer la configuration
+        function importerConfig() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const config = JSON.parse(e.target.result);
+                        Object.keys(config).forEach(key => {
+                            const element = document.getElementById(key);
+                            if (element) {
+                                element.value = config[key];
+                            }
+                        });
+                        alert('Configuration importée avec succès !');
+                    } catch (error) {
+                        alert('Erreur lors de l\'import de la configuration');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // Mettre à jour les informations système
+        function updateSystemInfo() {
+            const now = new Date();
+            document.getElementById('last-check').innerText = now.toLocaleString('fr-FR');
+            
+            const nextCheck = new Date(now.getTime() + 24 * 60 * 60 * 1000); // +24h
+            document.getElementById('next-check').innerText = nextCheck.toLocaleString('fr-FR');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentStats();
+            updateSystemInfo();
+            
+            // Mettre à jour toutes les 5 minutes
+            setInterval(loadCurrentStats, 300000);
+        });
+    </script>
+</body>
+</html> 

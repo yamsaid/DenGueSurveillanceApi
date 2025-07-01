@@ -1,0 +1,49 @@
+.barre-filtres {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.inputs-groupe {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.inputs-groupe div {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-filtrer {
+  background-color: #f44336;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-filtrer:hover {
+  background-color: #d32f2f;
+}
+
+.btn-export {
+ background-color: #3659f4;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  max-width: 150px;
+}
+
+.btn-export:hover {
+  background-color: #e0e0e0;
+}

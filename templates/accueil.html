@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surveillance Dengue - Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+    <link rel="stylesheet" href="/static/assets/css/fonts.min.css" />
+    <Style>
+        body {
+            font-family: 'Public Sans', Arial, sans-serif;
+        }
+        
+        /* Header moderne */
+        .modern-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .header-logo:hover {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .nav-link-modern.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .btn-login {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Menu hamburger pour mobile */
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.375rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-logo {
+                font-size: 1.25rem;
+            }
+            
+            .nav-link-modern {
+                padding: 0.75rem 1rem !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 0.5rem;
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Section Hero moderne */
+        .hero-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/assets/img/undraw/undraw_Hello_qnas.svg') no-repeat right center;
+            background-size: contain;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-hero-primary {
+            background: linear-gradient(45deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+            border: none;
+        }
+        
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+            color: white;
+        }
+        
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #22c55e;
+        }
+        
+        .hero-stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Responsive Hero */
+        @media (max-width: 768px) {
+            .hero-modern {
+                padding: 4rem 1rem;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .btn-hero-primary,
+            .btn-hero-secondary {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+                gap: 1.5rem;
+            }
+        }
+
+        .hero {
+            background-color: #f0f9ff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .card {
+        background-color: #ffffff;
+        border-radius: 0.75rem; /* équivalent à rounded-xl */
+        padding: 1.5rem;         /* équivalent à p-6 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+        text-align: center;
+        transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* shadow-lg */
+        }
+
+        .card h3 {
+        font-size: 1.125rem;   /* text-lg */
+        font-weight: 600;      /* font-semibold */
+        color: #1f2937;        /* text-gray-800 */
+        margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .card p {
+        font-size: 1.5rem;     /* text-2xl */
+        font-weight: bold;     /* font-bold */
+        color: #4f46e5;        /* text-indigo-600 */
+        }
+
+        
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #1e40af;
+        }
+
+        /* Section Statistiques modernisée */
+        .stats-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-card-icon.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .stat-card-icon.success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        
+        .stat-card-icon.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .stat-card-icon.danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .stat-card-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+        
+        .stat-card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0.5rem 0;
+            line-height: 1;
+        }
+        
+        .stat-card-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .stat-card-change.positive {
+            color: #22c55e;
+        }
+        
+        .stat-card-change.negative {
+            color: #ef4444;
+        }
+        
+        .stat-card-change.neutral {
+            color: #64748b;
+        }
+        
+        .trend-up {
+            color: #22c55e;
+        }
+        
+        .trend-down {
+            color: #ef4444;
+        }
+        
+        .trend-stable {
+            color: #64748b;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #64748b;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Responsive Stats */
+        @media (max-width: 768px) {
+            .stats-section {
+                padding: 3rem 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-card-value {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Section Fonctionnalités Principales */
+        .features-section {
+            padding: 5rem 0;
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .feature-card-icon.dashboard {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .feature-card-icon.exploration {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        
+        .feature-card-icon.update {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .feature-card-icon.indicators {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        
+        .feature-card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .feature-card-description {
+            font-size: 1rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .feature-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #667eea;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card-link:hover {
+            color: #5a67d8;
+            transform: translateX(5px);
+        }
+        
+        .feature-card-link i {
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-card-link i {
+            transform: translateX(3px);
+        }
+        
+        /* Responsive Features */
+        @media (max-width: 768px) {
+            .features-section {
+                padding: 3rem 0;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .feature-card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Section Alertes Récentes */
+        .alerts-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+        
+        .alerts-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .alert-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+        
+        .alert-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alert-item.critical {
+            border-left-color: #ef4444;
+        }
+        
+        .alert-item.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .alert-item.info {
+            border-left-color: #3b82f6;
+        }
+        
+        .alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .alert-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .alert-status.active {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+        
+        .alert-status.inactive {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+        }
+        
+        .alert-message {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .alert-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+        
+        .alert-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .no-alerts {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #64748b;
+        }
+        
+        .no-alerts-icon {
+            font-size: 3rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        
+        /* Responsive Alerts */
+        @media (max-width: 768px) {
+            .alerts-section {
+                padding: 3rem 0;
+            }
+            
+            .alert-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .alert-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Section Éducative */
+        .education-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .education-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .education-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .education-card.about .education-icon {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+        
+        .education-card.prevention .education-icon {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+        
+        .education-card.resources .education-icon {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .education-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .education-description {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .education-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            text-align: left;
+        }
+        
+        .education-list li {
+            padding: 0.5rem 0;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .education-list li::before {
+            content: '✓';
+            color: #22c55e;
+            font-weight: bold;
+        }
+        
+        .education-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .education-link:hover {
+            color: #1d4ed8;
+            transform: translateX(3px);
+        }
+        
+        /* Responsive Education */
+        @media (max-width: 768px) {
+            .education-section {
+                padding: 3rem 0;
+            }
+            
+            .education-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .education-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .education-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Footer moderne */
+        .footer-modern {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #f8fafc;
+        }
+        
+        .footer-section p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: #3b82f6;
+            transform: translateX(3px);
+        }
+        
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-contact i {
+            color: #3b82f6;
+            width: 20px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #475569;
+            padding-top: 2rem;
+            text-align: center;
+            color: #94a3b8;
+        }
+        
+        .footer-bottom a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+        
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive Footer */
+        @media (max-width: 768px) {
+            .footer-modern {
+                padding: 3rem 0 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </Style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header moderne -->
+    <header class="modern-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container mx-auto px-4 py-3">
+                <!-- Logo -->
+                <a href="/" class="header-logo">
+                    <i class="fas fa-shield-virus me-2"></i>
+                    Surveillance Dengue
+                </a>
+                
+                <!-- Indicateur de statut -->
+                <div class="status-indicator d-none d-md-flex">
+                    <div class="status-dot"></div>
+                    <span>Système Opérationnel</span>
+                </div>
+                
+                <!-- Bouton hamburger pour mobile -->
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Navigation -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link-modern active">
+                                <i class="fas fa-home me-1"></i>Accueil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/api/dashboard" class="nav-link-modern">
+                                <i class="fas fa-chart-line me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/exploration" class="nav-link-modern">
+                                <i class="fas fa-search me-1"></i>Exploration
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/mise-a-jour-form" class="nav-link-modern">
+                                <i class="fas fa-upload me-1"></i>Mise à jour
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
+                                <i class="fas fa-chart-bar me-1"></i>Indicateurs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/docs" class="nav-link-modern">
+                                <i class="fas fa-book me-1"></i>Documentation
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item ms-lg-3">
+                            <a href="/login" class="btn-login">
+                                <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bannière Principale -->
+    <section class="hero-modern">
+        <div class="container mx-auto">
+            <div class="hero-content">
+                <h2 class="hero-title">Surveillez la Dengue en Temps Réel</h2>
+                <p class="hero-subtitle">Accédez aux données, configurez des alertes et exportez des rapports pour agir contre la dengue.</p>
+                <div class="hero-buttons">
+                    <a href="/api/dashboard" class="btn-hero-primary">
+                        <i class="fas fa-chart-line me-2"></i>Voir les Statistiques
+                    </a>
+                    <a href="/exploration" class="btn-hero-secondary">
+                        <i class="fas fa-download me-2"></i>Exporter les Données
+                    </a>
+                </div>
+                
+                <!-- Statistiques rapides -->
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" id="hero-total-cases">--</div>
+                        <div class="hero-stat-label">Cas Total</div>
+                    </div>
+                    
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" id="hero-region-coverage">--</div>
+                        <div class="hero-stat-label">Régions touchées</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" id="hero-district-coverage">--</div>
+                        <div class="hero-stat-label">District Sanitaires Touchés</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <p> Enregistrements du 1er janvier  <span id="current-year">--</span> à aujourd'hui .</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistiques Récentes -->
+    <section class="stats-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Statistiques en Temps Réel</h2>
+            <p class="section-subtitle">Aperçu des données de surveillance de la dengue pour cette semaine</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon primary">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                    </div>
+                    <h3 class="stat-card-title">Total des Cas</h3>
+                    <div class="stat-card-value" id="total-cases">
+                        <span class="loading-spinner"></span>
+                    </div>
+                    <div class="stat-card-change positive">
+                        
+                        <span id="cases-change">+12% cette semaine</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon warning">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                    </div>
+                    <h3 class="stat-card-title">Région la Plus Touchée</h3>
+                    <div class="stat-card-value" id="top-region">
+                        <span class="loading-spinner"></span>
+                    </div>
+                    <div class="stat-card-change neutral">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="region-cases">Cas confirmés</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon warning">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                    </div>
+                    <h3 class="stat-card-title">District Sanitaire le Plus Touché</h3>
+                    <div class="stat-card-value" id="top-district">
+                        <span class="loading-spinner"></span>
+                    </div>
+                    <div class="stat-card-change neutral">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="district-cases">Cas confirmés</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon success">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                    </div>
+                    <h3 class="stat-card-title">Taux de Positivité</h3>
+                    <div class="stat-card-value" id="positivity-rate">
+                        <span class="loading-spinner"></span>
+                    </div>
+                    <div class="stat-card-change negative">
+                        
+                        <span id="positivity-change">-5% cette semaine</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="/api/dashboard" class="btn-hero-primary">
+                    <i class="fas fa-chart-line me-2"></i>Voir Plus de Statistiques
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alertes Récentes -->
+    <section class="alerts-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Alertes Épidémiologiques Récentes</h2>
+            <p class="section-subtitle">Dernières alertes générées par le système de surveillance</p>
+            
+            <div class="alerts-container">
+                <div id="alerts-content">
+                    <div class="text-center">
+                        <div class="loading-spinner"></div>
+                        <p>Chargement des alertes...</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/configuration-alertes" class="btn-hero-primary">
+                        <i class="fas fa-cog me-2"></i>Configurer les Alertes
+                    </a>
+                    <a href="/alertes-detail" class="btn-hero-secondary ms-2">
+                        <i class="fas fa-list me-2"></i>Voir Toutes les Alertes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fonctionnalités Principales -->
+    <section class="features-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Fonctionnalités Principales</h2>
+            <p class="section-subtitle">Découvrez les outils essentiels pour la surveillance et l'analyse de la dengue</p>
+            
+            <div class="features-grid">
+                <a href="/api/dashboard" class="feature-card">
+                    <div class="feature-card-icon dashboard">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-card-title">Dashboard & Statistiques</h3>
+                    <p class="feature-card-description">Visualisez les indicateurs clés de la dengue avec des graphiques interactifs et des métriques en temps réel.</p>
+                    <div class="feature-card-link">
+                        Accéder au Dashboard
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <a href="/exploration" class="feature-card">
+                    <div class="feature-card-icon exploration">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-card-title">Exploration & Exportation</h3>
+                    <p class="feature-card-description">Explorez les données, appliquez des filtres et exportez des rapports en différents formats (CSV, JSON, Excel).</p>
+                    <div class="feature-card-link">
+                        Explorer les Données
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <a href="/mise-a-jour-form" class="feature-card">
+                    <div class="feature-card-icon update">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <h3 class="feature-card-title">Mise à Jour des Données</h3>
+                    <p class="feature-card-description">Ajoutez de nouvelles données, corrigez les erreurs et maintenez la base de données à jour.</p>
+                    <div class="feature-card-link">
+                        Mettre à Jour
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <a href="/dashboard/indicateurs-powerbi" class="feature-card">
+                    <div class="feature-card-icon indicators">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="feature-card-title">Indicateurs Avancés</h3>
+                    <p class="feature-card-description">Analysez les tendances épidémiologiques avec des indicateurs spécialisés et des visualisations avancées.</p>
+                    <div class="feature-card-link">
+                        Voir les Indicateurs
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Éducative -->
+    <section class="education-section">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Informations Éducatives</h2>
+            <p class="section-subtitle">Apprenez-en plus sur la dengue et les mesures de prévention</p>
+            
+            <div class="education-grid">
+                <div class="education-card about">
+                    <div class="education-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="education-title">À Propos de la Dengue</h3>
+                    <p class="education-description">La dengue est une maladie virale transmise par les moustiques du genre Aedes. Elle peut causer des symptômes graves et nécessite une surveillance constante.</p>
+                    <ul class="education-list">
+                        <li>Transmission par moustiques Aedes</li>
+                        <li>Symptômes : fièvre, maux de tête, douleurs articulaires</li>
+                        <li>Formes sévères : dengue hémorragique</li>
+                        <li>Pas de traitement spécifique</li>
+                    </ul>
+                    <a href="https://www.who.int/fr" class="education-link" target="_blank">
+                        En savoir plus <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                
+                <div class="education-card prevention">
+                    <div class="education-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="education-title">Mesures de Prévention</h3>
+                    <p class="education-description">La prévention est essentielle pour lutter contre la dengue. Voici les principales mesures à adopter :</p>
+                    <ul class="education-list">
+                        <li>Éliminer les gîtes larvaires</li>
+                        <li>Utiliser des moustiquaires</li>
+                        <li>Porter des vêtements couvrants</li>
+                        <li>Utiliser des répulsifs</li>
+                    </ul>
+                    <a href="/docs" class="education-link">
+                        Guide de prévention <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="education-card resources">
+                    <div class="education-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h3 class="education-title">Ressources Officielles</h3>
+                    <p class="education-description">Accédez aux ressources officielles et à la documentation pour plus d'informations sur la surveillance de la dengue.</p>
+                    <ul class="education-list">
+                        <li>Documentation API complète</li>
+                        <li>Rapports épidémiologiques</li>
+                        <li>Protocoles de surveillance</li>
+                        <li>Formations disponibles</li>
+                    </ul>
+                    <a href="/docs" class="education-link">
+                        Accéder aux ressources <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de Page -->
+    <footer class="footer-modern">
+        <div class="container mx-auto">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>À Propos</h3>
+                    <p>Surveillance Dengue est une plateforme innovante pour la surveillance et la gestion de la dengue. Nous travaillons pour prévenir et contrôler la propagation de cette maladie.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/api/dashboard">Dashboard</a></li>
+                        <li><a href="/exploration">Exploration</a></li>
+                        <li><a href="/mise-a-jour-form">Mise à jour</a></li>
+                        <li><a href="/dashboard/indicateurs-powerbi">Indicateurs</a></li>
+                        <li><a href="/configuration-alertes">Configuration Alertes</a></li>
+                        <li><a href="/docs">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <div class="footer-contact">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="footer-contact">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@dengue-surveillance.org</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Surveillance Dengue. Tous droits réservés.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript pour charger les données -->
+    <script>
+        // Charger les statistiques
+        async function fetchStats() {
+            try {
+                const response = await fetch('/api/stats'); 
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+                const stats = await response.json();
+                
+                // Mettre à jour les statistiques du hero (annuelles)
+                document.getElementById('hero-total-cases').innerText = stats.annee_en_cours.total_cases.toLocaleString() ?? '--';
+                //document.getElementById('hero-active-alerts').innerText = stats.annee_en_cours.total_deaths.toLocaleString() ?? '--';
+                document.getElementById('hero-region-coverage').innerText = stats.annee_en_cours.nb_top_region ?? '--';
+                document.getElementById('hero-district-coverage').innerText = stats.annee_en_cours.nb_top_district ?? '--';
+                
+                // Mettre à jour les statistiques principales (hebdomadaires)
+                document.getElementById('total-cases').innerText = stats.semaine_en_cours.total_cases.toLocaleString() ?? 'N/A';
+                document.getElementById('top-region').innerText = stats.semaine_en_cours.top_region ?? 'N/A';
+                document.getElementById('top-district').innerText = stats.semaine_en_cours.top_district ?? 'N/A';
+                document.getElementById('positivity-rate').innerText = stats.semaine_en_cours.total_positives.toLocaleString() ?? 'N/A';
+                //document.getElementById('active-alerts').innerText = stats.semaine_en_cours.total_hospitalized.toLocaleString() ?? 'N/A';
+                
+                // Mettre à jour les changements avec les tendances dynamiques
+                updateTrendIndicator('cases-change', stats.semaine_en_cours.growth_cases, 'cas');
+                updateTrendIndicator('positivity-change', stats.semaine_en_cours.growth_positives, 'positifs');
+                
+                // Mettre à jour les informations supplémentaires
+                document.getElementById('region-cases').innerText = `${stats.semaine_en_cours.nb_cases_top_region} cas confirmés`;
+                document.getElementById('district-cases').innerText = `${stats.semaine_en_cours.nb_cases_top_district} cas confirmés`;
+                //document.getElementById('alerts-status').innerText = `${stats.semaine_en_cours.total_hospitalized} hospitalisations`;
+                document.getElementById('current-year').innerText = `${stats.semaine_en_cours.current_year}`;
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des stats:', error);
+                document.getElementById('total-cases').innerText = 'Erreur';
+                document.getElementById('top-region').innerText = 'Erreur';
+                document.getElementById('positivity-rate').innerText = 'Erreur';
+                //document.getElementById('active-alerts').innerText = 'Erreur';
+            }
+        }
+        
+        // Fonction pour mettre à jour les indicateurs de tendance
+        function updateTrendIndicator(elementId, value, type) {
+            const element = document.getElementById(elementId);
+            const parentElement = element.closest('.stat-card-change');
+            
+            // Supprimer les classes existantes
+            parentElement.classList.remove('positive', 'negative', 'neutral');
+            
+            // Déterminer la tendance et appliquer les classes appropriées
+            if (value > 0) {
+                parentElement.classList.add('positive');
+                element.innerHTML = `<i class="fas fa-arrow-up"></i> +${value.toFixed(1)}% cette semaine`;
+            } else if (value < 0) {
+                parentElement.classList.add('negative');
+                element.innerHTML = `<i class="fas fa-arrow-down"></i> ${value.toFixed(1)}% cette semaine`;
+            } else {
+                parentElement.classList.add('neutral');
+                element.innerHTML = `<i class="fas fa-minus"></i> 0% cette semaine`;
+            }
+        }
+        
+        // Charger les alertes
+        async function fetchAlerts() {
+            try {
+                const response = await fetch('/api/alerts/logs?limit=5');
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+                const result = await response.json();
+                const alerts = result.data || result; // Gérer les deux formats possibles
+                const alertsContent = document.getElementById('alerts-content');
+                
+                if (alerts && alerts.length > 0) {
+                    let alertsHTML = '';
+                    
+                    alerts.forEach(alert => {
+                        // Déterminer le type d'alerte et les icônes
+                        let alertType = 'warning';
+                        let icon = 'fas fa-exclamation-triangle';
+                        let severityClass = 'warning';
+                        
+                        if (alert.severity === 'critical') {
+                            alertType = 'critical';
+                            icon = 'fas fa-radiation';
+                            severityClass = 'danger';
+                        } else if (alert.severity === 'warning') {
+                            alertType = 'warning';
+                            icon = 'fas fa-exclamation-triangle';
+                            severityClass = 'warning';
+                        } else if (alert.severity === 'info') {
+                            alertType = 'info';
+                            icon = 'fas fa-info-circle';
+                            severityClass = 'info';
+                        }
+                        
+                        // Formater la date
+                        const alertDate = new Date(alert.created_at || alert.timestamp);
+                        const formattedDate = alertDate.toLocaleDateString('fr-FR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
+                        // Déterminer le statut
+                        const isActive = alert.status === 'active' || alert.status === 'new';
+                        const statusClass = isActive ? 'active' : 'inactive';
+                        const statusText = isActive ? 'Active' : 'Résolue';
+                        
+                        alertsHTML += `
+                            <div class="alert-item ${alertType}">
+                                <div class="alert-header">
+                                    <h4 class="alert-title">
+                                        <i class="${icon}"></i>
+                                        ${alert.message || alert.alert_message || 'Alerte épidémiologique'}
+                                    </h4>
+                                    <span class="alert-status ${statusClass}">${statusText}</span>
+                                </div>
+                                <p class="alert-message">
+                                    ${alert.description || alert.alert_description || 'Aucune description disponible'}
+                                </p>
+                                <div class="alert-meta">
+                                    <div class="alert-meta-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${alert.region || alert.region_name || 'Toutes les régions'}</span>
+                                    </div>
+                                    <div class="alert-meta-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>${alert.indicator_type || 'Indicateur épidémiologique'}</span>
+                                    </div>
+                                    <div class="alert-meta-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>${formattedDate}</span>
+                                    </div>
+                                    ${alert.threshold_value ? `
+                                    <div class="alert-meta-item">
+                                        <i class="fas fa-percentage"></i>
+                                        <span>Seuil: ${alert.threshold_value}%</span>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    alertsContent.innerHTML = alertsHTML;
+                } else {
+                    alertsContent.innerHTML = `
+                        <div class="no-alerts">
+                            <div class="no-alerts-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                            <h3>Aucune alerte active</h3>
+                            <p>Toutes les régions sont sous surveillance normale. Le système continue de surveiller les indicateurs épidémiologiques.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des alertes:', error);
+                const alertsContent = document.getElementById('alerts-content');
+                alertsContent.innerHTML = `
+                    <div class="no-alerts">
+                        <div class="no-alerts-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3>Erreur de chargement</h3>
+                        <p>Impossible de charger les alertes pour le moment. Veuillez réessayer plus tard.</p>
+                        <button onclick="fetchAlerts()" class="btn-hero-secondary mt-2">
+                            <i class="fas fa-sync-alt me-2"></i>Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger les données au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchStats();
+            fetchAlerts();
+            
+            // Mettre à jour les données toutes les 5 minutes
+            setInterval(fetchStats, 300000);
+            setInterval(fetchAlerts, 300000);
+        });
+    </script>
+</body>
+
+</html>

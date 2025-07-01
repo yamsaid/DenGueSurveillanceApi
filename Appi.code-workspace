@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "Appi",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501
+	}
+}

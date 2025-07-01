@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertes Épidémiologiques - Système de Surveillance Dengue</title>
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/demo.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .alerts-page {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .filters-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-section {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-section h5 {
+            color: #374151;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.4);
+        }
+        
+        .alerts-container {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alerts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .alerts-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .alerts-count {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+        }
+        
+        .alert-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+        
+        .alert-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alert-item.critical {
+            border-left-color: #ef4444;
+        }
+        
+        .alert-item.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .alert-item.info {
+            border-left-color: #3b82f6;
+        }
+        
+        .alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .alert-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .alert-status.active {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+        
+        .alert-status.resolved {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+        }
+        
+        .alert-message {
+            color: #64748b;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .alert-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+        
+        .alert-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .alert-meta-item i {
+            width: 16px;
+            color: #6b7280;
+        }
+        
+        .alert-values {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .value-item {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .value-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .value-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .pagination-info {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .btn-pagination {
+            background: white;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-pagination:hover {
+            background: #f8fafc;
+            border-color: #9ca3af;
+            color: #1e293b;
+        }
+        
+        .btn-pagination.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .btn-pagination:disabled {
+            background: #f3f4f6;
+            border-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .no-alerts {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+        }
+        
+        .no-alerts-icon {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-export {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-export:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .alerts-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .alert-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .alert-values {
+                flex-direction: column;
+            }
+            
+            .export-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="alerts-page">
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container mx-auto px-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="page-title">
+                        <i class="fas fa-bell me-3"></i>
+                        Alertes Épidémiologiques
+                    </h1>
+                    <p class="page-subtitle">Surveillance et gestion des alertes de dengue</p>
+                </div>
+                <div class="d-none d-md-block">
+                    <a href="/" class="btn btn-outline-light">
+                        <i class="fas fa-home me-2"></i>Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4">
+        <!-- Filtres -->
+        <div class="filters-card">
+            <h4 class="mb-4">
+                <i class="fas fa-filter text-primary me-2"></i>
+                Filtres et Recherche
+            </h4>
+            
+            <form id="filtersForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-user text-info"></i>Utilisateur</h5>
+                            <div class="mb-3">
+                                <label for="usermail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="usermail" name="usermail" placeholder="admin@gmail.com">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-map-marker-alt text-warning"></i>Géographie</h5>
+                            <div class="mb-3">
+                                <label for="region" class="form-label">Région</label>
+                                <select class="form-select" id="region" name="region">
+                                    <option value="">Toutes les régions</option>
+                                    <option value="Centre">Centre</option>
+                                    <option value="Nord">Nord</option>
+                                    <option value="Sud">Sud</option>
+                                    <option value="Est">Est</option>
+                                    <option value="Ouest">Ouest</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-exclamation-triangle text-danger"></i>Sévérité</h5>
+                            <div class="mb-3">
+                                <label for="severity" class="form-label">Niveau</label>
+                                <select class="form-select" id="severity" name="severity">
+                                    <option value="">Tous les niveaux</option>
+                                    <option value="critical">Critique</option>
+                                    <option value="warning">Avertissement</option>
+                                    <option value="info">Information</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-clock text-secondary"></i>Statut</h5>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">État</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="">Tous les statuts</option>
+                                    <option value="active">Active</option>
+                                    <option value="resolved">Résolue</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-calendar text-success"></i>Période</h5>
+                            <div class="mb-3">
+                                <label for="date_debut" class="form-label">Date de début</label>
+                                <input type="date" class="form-control" id="date_debut" name="date_debut">
+                            </div>
+                            <div class="mb-3">
+                                <label for="date_fin" class="form-label">Date de fin</label>
+                                <input type="date" class="form-control" id="date_fin" name="date_fin">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-sort text-primary"></i>Tri et Limite</h5>
+                            <div class="mb-3">
+                                <label for="limit" class="form-label">Nombre d'alertes</label>
+                                <select class="form-select" id="limit" name="limit">
+                                    <option value="10">10 alertes</option>
+                                    <option value="25">25 alertes</option>
+                                    <option value="50">50 alertes</option>
+                                    <option value="100">100 alertes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="filter-section">
+                            <h5><i class="fas fa-cog text-info"></i>Actions</h5>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Appliquer les Filtres
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="resetFilters()">
+                                    <i class="fas fa-undo me-2"></i>Réinitialiser
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Liste des Alertes -->
+        <div class="alerts-container">
+            <div class="alerts-header">
+                <div>
+                    <h3 class="alerts-title">Liste des Alertes</h3>
+                    <p class="text-muted mb-0">Alertes filtrées selon vos critères</p>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="alerts-count" id="alerts-count">0 alertes</span>
+                    <div class="export-buttons">
+                        <button class="btn-export" onclick="exportAlerts('json')">
+                            <i class="fas fa-download me-1"></i>JSON
+                        </button>
+                        <button class="btn-export" onclick="exportAlerts('csv')">
+                            <i class="fas fa-download me-1"></i>CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="alerts-content">
+                <div class="text-center">
+                    <div class="loading-spinner"></div>
+                    <p>Chargement des alertes...</p>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination-container" id="pagination" style="display: none;">
+                <button class="btn-pagination" id="prev-page" onclick="changePage(-1)">
+                    <i class="fas fa-chevron-left"></i> Précédent
+                </button>
+                <span class="pagination-info" id="page-info">Page 1 sur 1</span>
+                <button class="btn-pagination" id="next-page" onclick="changePage(1)">
+                    Suivant <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/assets/js/core/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentFilters = {};
+        
+        // Charger les alertes au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAlerts();
+            
+            // Gestion du formulaire de filtres
+            document.getElementById('filtersForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                currentPage = 1;
+                loadAlerts();
+            });
+        });
+        
+        // Charger les alertes
+        async function loadAlerts() {
+            const alertsContent = document.getElementById('alerts-content');
+            alertsContent.innerHTML = `
+                <div class="text-center">
+                    <div class="loading-spinner"></div>
+                    <p>Chargement des alertes...</p>
+                </div>
+            `;
+            
+            try {
+                // Récupérer les filtres
+                const formData = new FormData(document.getElementById('filtersForm'));
+                const filters = {};
+                for (let [key, value] of formData.entries()) {
+                    if (value) filters[key] = value;
+                }
+                
+                // Construire l'URL avec les paramètres
+                const params = new URLSearchParams();
+                Object.keys(filters).forEach(key => {
+                    params.append(key, filters[key]);
+                });
+                
+                const response = await fetch(`/api/alerts/logs?${params.toString()}`);
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+                
+                const result = await response.json();
+                const alerts = result.data || [];
+                
+                // Mettre à jour le compteur
+                document.getElementById('alerts-count').textContent = `${alerts.length} alerte${alerts.length > 1 ? 's' : ''}`;
+                
+                if (alerts.length > 0) {
+                    displayAlerts(alerts);
+                } else {
+                    alertsContent.innerHTML = `
+                        <div class="no-alerts">
+                            <div class="no-alerts-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                            <h3>Aucune alerte trouvée</h3>
+                            <p>Aucune alerte ne correspond aux critères de recherche sélectionnés.</p>
+                            <button onclick="resetFilters()" class="btn btn-primary mt-3">
+                                <i class="fas fa-undo me-2"></i>Réinitialiser les filtres
+                            </button>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des alertes:', error);
+                alertsContent.innerHTML = `
+                    <div class="no-alerts">
+                        <div class="no-alerts-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h3>Erreur de chargement</h3>
+                        <p>Impossible de charger les alertes pour le moment. Veuillez réessayer plus tard.</p>
+                        <button onclick="loadAlerts()" class="btn btn-primary mt-3">
+                            <i class="fas fa-sync-alt me-2"></i>Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Afficher les alertes
+        function displayAlerts(alerts) {
+            const alertsContent = document.getElementById('alerts-content');
+            let alertsHTML = '';
+            
+            alerts.forEach(alert => {
+                // Déterminer le type d'alerte et les icônes
+                let alertType = 'warning';
+                let icon = 'fas fa-exclamation-triangle';
+                
+                if (alert.severity === 'critical') {
+                    alertType = 'critical';
+                    icon = 'fas fa-radiation';
+                } else if (alert.severity === 'warning') {
+                    alertType = 'warning';
+                    icon = 'fas fa-exclamation-triangle';
+                } else if (alert.severity === 'info') {
+                    alertType = 'info';
+                    icon = 'fas fa-info-circle';
+                }
+                
+                // Formater la date
+                const alertDate = new Date(alert.created_at);
+                const formattedDate = alertDate.toLocaleDateString('fr-FR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                // Déterminer le statut
+                const isActive = alert.status === 'active' || alert.status === '1';
+                const statusClass = isActive ? 'active' : 'resolved';
+                const statusText = isActive ? 'Active' : 'Résolue';
+                
+                alertsHTML += `
+                    <div class="alert-item ${alertType}">
+                        <div class="alert-header">
+                            <h4 class="alert-title">
+                                <i class="${icon}"></i>
+                                ${alert.message || 'Alerte épidémiologique'}
+                            </h4>
+                            <span class="alert-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <p class="alert-message">
+                            ${alert.description || 'Aucune description disponible'}
+                        </p>
+                        <div class="alert-meta">
+                            <div class="alert-meta-item">
+                                <i class="fas fa-user"></i>
+                                <span>${alert.usermail || 'N/A'}</span>
+                            </div>
+                            <div class="alert-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${alert.region || 'Toutes les régions'}</span>
+                            </div>
+                            <div class="alert-meta-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>${alert.indicator_type || 'Indicateur épidémiologique'}</span>
+                            </div>
+                            <div class="alert-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>${formattedDate}</span>
+                            </div>
+                        </div>
+                        ${alert.threshold_value || alert.current_value ? `
+                        <div class="alert-values">
+                            ${alert.threshold_value ? `
+                            <div class="value-item">
+                                <div class="value-label">Seuil</div>
+                                <div class="value-number">${alert.threshold_value}%</div>
+                            </div>
+                            ` : ''}
+                            ${alert.current_value ? `
+                            <div class="value-item">
+                                <div class="value-label">Valeur Actuelle</div>
+                                <div class="value-number">${alert.current_value}%</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            alertsContent.innerHTML = alertsHTML;
+        }
+        
+        // Réinitialiser les filtres
+        function resetFilters() {
+            document.getElementById('filtersForm').reset();
+            currentPage = 1;
+            loadAlerts();
+        }
+        
+        // Changer de page
+        function changePage(delta) {
+            currentPage += delta;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            loadAlerts();
+        }
+        
+        // Exporter les alertes
+        async function exportAlerts(format) {
+            try {
+                const formData = new FormData(document.getElementById('filtersForm'));
+                const filters = {};
+                for (let [key, value] of formData.entries()) {
+                    if (value) filters[key] = value;
+                }
+                
+                const params = new URLSearchParams();
+                Object.keys(filters).forEach(key => {
+                    params.append(key, filters[key]);
+                });
+                
+                const response = await fetch(`/api/alerts/logs?${params.toString()}`);
+                const result = await response.json();
+                const alerts = result.data || [];
+                
+                if (format === 'json') {
+                    downloadJSON(alerts, 'alertes_epidemiologiques.json');
+                } else if (format === 'csv') {
+                    downloadCSV(alerts, 'alertes_epidemiologiques.csv');
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'export:', error);
+                alert('Erreur lors de l\'export des données');
+            }
+        }
+        
+        // Télécharger JSON
+        function downloadJSON(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Télécharger CSV
+        function downloadCSV(data, filename) {
+            if (data.length === 0) {
+                alert('Aucune donnée à exporter');
+                return;
+            }
+            
+            const headers = Object.keys(data[0]);
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => headers.map(header => `"${row[header] || ''}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html> 

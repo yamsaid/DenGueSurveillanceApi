@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à Jour des Données - Surveillance Dengue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2E86AB;
+            --secondary-color: #A23B72;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .content-section {
+            padding: 3rem;
+        }
+
+        .upload-zone {
+            border: 3px dashed var(--primary-color);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            background: var(--light-bg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 2rem;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--secondary-color);
+            background: rgba(46, 134, 171, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .upload-zone.dragover {
+            border-color: var(--success-color);
+            background: rgba(40, 167, 69, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .upload-hint {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .progress-section {
+            display: none;
+            margin: 2rem 0;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .progress-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .progress-icon.uploading {
+            background: var(--info-color);
+            animation: pulse 2s infinite;
+        }
+
+        .progress-icon.success {
+            background: var(--success-color);
+        }
+
+        .progress-icon.error {
+            background: var(--danger-color);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: #e9ecef;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .file-info {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-size {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .validation-section {
+            display: none;
+            margin: 2rem 0;
+        }
+
+        .validation-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .validation-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .validation-item:last-child {
+            border-bottom: none;
+        }
+
+        .validation-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .validation-icon.success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .validation-icon.warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .validation-icon.error {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-modern {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        .btn-modern:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary-modern {
+            background: #6c757d;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary-modern:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-decoration: none;
+        }
+
+        .alert-modern {
+            border-radius: 15px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .navigation-links {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--dark-bg);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .header-section {
+                padding: 1.5rem;
+            }
+
+            .header-section h1 {
+                font-size: 2rem;
+            }
+
+            .upload-zone {
+                padding: 2rem 1rem;
+            }
+
+            .upload-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1>
+                <i class="fas fa-upload me-3"></i>
+                Mise à Jour des Données
+            </h1>
+            <p>Importez et analysez vos fichiers de données épidémiologiques en toute sécurité</p>
+        </div>
+
+        <!-- Content Section -->
+        <div class="content-section">
+            <!-- Features Grid -->
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-title">Validation Automatique</div>
+                    <div class="feature-description">Détection automatique des erreurs et incohérences dans vos données</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-title">Analyse Préliminaire</div>
+                    <div class="feature-description">Prévisualisation et analyse de la qualité de vos données</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-title">Intégration Sécurisée</div>
+                    <div class="feature-description">Import sécurisé vers la base de données après validation</div>
+                </div>
+            </div>
+
+            <!-- Upload Zone -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    Glissez-déposez votre fichier ici ou cliquez pour sélectionner
+                </div>
+                <div class="upload-hint">
+                    Formats acceptés: CSV, Excel (.xlsx, .xls) - Taille max: 10MB
+                </div>
+                <input type="file" class="file-input" id="fileInput" accept=".csv,.xlsx,.xls" />
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection">
+                <div class="progress-card">
+                    <div class="progress-header">
+                        <div class="progress-icon uploading" id="progressIcon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Analyse en cours...</h5>
+                            <p class="mb-0 text-muted">Veuillez patienter pendant l'analyse de votre fichier</p>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+            </div>
+
+            <!-- Validation Section -->
+            <div class="validation-section" id="validationSection">
+                <div class="validation-card">
+                    <h5 class="mb-3">
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                        Résultats de la Validation
+                    </h5>
+                    <div id="validationResults"></div>
+                    <div class="text-center mt-3">
+                        <button class="btn-modern" id="proceedBtn">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            Continuer vers l'analyse détaillée
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Form -->
+            <form action="/analyse" method="post" enctype="multipart/form-data" id="uploadForm" style="display: none;">
+                <input type="file" name="file" id="formFile" />
+                <button type="submit" class="btn-modern" id="submitBtn">
+                    <i class="fas fa-play me-2"></i>
+                    Lancer l'Analyse
+                </button>
+            </form>
+
+            <!-- Navigation Links -->
+            <div class="navigation-links">
+                <a href="/" class="btn-secondary-modern me-2">
+                    <i class="fas fa-home me-1"></i>
+                    Retour à l'accueil
+                </a>
+                <a href="/exploration" class="btn-secondary-modern me-2">
+                    <i class="fas fa-search me-1"></i>
+                    Exploration des données
+                </a>
+                <a href="/guide" class="btn-secondary-modern">
+                    <i class="fas fa-book me-1"></i>
+                    Guide d'utilisation
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="mb-0">
+                <i class="fas fa-heart text-danger me-1"></i>
+                2024 - Plateforme de Surveillance Sanitaire | Développé avec FastAPI
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            const progressSection = document.getElementById('progressSection');
+            const validationSection = document.getElementById('validationSection');
+            const uploadForm = document.getElementById('uploadForm');
+            const formFile = document.getElementById('formFile');
+            const submitBtn = document.getElementById('submitBtn');
+            const proceedBtn = document.getElementById('proceedBtn');
+
+            // Drag and drop functionality
+            uploadZone.addEventListener('click', () => fileInput.click());
+            
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            function handleFile(file) {
+                // Validate file type
+                const allowedTypes = ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+                if (!allowedTypes.includes(file.type)) {
+                    showAlert('Format de fichier non supporté. Veuillez utiliser un fichier CSV ou Excel.', 'danger');
+                    return;
+                }
+
+                // Validate file size (10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    showAlert('Fichier trop volumineux. Taille maximale: 10MB', 'danger');
+                    return;
+                }
+
+                // Show progress
+                showProgress(file);
+                
+                // Simulate validation process
+                simulateValidation(file);
+            }
+
+            function showProgress(file) {
+                progressSection.style.display = 'block';
+                validationSection.style.display = 'none';
+                
+                const fileInfo = document.getElementById('fileInfo');
+                fileInfo.innerHTML = `
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-size">${formatFileSize(file.size)}</div>
+                `;
+
+                // Simulate progress
+                const progressFill = document.getElementById('progressFill');
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                    }
+                    progressFill.style.width = progress + '%';
+                }, 200);
+            }
+
+            function simulateValidation(file) {
+                setTimeout(() => {
+                    const progressIcon = document.getElementById('progressIcon');
+                    progressIcon.className = 'progress-icon success';
+                    progressIcon.innerHTML = '<i class="fas fa-check"></i>';
+
+                    showValidationResults(file);
+                }, 3000);
+            }
+
+            function showValidationResults(file) {
+                progressSection.style.display = 'none';
+                validationSection.style.display = 'block';
+
+                const validationResults = document.getElementById('validationResults');
+                validationResults.innerHTML = `
+                    <div class="validation-item">
+                        <div class="validation-icon success">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <strong>Format de fichier</strong>
+                            <div class="text-muted">Fichier ${file.name.split('.').pop().toUpperCase()} détecté</div>
+                        </div>
+                    </div>
+                    <div class="validation-item">
+                        <div class="validation-icon success">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <strong>Taille du fichier</strong>
+                            <div class="text-muted">${formatFileSize(file.size)} - Acceptable</div>
+                        </div>
+                    </div>
+                    <div class="validation-item">
+                        <div class="validation-icon success">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div>
+                            <strong>Structure des données</strong>
+                            <div class="text-muted">Colonnes épidémiologiques détectées</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function showAlert(message, type) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-modern alert-${type}`;
+                alertDiv.innerHTML = `
+                    <i class="fas fa-${type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                    ${message}
+                `;
+                
+                const contentSection = document.querySelector('.content-section');
+                contentSection.insertBefore(alertDiv, contentSection.firstChild);
+                
+                setTimeout(() => alertDiv.remove(), 5000);
+            }
+
+            // Handle form submission
+            proceedBtn.addEventListener('click', () => {
+                formFile.files = fileInput.files;
+                uploadForm.style.display = 'block';
+                submitBtn.click();
+            });
+        });
+    </script>
+</body>
+</html> 

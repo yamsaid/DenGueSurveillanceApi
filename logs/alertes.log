@@ -1,0 +1,6 @@
+2025-06-30 23:16:35,912 - INFO - Démarrage du planificateur d'alertes épidémiologiques
+2025-06-30 23:18:34,232 - INFO - Démarrage du planificateur d'alertes épidémiologiques
+2025-06-30 23:18:34,235 - INFO - Planification configurée:
+2025-06-30 23:18:34,235 - INFO - - Vérification quotidienne: 08:00
+2025-06-30 23:18:34,238 - INFO - - Vérification hebdomadaire: Lundi 09:00
+2025-06-30 23:18:34,240 - INFO - - Vérification mensuelle: 1er du mois 10:00

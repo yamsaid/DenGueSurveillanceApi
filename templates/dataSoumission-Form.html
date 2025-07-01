@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Soumission - Surveillance Dengue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2E86AB;
+            --secondary-color: #A23B72;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .content-section {
+            padding: 3rem;
+        }
+
+        .progress-container {
+            margin-bottom: 3rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-circle.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 134, 171, 0.3);
+        }
+
+        .step-circle.completed {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .step-circle.pending {
+            background: #e9ecef;
+            color: #6c757d;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--dark-bg);
+        }
+
+        .step.active .step-label {
+            color: var(--primary-color);
+        }
+
+        .step.completed .step-label {
+            color: var(--success-color);
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-bg);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control-modern {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control-modern:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(46, 134, 171, 0.25);
+            outline: none;
+        }
+
+        .form-control-modern.is-valid {
+            border-color: var(--success-color);
+        }
+
+        .form-control-modern.is-invalid {
+            border-color: var(--danger-color);
+        }
+
+        .validation-message {
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .validation-message.valid {
+            color: var(--success-color);
+        }
+
+        .validation-message.invalid {
+            color: var(--danger-color);
+        }
+
+        .btn-modern {
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary-modern {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-secondary-modern {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success-modern {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .info-card h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .preview-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .preview-header {
+            background: linear-gradient(135deg, var(--success-color), #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px 15px 0 0;
+            margin: -2rem -2rem 2rem -2rem;
+            font-weight: 600;
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+
+        .preview-label {
+            font-weight: 600;
+            color: var(--dark-bg);
+        }
+
+        .preview-value {
+            color: #666;
+        }
+
+        .alert-modern {
+            border-radius: 15px;
+            border: none;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer {
+            background: var(--dark-bg);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .content-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .header-section {
+                padding: 1.5rem;
+            }
+
+            .header-section h1 {
+                font-size: 2rem;
+            }
+
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .step-label {
+                font-size: 0.8rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn-modern {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1>
+                <i class="fas fa-clipboard-list me-3"></i>
+                Formulaire de Soumission
+            </h1>
+            <p>Collectez les informations nécessaires pour l'intégration des données</p>
+        </div>
+
+        <!-- Content Section -->
+        <div class="content-section">
+            <!-- Progress Steps -->
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="progress-line">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="step active" data-step="1">
+                        <div class="step-circle active">1</div>
+                        <div class="step-label">Informations Personnelles</div>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-circle pending">2</div>
+                        <div class="step-label">Période de Couverture</div>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-circle pending">3</div>
+                        <div class="step-label">Description des Données</div>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-circle pending">4</div>
+                        <div class="step-label">Validation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Steps -->
+            <form id="submissionForm" action="/submit-data-form" method="post">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <div class="info-card">
+                        <h5>
+                            <i class="fas fa-user"></i>
+                            Informations du Soumissionnaire
+                        </h5>
+                        <p>Veuillez fournir vos informations personnelles pour l'authentification et le suivi.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="username">
+                            <i class="fas fa-user"></i>
+                            Nom de l'utilisateur
+                        </label>
+                        <input type="text" class="form-control-modern" id="username" name="username" placeholder="Jean Kaboré" required>
+                        <div class="validation-message" id="usernameValidation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="centre">
+                            <i class="fas fa-hospital"></i>
+                            Centre Médical
+                        </label>
+                        <input type="text" class="form-control-modern" id="centre" name="centre" placeholder="CSPS de Kossodo" required>
+                        <div class="validation-message" id="centreValidation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="poste">
+                            <i class="fas fa-briefcase"></i>
+                            Poste
+                        </label>
+                        <input type="text" class="form-control-modern" id="poste" name="poste" placeholder="Agent de santé communautaire" required>
+                        <div class="validation-message" id="posteValidation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="apikey">
+                            <i class="fas fa-key"></i>
+                            Clé API
+                        </label>
+                        <input type="text" class="form-control-modern" id="apikey" name="apikey" placeholder="Ex: 1a2b3c4d5e..." required>
+                        <div class="validation-message" id="apikeyValidation"></div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <div></div>
+                        <button type="button" class="btn-modern btn-primary-modern" onclick="nextStep()">
+                            Suivant
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Coverage Period -->
+                <div class="form-step" id="step2">
+                    <div class="info-card">
+                        <h5>
+                            <i class="fas fa-calendar-alt"></i>
+                            Période de Couverture
+                        </h5>
+                        <p>Définissez la période couverte par les données que vous soumettez.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="periode_debut">
+                            <i class="fas fa-calendar-start"></i>
+                            Date de début
+                        </label>
+                        <input type="date" class="form-control-modern" id="periode_debut" name="periode_debut" required>
+                        <div class="validation-message" id="periode_debutValidation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="periode_fin">
+                            <i class="fas fa-calendar-end"></i>
+                            Date de fin
+                        </label>
+                        <input type="date" class="form-control-modern" id="periode_fin" name="periode_fin" required>
+                        <div class="validation-message" id="periode_finValidation"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="source">
+                            <i class="fas fa-database"></i>
+                            Source des données
+                        </label>
+                        <input type="text" class="form-control-modern" id="source" name="source" placeholder="Ex: Registre des consultations, Laboratoire..." required>
+                        <div class="validation-message" id="sourceValidation"></div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn-modern btn-secondary-modern" onclick="prevStep()">
+                            <i class="fas fa-arrow-left"></i>
+                            Précédent
+                        </button>
+                        <button type="button" class="btn-modern btn-primary-modern" onclick="nextStep()">
+                            Suivant
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Data Description -->
+                <div class="form-step" id="step3">
+                    <div class="info-card">
+                        <h5>
+                            <i class="fas fa-file-alt"></i>
+                            Description des Données
+                        </h5>
+                        <p>Décrivez en détail les données que vous soumettez pour faciliter leur traitement.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="description">
+                            <i class="fas fa-edit"></i>
+                            Description détaillée
+                        </label>
+                        <textarea class="form-control-modern" id="description" name="description" rows="6" placeholder="Décrivez ici les données à insérer, les spécificités, sources, méthodes de collecte, etc." required></textarea>
+                        <div class="validation-message" id="descriptionValidation"></div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn-modern btn-secondary-modern" onclick="prevStep()">
+                            <i class="fas fa-arrow-left"></i>
+                            Précédent
+                        </button>
+                        <button type="button" class="btn-modern btn-primary-modern" onclick="nextStep()">
+                            Suivant
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Validation -->
+                <div class="form-step" id="step4">
+                    <div class="info-card">
+                        <h5>
+                            <i class="fas fa-check-circle"></i>
+                            Validation Finale
+                        </h5>
+                        <p>Vérifiez toutes les informations avant de soumettre le formulaire.</p>
+                    </div>
+
+                    <div class="preview-section">
+                        <div class="preview-header">
+                            <i class="fas fa-eye me-2"></i>
+                            Aperçu des Informations
+                        </div>
+                        <div id="previewContent">
+                            <!-- Preview content will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn-modern btn-secondary-modern" onclick="prevStep()">
+                            <i class="fas fa-arrow-left"></i>
+                            Précédent
+                        </button>
+                        <button type="submit" class="btn-modern btn-success-modern">
+                            <i class="fas fa-paper-plane"></i>
+                            Soumettre
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="mb-0">
+                <i class="fas fa-heart text-danger me-1"></i>
+                2024 - Plateforme de Surveillance Sanitaire | Burkina Faso
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            setupValidation();
+        });
+
+        function nextStep() {
+            if (validateCurrentStep()) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepDisplay();
+                    updateProgress();
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepDisplay();
+                updateProgress();
+            }
+        }
+
+        function updateStepDisplay() {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            // Show current step
+            document.getElementById(`step${currentStep}`).classList.add('active');
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNumber = index + 1;
+                const circle = step.querySelector('.step-circle');
+                const label = step.querySelector('.step-label');
+
+                if (stepNumber < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                    circle.classList.remove('active', 'pending');
+                    circle.classList.add('completed');
+                    circle.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (stepNumber === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                    circle.classList.remove('completed', 'pending');
+                    circle.classList.add('active');
+                    circle.innerHTML = stepNumber;
+                } else {
+                    step.classList.remove('active', 'completed');
+                    circle.classList.remove('active', 'completed');
+                    circle.classList.add('pending');
+                    circle.innerHTML = stepNumber;
+                }
+            });
+
+            // Update preview if on last step
+            if (currentStep === 4) {
+                updatePreview();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function setupValidation() {
+            // Real-time validation for text inputs
+            document.querySelectorAll('input[type="text"], textarea').forEach(input => {
+                input.addEventListener('input', function() {
+                    validateField(this);
+                });
+            });
+
+            // Real-time validation for date inputs
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    validateField(this);
+                });
+            });
+        }
+
+        function validateField(field) {
+            const value = field.value.trim();
+            const fieldName = field.name;
+            const validationElement = document.getElementById(fieldName + 'Validation');
+
+            // Remove existing validation classes
+            field.classList.remove('is-valid', 'is-invalid');
+            validationElement.className = 'validation-message';
+
+            // Validation rules
+            let isValid = true;
+            let message = '';
+
+            switch (fieldName) {
+                case 'username':
+                    if (value.length < 2) {
+                        isValid = false;
+                        message = 'Le nom doit contenir au moins 2 caractères';
+                    }
+                    break;
+                case 'centre':
+                    if (value.length < 3) {
+                        isValid = false;
+                        message = 'Le nom du centre doit contenir au moins 3 caractères';
+                    }
+                    break;
+                case 'poste':
+                    if (value.length < 5) {
+                        isValid = false;
+                        message = 'Le poste doit contenir au moins 5 caractères';
+                    }
+                    break;
+                case 'apikey':
+                    if (value.length < 8) {
+                        isValid = false;
+                        message = 'La clé API doit contenir au moins 8 caractères';
+                    }
+                    break;
+                case 'periode_debut':
+                case 'periode_fin':
+                    if (!value) {
+                        isValid = false;
+                        message = 'Veuillez sélectionner une date';
+                    }
+                    break;
+                case 'source':
+                    if (value.length < 5) {
+                        isValid = false;
+                        message = 'La source doit contenir au moins 5 caractères';
+                    }
+                    break;
+                case 'description':
+                    if (value.length < 20) {
+                        isValid = false;
+                        message = 'La description doit contenir au moins 20 caractères';
+                    }
+                    break;
+            }
+
+            // Apply validation result
+            if (isValid && value) {
+                field.classList.add('is-valid');
+                validationElement.className = 'validation-message valid';
+                validationElement.innerHTML = '<i class="fas fa-check"></i> Champ valide';
+            } else if (!isValid) {
+                field.classList.add('is-invalid');
+                validationElement.className = 'validation-message invalid';
+                validationElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + message;
+            }
+        }
+
+        function validateCurrentStep() {
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                validateField(field);
+                if (field.classList.contains('is-invalid') || !field.value.trim()) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showAlert('Veuillez corriger les erreurs avant de continuer.', 'warning');
+            }
+
+            return isValid;
+        }
+
+        function updatePreview() {
+            const previewContent = document.getElementById('previewContent');
+            const formData = new FormData(document.getElementById('submissionForm'));
+            
+            let previewHTML = '';
+            
+            for (let [key, value] of formData.entries()) {
+                if (value) {
+                    const label = getFieldLabel(key);
+                    previewHTML += `
+                        <div class="preview-item">
+                            <span class="preview-label">${label}:</span>
+                            <span class="preview-value">${value}</span>
+                        </div>
+                    `;
+                }
+            }
+
+            previewContent.innerHTML = previewHTML;
+        }
+
+        function getFieldLabel(fieldName) {
+            const labels = {
+                'username': 'Nom de l\'utilisateur',
+                'centre': 'Centre Médical',
+                'poste': 'Poste',
+                'apikey': 'Clé API',
+                'periode_debut': 'Date de début',
+                'periode_fin': 'Date de fin',
+                'source': 'Source des données',
+                'description': 'Description'
+            };
+            return labels[fieldName] || fieldName;
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert-modern alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            const contentSection = document.querySelector('.content-section');
+            contentSection.insertBefore(alertDiv, contentSection.firstChild);
+            
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // Form submission
+        document.getElementById('submissionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateCurrentStep()) {
+                // Show loading state
+                const submitBtn = document.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Soumission en cours...';
+                submitBtn.disabled = true;
+
+                // Simulate form submission
+                setTimeout(() => {
+                    showAlert('Formulaire soumis avec succès !', 'success');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

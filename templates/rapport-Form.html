@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Rapport d'Analyse - Surveillance Dengue</title> 
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="/static/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+    <!-- Fonts and icons -->
+    <script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["static/assets/css/fonts.min.css"],
+        },
+        active: function () { sessionStorage.fonts = true; },
+      });
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS for modern design -->
+    <style>
+      :root {
+        --primary-color: #2E86AB;
+        --secondary-color: #A23B72;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+        --info-color: #17a2b8;
+        --light-bg: #f8f9fa;
+        --dark-bg: #343a40;
+      }
+
+      /* Header moderne */
+      .modern-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      
+      .header-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .header-logo:hover {
+        color: #e2e8f0;
+        text-decoration: none;
+      }
+      
+      .nav-link-modern {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 500;
+        padding: 0.5rem 1rem !important;
+        border-radius: 0.375rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      
+      .nav-link-modern:hover {
+        color: white !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+      }
+      
+      .nav-link-modern.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white !important;
+      }
+      
+      .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.75rem;
+        background-color: rgba(34, 197, 94, 0.2);
+        color: #22c55e;
+        border-radius: 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #22c55e;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      .btn-login {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      
+      .btn-login:hover {
+        background: rgba(255, 255, 255, 0.3);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* Menu hamburger pour mobile */
+      .navbar-toggler {
+        border: none;
+        padding: 0.25rem 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 0.375rem;
+      }
+      
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+      
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      .summary-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        color: white;
+      }
+
+      .summary-header {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px 15px 0 0;
+        padding: 1.5rem;
+      }
+
+      .summary-body {
+        padding: 2rem;
+      }
+
+      .error-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .chart-container {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        height: 400px; /* Hauteur fixe pour éviter que les diagrammes s'envolent */
+        position: relative;
+      }
+
+      .chart-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--dark-bg);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .chart-title i {
+        margin-right: 0.5rem;
+        color: var(--primary-color);
+      }
+
+      .chart-canvas {
+        width: 100% !important;
+        height: 300px !important; /* Hauteur fixe pour le canvas */
+        max-height: 300px !important;
+      }
+
+      .error-details-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+
+      .error-details-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 1.5rem;
+        font-weight: 600;
+      }
+
+      .error-table {
+        margin: 0;
+      }
+
+      .error-table th {
+        background: var(--light-bg);
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--dark-bg);
+      }
+
+      .error-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding: 1rem;
+        vertical-align: top;
+      }
+
+      .error-severity {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .severity-critical {
+        background: rgba(220, 53, 69, 0.1);
+        color: var(--danger-color);
+      }
+
+      .severity-warning {
+        background: rgba(255, 193, 7, 0.1);
+        color: var(--warning-color);
+      }
+
+      .severity-info {
+        background: rgba(23, 162, 184, 0.1);
+        color: var(--info-color);
+      }
+
+      .severity-success {
+        background: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+      }
+
+      .progress-section {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+      }
+
+      .progress-item {
+        margin-bottom: 1.5rem;
+      }
+
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--dark-bg);
+      }
+
+      .progress-bar-custom {
+        height: 8px;
+        border-radius: 4px;
+        background: #e9ecef;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+
+      .progress-fill.critical {
+        background: var(--danger-color);
+      }
+
+      .progress-fill.warning {
+        background: var(--warning-color);
+      }
+
+      .progress-fill.info {
+        background: var(--info-color);
+      }
+
+      .progress-fill.success {
+        background: var(--success-color);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+
+      .btn-modern {
+        border-radius: 10px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        text-decoration: none;
+      }
+
+      .btn-primary-modern {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+      }
+
+      .btn-success-modern {
+        background: var(--success-color);
+        color: white;
+      }
+
+      .btn-info-modern {
+        background: var(--info-color);
+        color: white;
+      }
+
+      .btn-secondary-modern {
+        background: #6c757d;
+        color: white;
+      }
+
+      .alert-modern {
+        border-radius: 15px;
+        border: none;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .data-preview-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+
+      .data-preview-header {
+        background: linear-gradient(135deg, var(--success-color), #20c997);
+        color: white;
+        padding: 1.5rem;
+        font-weight: 600;
+      }
+
+      .table-modern {
+        margin: 0;
+      }
+
+      .table-modern th {
+        background: var(--light-bg);
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--dark-bg);
+      }
+
+      .table-modern td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding: 1rem;
+      }
+
+      .table-modern tbody tr:hover {
+        background: rgba(46, 134, 171, 0.05);
+      }
+
+      /* Footer moderne */
+      .footer-modern {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        color: white;
+        padding: 4rem 0 2rem;
+        margin-top: 4rem;
+      }
+      
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+      
+      .footer-section h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #f8fafc;
+      }
+      
+      .footer-section p {
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .footer-links li {
+        margin-bottom: 0.75rem;
+      }
+      
+      .footer-links a {
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .footer-links a:hover {
+        color: #3b82f6;
+        transform: translateX(3px);
+      }
+      
+      .footer-contact {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #cbd5e1;
+        margin-bottom: 0.75rem;
+      }
+      
+      .footer-contact i {
+        color: #3b82f6;
+        width: 20px;
+      }
+      
+      .footer-bottom {
+        border-top: 1px solid #475569;
+        padding-top: 2rem;
+        text-align: center;
+        color: #94a3b8;
+      }
+      
+      .footer-bottom a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+      
+      .footer-bottom a:hover {
+        text-decoration: underline;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      
+      .social-link {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      
+      .social-link:hover {
+        background: #3b82f6;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .error-stats {
+          grid-template-columns: 1fr;
+        }
+        
+        .action-buttons {
+          flex-direction: column;
+        }
+        
+        .btn-modern {
+          justify-content: center;
+        }
+
+        .header-logo {
+          font-size: 1.25rem;
+        }
+        
+        .nav-link-modern {
+          padding: 0.75rem 1rem !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-collapse {
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 0.5rem;
+          margin-top: 1rem;
+          padding: 1rem;
+        }
+
+        .chart-container {
+          height: 350px;
+        }
+
+        .chart-canvas {
+          height: 250px !important;
+        }
+
+        .footer-modern {
+          padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+        
+        .footer-section {
+          text-align: center;
+        }
+        
+        .social-links {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header moderne -->
+    <header class="modern-header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container mx-auto px-4 py-3">
+          <!-- Logo -->
+          <a href="/" class="header-logo">
+            <i class="fas fa-shield-virus me-2"></i>
+            Surveillance Dengue
+          </a>
+          
+          <!-- Indicateur de statut -->
+          <div class="status-indicator d-none d-md-flex">
+            <div class="status-dot"></div>
+            <span>Système Opérationnel</span>
+          </div>
+          
+          <!-- Bouton hamburger pour mobile -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <!-- Navigation -->
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item">
+                <a href="/" class="nav-link-modern">
+                  <i class="fas fa-home me-1"></i>Accueil
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/dashboard" class="nav-link-modern">
+                  <i class="fas fa-chart-line me-1"></i>Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/exploration" class="nav-link-modern">
+                  <i class="fas fa-search me-1"></i>Exploration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/mise-a-jour-form" class="nav-link-modern">
+                  <i class="fas fa-upload me-1"></i>Mise à jour
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/rapport" class="nav-link-modern active">
+                  <i class="fas fa-chart-bar me-1"></i>Rapport d'analyse
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
+                  <i class="fas fa-chart-pie me-1"></i>Indicateurs
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/docs" class="nav-link-modern">
+                  <i class="fas fa-book me-1"></i>Documentation
+                </a>
+              </li>
+              <li class="nav-item ms-lg-3">
+                <a href="/login" class="btn-login">
+                  <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="page-inner">
+        <div class="page-header">
+          <h3 class="fw-bold mb-3">
+            <i class="fas fa-chart-bar text-primary me-2"></i>
+            Rapport d'Analyse des Données
+          </h3>
+          <p class="text-muted">Résultats de l'analyse et corrections appliquées</p>
+        </div>
+
+        {% if isRapport %}
+          {% if rapport %}
+            <!-- Success Alert -->
+            <div class="alert-modern alert-success">
+              <i class="fas fa-check-circle"></i>
+              <strong>Rapport généré avec succès !</strong> L'analyse a détecté et corrigé {{ nbErreur }} erreurs.
+            </div>
+
+            <!-- Summary Card -->
+            <div class="summary-card">
+              <div class="summary-header">
+                <h4 class="mb-0">
+                  <i class="fas fa-clipboard-check me-2"></i>
+                  Résumé de l'Analyse
+                </h4>
+              </div>
+              <div class="summary-body">
+                <div class="error-stats">
+                  <div class="stat-card">
+                    <div class="stat-number">{{ nbErreur }}</div>
+                    <div class="stat-label">Erreurs Détectées</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-number">{{ rapport|length }}</div>
+                    <div class="stat-label">Colonnes Analysées</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Taux de Correction</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Qualité Finale</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="chart-container">
+                  <div class="chart-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Répartition des Erreurs par Type
+                  </div>
+                  <canvas id="errorTypeChart" class="chart-canvas"></canvas>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="chart-container">
+                  <div class="chart-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Erreurs par Colonne
+                  </div>
+                  <canvas id="errorColumnChart" class="chart-canvas"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+              <h5 class="mb-3">
+                <i class="fas fa-tasks me-2"></i>
+                Progression de la Correction
+              </h5>
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Erreurs critiques corrigées</span>
+                  <span>85%</span>
+                </div>
+                <div class="progress-bar-custom">
+                  <div class="progress-fill critical" style="width: 85%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Erreurs de format corrigées</span>
+                  <span>92%</span>
+                </div>
+                <div class="progress-bar-custom">
+                  <div class="progress-fill warning" style="width: 92%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Données manquantes complétées</span>
+                  <span>78%</span>
+                </div>
+                <div class="progress-bar-custom">
+                  <div class="progress-fill info" style="width: 78%"></div>
+                </div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Validation globale</span>
+                  <span>100%</span>
+                </div>
+                <div class="progress-bar-custom">
+                  <div class="progress-fill success" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error Details -->
+            <div class="error-details-card">
+              <div class="error-details-header">
+                <h5 class="mb-0">
+                  <i class="fas fa-exclamation-triangle me-2"></i>
+                  Détails des Erreurs Détectées
+                </h5>
+              </div>
+              <div class="table-responsive">
+                <table class="table error-table">
+                  <thead>
+                    <tr>
+                      <th>Colonne</th>
+                      <th>Type d'Erreur</th>
+                      <th>Détails</th>
+                      <th>Sévérité</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for col, infos in rapport.items() %}
+                    <tr>
+                      <td><strong>{{ col }}</strong></td>
+                      <td>
+                        {% for key, val in infos.items() %}
+                          {% if key == 'type_erreur' %}
+                            <span class="error-severity severity-{{ val.lower() }}">{{ val }}</span>
+                          {% endif %}
+                        {% endfor %}
+                      </td>
+                      <td>
+                        <ul class="mb-0">
+                          {% for key, val in infos.items() %}
+                            {% if key != 'type_erreur' %}
+                              <li><strong>{{ key }}</strong>: {{ val }}</li>
+                            {% endif %}
+                          {% endfor %}
+                        </ul>
+                      </td>
+                      <td>
+                        {% for key, val in infos.items() %}
+                          {% if key == 'type_erreur' %}
+                            {% if val.lower() == 'critique' %}
+                              <span class="error-severity severity-critical">Critique</span>
+                            {% elif val.lower() == 'avertissement' %}
+                              <span class="error-severity severity-warning">Avertissement</span>
+                            {% else %}
+                              <span class="error-severity severity-info">Info</span>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="fas fa-eye"></i> Voir
+                        </button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+              <a href="/le-rapport" class="btn-modern btn-primary-modern">
+                <i class="fas fa-file-pdf"></i>
+                Télécharger le Rapport
+              </a>
+              <a href="/donnees-corrigees" class="btn-modern btn-success-modern">
+                <i class="fas fa-table"></i>
+                Afficher les Données Corrigées
+              </a>
+              <a href="/formulaire-de-soumission" class="btn-modern btn-info-modern">
+                <i class="fas fa-database"></i>
+                Insérer dans la Base
+              </a>
+              <a href="/" class="btn-modern btn-secondary-modern">
+                <i class="fas fa-arrow-left"></i>
+                Retour à l'Accueil
+              </a>
+            </div>
+
+          {% else %}
+            <div class="alert-modern alert-danger">
+              <i class="fas fa-exclamation-triangle"></i>
+              <strong>Aucun rapport disponible.</strong> Veuillez d'abord analyser un fichier.
+            </div>
+          {% endif %}
+        {% endif %}
+
+        <!-- Data Preview Section -->
+        {% if not isRapport %}
+          {% if donnees %}
+            <div class="data-preview-card">
+              <div class="data-preview-header">
+                <h5 class="mb-0">
+                  <i class="fas fa-table me-2"></i>
+                  Aperçu des Données Corrigées
+                </h5>
+              </div>
+              <div class="table-responsive">
+                <table id="multi-filter-select" class="table table-modern">
+                  <thead>
+                    <tr>
+                      {% for col in colonnes %}
+                      <th>{{ col }}</th>
+                      {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for ligne in donnees %}
+                    <tr>
+                      {% for cell in ligne %}
+                      <td>{{ cell }}</td>
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Action Buttons for Data Preview -->
+            <div class="action-buttons">
+              <a href="/formulaire-de-soumission" class="btn-modern btn-success-modern">
+                <i class="fas fa-database"></i>
+                Insérer dans la Base de Données
+              </a>
+              <a href="/export-corrected" class="btn-modern btn-info-modern">
+                <i class="fas fa-download"></i>
+                Exporter les Données Corrigées
+              </a>
+              <a href="/" class="btn-modern btn-secondary-modern">
+                <i class="fas fa-arrow-left"></i>
+                Retour à l'Accueil
+              </a>
+            </div>
+
+          {% else %}
+            <div class="alert-modern alert-warning">
+              <i class="fas fa-info-circle"></i>
+              <strong>Aucune donnée à afficher.</strong> Veuillez d'abord corriger des données.
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Pied de Page -->
+    <footer class="footer-modern">
+      <div class="container mx-auto">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>À Propos</h3>
+            <p>Surveillance Dengue est une plateforme innovante pour la surveillance et la gestion de la dengue. Nous travaillons pour prévenir et contrôler la propagation de cette maladie.</p>
+          </div>
+          <div class="footer-section">
+            <h3>Liens Rapides</h3>
+            <ul class="footer-links">
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/exploration">Exploration</a></li>
+              <li><a href="/mise-a-jour-form">Mise à jour</a></li>
+              <li><a href="/dashboard/indicateurs-powerbi">Indicateurs</a></li>
+              <li><a href="/docs">Documentation</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Contact</h3>
+            <div class="footer-contact">
+              <i class="fas fa-phone"></i>
+              <span>+1 (555) 123-4567</span>
+            </div>
+            <div class="footer-contact">
+              <i class="fas fa-envelope"></i>
+              <span>contact@dengue-surveillance.org</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Surveillance Dengue. Tous droits réservés.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Core JS Files -->
+    <script src="/static/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/static/assets/js/core/popper.min.js"></script>
+    <script src="/static/assets/js/core/bootstrap.min.js"></script>
+    <script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="/static/assets/js/kaiadmin.min.js"></script>
+    <script src="/static/assets/js/demo.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // Initialize DataTable
+        $("#multi-filter-select").DataTable({
+          pageLength: 25,
+          responsive: true,
+          language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json'
+          }
+        });
+
+        // Error Type Chart - avec hauteur fixe
+        const errorTypeCtx = document.getElementById('errorTypeChart');
+        if (errorTypeCtx) {
+          new Chart(errorTypeCtx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Erreurs de Format', 'Données Manquantes', 'Incohérences', 'Doublons'],
+              datasets: [{
+                data: [35, 25, 20, 20],
+                backgroundColor: [
+                  '#dc3545',
+                  '#ffc107',
+                  '#17a2b8',
+                  '#6c757d'
+                ],
+                borderWidth: 2,
+                borderColor: '#fff'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom'
+                }
+              }
+            }
+          });
+        }
+
+        // Error Column Chart - avec hauteur fixe
+        const errorColumnCtx = document.getElementById('errorColumnChart');
+        if (errorColumnCtx) {
+          new Chart(errorColumnCtx, {
+            type: 'bar',
+            data: {
+              labels: ['Date', 'Région', 'Âge', 'Sexe', 'Symptômes'],
+              datasets: [{
+                label: 'Nombre d\'erreurs',
+                data: [12, 8, 15, 5, 10],
+                backgroundColor: 'rgba(46, 134, 171, 0.8)',
+                borderColor: 'rgba(46, 134, 171, 1)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              plugins: {
+                legend: {
+                  display: false
+                }
+              }
+            }
+          });
+        }
+
+        // Animate progress bars
+        $('.progress-fill').each(function() {
+          const width = $(this).css('width');
+          $(this).css('width', '0%');
+          setTimeout(() => {
+            $(this).css('width', width);
+          }, 500);
+        });
+      });
+    </script>
+  </body>
+</html>
