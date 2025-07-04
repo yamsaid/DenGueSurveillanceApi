@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration PowerBI - Surveillance Dengue</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .config-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+        
+        .help-text {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .copy-btn {
+            background: #6c757d;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #5a6268;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="config-card">
+            <div class="text-center mb-4">
+                <h1><i class="fas fa-cog"></i> Configuration PowerBI</h1>
+                <p class="text-muted">Configurez l'intégration PowerBI pour votre page d'indicateurs</p>
+            </div>
+            
+            <!-- Indicateurs d'étapes -->
+            <div class="step-indicator">
+                <div class="step active" id="step1">1</div>
+                <div class="step" id="step2">2</div>
+                <div class="step" id="step3">3</div>
+                <div class="step" id="step4">4</div>
+            </div>
+            
+            <!-- Étape 1: Informations de base -->
+            <div id="step1-content">
+                <h3><i class="fas fa-info-circle"></i> Étape 1: Informations de base</h3>
+                <p>Avant de commencer, assurez-vous d'avoir :</p>
+                <ul>
+                    <li>Un compte PowerBI actif</li>
+                    <li>Un rapport publié dans PowerBI Service</li>
+                    <li>Les permissions d'intégration</li>
+                </ul>
+                
+                <div class="help-text">
+                    <strong>💡 Conseil :</strong> Si vous n'avez pas encore de rapport PowerBI, 
+                    créez-en un d'abord dans PowerBI Desktop puis publiez-le.
+                </div>
+                
+                <button class="btn btn-primary" onclick="nextStep()">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <!-- Étape 2: Obtenir les IDs -->
+            <div id="step2-content" style="display: none;">
+                <h3><i class="fas fa-key"></i> Étape 2: Obtenir les identifiants</h3>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Report ID</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="reportId" placeholder="Ex: 12345678-1234-1234-1234-123456789012">
+                            <button class="btn btn-outline-secondary copy-btn" onclick="copyToClipboard('reportId')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <h5>Workspace ID</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="workspaceId" placeholder="Ex: 98765432-5432-1098-ba98-765432109876">
+                            <button class="btn btn-outline-secondary copy-btn" onclick="copyToClipboard('workspaceId')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Embed URL</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="embedUrl" placeholder="https://app.powerbi.com/reportEmbed?reportId=...">
+                            <button class="btn btn-outline-secondary copy-btn" onclick="copyToClipboard('embedUrl')">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        
+                        <h5>Access Token</h5>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="accessToken" placeholder="Token d'accès généré">
+                            <button class="btn btn-outline-secondary" onclick="togglePassword('accessToken')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="help-text">
+                    <strong>🔍 Comment obtenir ces informations :</strong>
+                    <ol>
+                        <li>Allez sur <a href="https://powerbi.com" target="_blank">PowerBI.com</a></li>
+                        <li>Ouvrez votre rapport</li>
+                        <li>Cliquez sur "Partager" > "Intégrer"</li>
+                        <li>Copiez les informations affichées</li>
+                    </ol>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Précédent
+                    </button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Suivant <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Étape 3: Test de connexion -->
+            <div id="step3-content" style="display: none;">
+                <h3><i class="fas fa-plug"></i> Étape 3: Test de connexion</h3>
+                
+                <div class="text-center">
+                    <button class="btn btn-primary btn-lg" onclick="testConnection()">
+                        <i class="fas fa-play"></i> Tester la connexion
+                    </button>
+                </div>
+                
+                <div id="testResult" class="mt-3"></div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <button class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Précédent
+                    </button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="nextStep3" disabled>
+                        Suivant <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Étape 4: Finalisation -->
+            <div id="step4-content" style="display: none;">
+                <h3><i class="fas fa-check-circle"></i> Étape 4: Finalisation</h3>
+                
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check"></i> Configuration PowerBI réussie !
+                </div>
+                
+                <div class="text-center">
+                    <button class="btn btn-success btn-lg" onclick="saveConfiguration()">
+                        <i class="fas fa-save"></i> Sauvegarder la configuration
+                    </button>
+                </div>
+                
+                <div class="mt-4">
+                    <h5>Prochaines étapes :</h5>
+                    <ul>
+                        <li>Redémarrez votre serveur FastAPI</li>
+                        <li>Accédez à <a href="/page-indicateurs">la page d'indicateurs</a></li>
+                        <li>Vérifiez que PowerBI s'affiche correctement</li>
+                    </ul>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-secondary" onclick="prevStep()">
+                        <i class="fas fa-arrow-left"></i> Précédent
+                    </button>
+                    <a href="/page-indicateurs" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Aller à la page d'indicateurs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                document.getElementById(`step${currentStep}-content`).style.display = 'none';
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`step${currentStep}`).classList.add('completed');
+                
+                currentStep++;
+                
+                document.getElementById(`step${currentStep}-content`).style.display = 'block';
+                document.getElementById(`step${currentStep}`).classList.add('active');
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step${currentStep}-content`).style.display = 'none';
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                
+                currentStep--;
+                
+                document.getElementById(`step${currentStep}-content`).style.display = 'block';
+                document.getElementById(`step${currentStep}`).classList.remove('completed');
+                document.getElementById(`step${currentStep}`).classList.add('active');
+            }
+        }
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            element.select();
+            document.execCommand('copy');
+            
+            // Feedback visuel
+            const btn = event.target.closest('.copy-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = '#28a745';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '#6c757d';
+            }, 1000);
+        }
+        
+        function togglePassword(elementId) {
+            const element = document.getElementById(elementId);
+            const btn = event.target.closest('button');
+            
+            if (element.type === 'password') {
+                element.type = 'text';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                element.type = 'password';
+                btn.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+        
+        function testConnection() {
+            const reportId = document.getElementById('reportId').value;
+            const workspaceId = document.getElementById('workspaceId').value;
+            const embedUrl = document.getElementById('embedUrl').value;
+            const accessToken = document.getElementById('accessToken').value;
+            
+            if (!reportId || !workspaceId || !embedUrl || !accessToken) {
+                showMessage('Veuillez remplir tous les champs', 'error');
+                return;
+            }
+            
+            // Simulation de test (remplacez par un vrai test API)
+            showMessage('Test de connexion en cours...', 'info');
+            
+            setTimeout(() => {
+                showMessage('✅ Connexion PowerBI réussie !', 'success');
+                document.getElementById('nextStep3').disabled = false;
+            }, 2000);
+        }
+        
+        function saveConfiguration() {
+            const config = {
+                reportId: document.getElementById('reportId').value,
+                workspaceId: document.getElementById('workspaceId').value,
+                embedUrl: document.getElementById('embedUrl').value,
+                accessToken: document.getElementById('accessToken').value
+            };
+            
+            // Sauvegarder la configuration (remplacez par un appel API)
+            localStorage.setItem('powerbi_config', JSON.stringify(config));
+            
+            document.getElementById('successMessage').style.display = 'block';
+        }
+        
+        function showMessage(message, type) {
+            const resultDiv = document.getElementById('testResult');
+            resultDiv.innerHTML = `<div class="alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'}">${message}</div>`;
+        }
+        
+        // Charger la configuration existante
+        window.onload = function() {
+            const savedConfig = localStorage.getItem('powerbi_config');
+            if (savedConfig) {
+                const config = JSON.parse(savedConfig);
+                document.getElementById('reportId').value = config.reportId || '';
+                document.getElementById('workspaceId').value = config.workspaceId || '';
+                document.getElementById('embedUrl').value = config.embedUrl || '';
+                document.getElementById('accessToken').value = config.accessToken || '';
+            }
+        };
+    </script>
+</body>
+</html> 

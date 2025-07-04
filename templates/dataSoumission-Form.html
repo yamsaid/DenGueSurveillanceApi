@@ -822,21 +822,8 @@
 
         // Form submission
         document.getElementById('submissionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (validateCurrentStep()) {
-                // Show loading state
-                const submitBtn = document.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Soumission en cours...';
-                submitBtn.disabled = true;
-
-                // Simulate form submission
-                setTimeout(() => {
-                    showAlert('Formulaire soumis avec succès !', 'success');
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
+            if (!validateCurrentStep()) {
+                e.preventDefault(); // Empêche la soumission seulement si le formulaire n'est pas valide
             }
         });
     </script>

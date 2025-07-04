@@ -3,33 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Évolution - Surveillance Dengue</title>
+    <title>Dashboard - Système de Surveillance Dengue</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- html2canvas et jsPDF pour l'export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- FileSaver pour l'export PNG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     
     <style>
         :root {
-            --primary-color: #2E86AB;
-            --secondary-color: #A23B72;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --info-color: #17a2b8;
-            --light-bg: #f8f9fa;
-            --dark-bg: #343a40;
+            --primary-color: #3B82F6;
+            --secondary-color: #10B981;
+            --accent-color: #F59E0B;
+            --danger-color: #EF4444;
+            --neutral-color: #6B7280;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E5E7EB;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            font-family: 'Public Sans', Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
         }
 
         /* Header moderne */
-        .modern-header {
+      .modern-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -38,7 +55,7 @@
         }
         
         .header-logo {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: white;
             text-decoration: none;
@@ -73,7 +90,11 @@
         }
         
         .status-indicator {
-            display: inline-flex;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+            max-width: 250px;
+            white-space: nowrap;
+            display: flex;
             align-items: center;
             gap: 0.25rem;
             padding: 0.25rem 0.75rem;
@@ -150,121 +171,89 @@
             }
         }
 
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
+
+        /* Page Content */
+        .page-content {
+            padding: 2rem 0;
+            min-height: calc(100vh - 80px);
         }
 
-        .header-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+        .page-header {
+            background: var(--card-bg);
+            border-radius: 1rem;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .header-title {
-            color: var(--primary-color);
+        .page-title {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
         }
 
-        .header-subtitle {
-            color: #666;
+        .page-subtitle {
             font-size: 1.1rem;
-            margin-bottom: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        /* Navigation buttons */
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
+        /* Métriques Cards */
+        .metrics-section {
+            margin-bottom: 3rem;
         }
 
-        .btn-nav {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-            color: white;
-        }
-
-        .btn-nav.secondary {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-        }
-
-        .btn-nav.secondary:hover {
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-        }
-
-        .stats-grid {
+        .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border-left: 4px solid var(--primary-color);
-            transition: transform 0.3s ease;
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card:hover {
+        .metric-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
         }
 
-        .stat-card.critical {
-            border-left-color: var(--danger-color);
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-color);
         }
 
-        .stat-card.warning {
-            border-left-color: var(--warning-color);
-        }
+        .metric-card.cases::before { background: var(--primary-color); }
+        .metric-card.positive::before { background: var(--secondary-color); }
+        .metric-card.hospitalized::before { background: var(--accent-color); }
+        .metric-card.deaths::before { background: var(--danger-color); }
+        .metric-card.variants::before { background: #8B5CF6; }
 
-        .stat-card.success {
-            border-left-color: var(--success-color);
-        }
-
-        .stat-card.info {
-            border-left-color: var(--info-color);
-        }
-
-        .stat-header {
+        .metric-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 1rem;
         }
 
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
+        .metric-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -272,514 +261,673 @@
             color: white;
         }
 
-        .stat-icon.primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
+        .metric-icon.cases { background: var(--primary-color); }
+        .metric-icon.positive { background: var(--secondary-color); }
+        .metric-icon.hospitalized { background: var(--accent-color); }
+        .metric-icon.deaths { background: var(--danger-color); }
+        .metric-icon.variants { background: #8B5CF6; }
 
-        .stat-icon.critical {
-            background: linear-gradient(135deg, var(--danger-color), #e74c3c);
-        }
-
-        .stat-icon.warning {
-            background: linear-gradient(135deg, var(--warning-color), #f39c12);
-        }
-
-        .stat-icon.success {
-            background: linear-gradient(135deg, var(--success-color), #27ae60);
-        }
-
-        .stat-icon.info {
-            background: linear-gradient(135deg, var(--info-color), #3498db);
-        }
-
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .trend-up {
-            color: var(--success-color);
-        }
-
-        .trend-down {
-            color: var(--danger-color);
-        }
-
-        .trend-stable {
-            color: var(--warning-color);
-        }
-
-        .stat-number {
+        .metric-value {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--dark-bg);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            color: #666;
-            font-size: 1rem;
-            font-weight: 600;
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
-        .chart-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 2rem;
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .metric-change.positive {
+            color: var(--secondary-color);
+        }
+
+        .metric-change.negative {
+            color: var(--danger-color);
+        }
+
+        .metric-change.neutral {
+            color: var(--neutral-color);
+        }
+
+        /* Filtres */
+        .filters-section {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #2563EB;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--neutral-color);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+            transform: translateY(-1px);
+        }
+
+        /* Graphiques */
+        .charts-section {
+            margin-bottom: 3rem;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
         }
 
         .chart-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
         }
 
         .chart-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark-bg);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        .filters-section {
+        .chart-actions {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
             gap: 0.5rem;
         }
 
-        .filter-label {
-            font-weight: 600;
-            color: var(--dark-bg);
-            font-size: 0.9rem;
-        }
-
-        .filter-select {
+        .btn-export {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
             padding: 0.5rem 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            background: white;
-            font-size: 0.9rem;
-            transition: border-color 0.3s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
-        .filter-select:focus {
-            outline: none;
-            border-color: var(--primary-color);
+        .btn-export:hover {
+            background: #059669;
+            color: white;
+            transform: translateY(-1px);
+            text-decoration: none;
         }
 
-        .chart-container {
+        .btn-export.danger {
+            background: var(--danger-color);
+        }
+
+        .btn-export.danger:hover {
+            background: #DC2626;
+        }
+
+        .chart-wrapper {
             position: relative;
             height: 400px;
-            margin-top: 1rem;
         }
 
+        /* Actions Section */
+        .actions-section {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .actions-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2563EB 100%);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            min-height: 80px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #059669 100%);
+        }
+
+        .action-btn.secondary:hover {
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .action-btn.accent {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #D97706 100%);
+        }
+
+        .action-btn.accent:hover {
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Loading States */
         .loading-spinner {
-            display: none;
-            text-align: center;
-            padding: 2rem;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
         }
 
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            color: var(--primary-color);
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .error-message {
-            background: rgba(220, 53, 69, 0.1);
-            border: 1px solid var(--danger-color);
-            border-radius: 8px;
-            padding: 1rem;
-            color: var(--danger-color);
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .no-data-message {
-            background: rgba(108, 117, 125, 0.1);
-            border: 1px solid #6c757d;
-            border-radius: 8px;
-            padding: 2rem;
-            color: #6c757d;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .no-data-message i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .main-container {
-                padding: 1rem;
+            .page-title {
+                font-size: 2rem;
             }
 
-            .header-title {
-                font-size: 2rem;
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
             }
 
             .chart-header {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
+                gap: 1rem;
             }
 
-            .filters-section {
-                flex-direction: column;
+            .chart-actions {
+                width: 100%;
+                justify-content: space-between;
             }
 
-            .nav-buttons {
-                flex-direction: column;
+            .actions-grid {
+                grid-template-columns: 1fr;
             }
 
-            .btn-nav {
-                justify-content: center;
+            .header-logo {
+                font-size: 1.25rem;
             }
+
+            .nav-link-modern {
+                padding: 0.75rem 1rem !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
-    <!-- Header moderne -->
+    <!-- Header -->
     <header class="modern-header">
         <nav class="navbar navbar-expand-lg">
-            <div class="container mx-auto px-4 py-3">
-                <!-- Logo -->
-                <a href="/" class="header-logo">
-                    <i class="fas fa-shield-virus me-2"></i>
-                    Surveillance Dengue
-                </a>
-                
-                <!-- Indicateur de statut -->
-                <div class="status-indicator d-none d-md-flex">
-                    <div class="status-dot"></div>
-                    <span>Système Opérationnel</span>
-                </div>
-                
-                <!-- Bouton hamburger pour mobile -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <!-- Navigation -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link-modern">
-                                <i class="fas fa-home me-1"></i>Accueil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/api/dashboard" class="nav-link-modern active">
-                                <i class="fas fa-chart-line me-1"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/exploration" class="nav-link-modern">
-                                <i class="fas fa-search me-1"></i>Exploration
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/mise-a-jour-form" class="nav-link-modern">
-                                <i class="fas fa-upload me-1"></i>Mise à jour
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
-                                <i class="fas fa-chart-bar me-1"></i>Indicateurs
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/configuration-alertes" class="nav-link-modern">
-                                <i class="fas fa-bell me-1"></i>Alertes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/docs" class="nav-link-modern">
-                                <i class="fas fa-book me-1"></i>Documentation
-                            </a>
-                        </li>
-                        <li class="nav-item ms-lg-3">
-                            <a href="/login" class="btn-login">
-                                <i class="fas fa-sign-in-alt me-1"></i>Connexion
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <div class="container mx-auto px-0 py-2 align-items-center justify-content-center justify-content-lg-between flex-wrap">
+                <!-- <div class="container mx-auto px-4 py-3 d-flex flex-wrap align-items-center justify-content-between"> -->
+                    <!-- Logo -->
+                    <a href="/" class="header-logo">
+                        <i class="fas fa-shield-virus me-2"></i>
+                        Surveillance <br>Dengue
+                    </a>
+                    <!-- Indicateur de statut -->
+                    <div class="status-indicator d-none d-md-flex">
+                        <div class="status-dot"></div>
+                        <span>Système Opérationnel</span>
+                      </div>
+                    <!-- Bouton hamburger pour mobile -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Navigation -->
+                    <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
+                        <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-2 gap-lg-4">
+                            <li class="nav-item"><a href="/" class="nav-link-modern"><i class="fas fa-home me-1"></i><br>Accueil</a></li>
+                            <li class="nav-item"><a href="/api/dashboard" class="nav-link-modern"><i class="fas fa-chart-line me-1"></i><br>Dashboard</a></li>
+                            <li class="nav-item"><a href="/exploration" class="nav-link-modern"><i class="fas fa-search me-1"></i><br>Exploration</a></li>
+                            <li class="nav-item"><a href="/mise-a-jour-form" class="nav-link-modern"><i class="fas fa-upload me-1"></i><br>Mise à jour</a></li>
+                            <li class="nav-item"><a href="/dashboard/indicateurs-powerbi" class="nav-link-modern"><i class="fas fa-chart-bar me-1"></i><br>Indicateurs</a></li>
+                            <!-- <li class="nav-item"><a href="/configuration-alertes" class="nav-link-modern"><i class="fas fa-bell me-1"></i><br>Alertes</a></li> -->
+                            <li class="nav-item"><a href="/docs" class="nav-link-modern"><i class="fas fa-book me-1"></i><br>Documentation</a></li>
+                            <li class="nav-item ms-lg-3"><a href="/login" class="btn-login"><i class="fas fa-sign-in-alt me-1"></i>Connexion</a></li>
+                        </ul>
+                    </div>
+              </div>
         </nav>
     </header>
 
-    <div class="main-container">
-        <!-- Header Section -->
-        <div class="header-section">
-            <h1 class="header-title">
-                <i class="fas fa-chart-line"></i>
-                Dashboard Évolution Épidémiologique
-            </h1>
-            <p class="header-subtitle">
-                Suivez l'évolution des indicateurs de la dengue en temps réel avec des visualisations interactives et des analyses détaillées.
-            </p>
-            
-            <!-- Navigation buttons -->
-            <div class="nav-buttons">
-                <a href="/" class="btn-nav">
-                    <i class="fas fa-home"></i>
-                    Retour à l'Accueil
-                </a>
-                <a href="/dashboard/indicateurs-powerbi" class="btn-nav secondary">
-                    <i class="fas fa-chart-bar"></i>
-                    Statistiques Avancées
-                </a>
-            </div>
-        </div>
-
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card primary">
-                <div class="stat-header">
-                    <div class="stat-icon primary">
-                        <i class="fas fa-virus"></i>
-                    </div>
-                    <div class="stat-trend trend-up">
-                        <i class="fas fa-arrow-up"></i>
-                        +12%
-                    </div>
-                </div>
-                <div class="stat-number" id="total-cases">--</div>
-                <div class="stat-label">Total des Cas</div>
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header fade-in">
+                <h1 class="page-title">
+                    <i class="fas fa-chart-line text-primary me-3"></i>
+                    Dashboard de Surveillance
+                </h1>
+                <p class="page-subtitle">
+                    Visualisez les indicateurs clés de la dengue en temps réel avec des graphiques interactifs et des métriques détaillées.
+                </p>
             </div>
 
-            <div class="stat-card warning">
-                <div class="stat-header">
-                    <div class="stat-icon warning">
-                        <i class="fas fa-hospital"></i>
-                    </div>
-                    <div class="stat-trend trend-down">
-                        <i class="fas fa-arrow-down"></i>
-                        -5%
-                    </div>
-                </div>
-                <div class="stat-number" id="hospitalized">--</div>
-                <div class="stat-label">Hospitalisations</div>
-            </div>
-
-            <div class="stat-card critical">
-                <div class="stat-header">
-                    <div class="stat-icon critical">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div class="stat-trend trend-stable">
-                        <i class="fas fa-minus"></i>
-                        0%
-                    </div>
-                </div>
-                <div class="stat-number" id="deaths">--</div>
-                <div class="stat-label">Décès</div>
-            </div>
-
-            <div class="stat-card success">
-                <div class="stat-header">
-                    <div class="stat-icon success">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="stat-trend trend-up">
-                        <i class="fas fa-arrow-up"></i>
-                        +3
-                    </div>
-                </div>
-                <div class="stat-number" id="regions">--</div>
-                <div class="stat-label">Régions Touchées</div>
-            </div>
-        </div>
-
-        <!-- Chart Section -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <h2 class="chart-title">
-                    <i class="fas fa-chart-area"></i>
-                    Évolution Temporelle des Cas
+            <!-- Section 1: Métriques de la Semaine en Cours -->
+            <div class="metrics-section fade-in">
+                <h2 class="section-title mb-4">
+                    <i class="fas fa-calendar-week text-primary me-2"></i>
+                    Métriques de la Semaine en Cours
                 </h2>
-                <div class="filters-section">
-                    <div class="filter-group">
-                        <label class="filter-label">Région</label>
-                        <select class="filter-select" id="region-filter">
-                            <option value="">Toutes les régions</option>
-                            {% for region in regions %}
-                            <option value="{{ region }}">{{ region }}</option>
-                            {% endfor %}
-                        </select>
+                
+                <div class="metrics-grid">
+                    <!-- Total des cas enregistrés -->
+                    <div class="metric-card cases">
+                        <div class="metric-header">
+                            <div class="metric-icon cases">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="total-cases">
+                            <span class="loading-spinner"></span>
+                        </div>
+                        <div class="metric-label">Total des cas enregistrés</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="cases-change">+12% cette semaine</span>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Période</label>
-                        <select class="filter-select" id="period-filter">
-                            <option value="7">7 derniers jours</option>
-                            <option value="30" selected>30 derniers jours</option>
-                            <option value="90">3 derniers mois</option>
-                            <option value="365">1 an</option>
-                        </select>
+
+                    <!-- Tests positifs -->
+                    <div class="metric-card positive">
+                        <div class="metric-header">
+                            <div class="metric-icon positive">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="positive-tests">
+                            <span class="loading-spinner"></span>
+                        </div>
+                        <div class="metric-label">Tests positifs</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="positive-change">+8% cette semaine</span>
+                        </div>
+                    </div>
+
+                    <!-- Hospitalisations -->
+                    <div class="metric-card hospitalized">
+                        <div class="metric-header">
+                            <div class="metric-icon hospitalized">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="hospitalizations">
+                            <span class="loading-spinner"></span>
+                        </div>
+                        <div class="metric-label">Hospitalisations</div>
+                        <div class="metric-change negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span id="hospitalization-change">-3% cette semaine</span>
+                        </div>
+                    </div>
+
+                    <!-- Décès -->
+                    <div class="metric-card deaths">
+                        <div class="metric-header">
+                            <div class="metric-icon deaths">
+                                <i class="fas fa-heart-broken"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="deaths">
+                            <span class="loading-spinner"></span>
+                        </div>
+                        <div class="metric-label">Décès</div>
+                        <div class="metric-change neutral">
+                            <i class="fas fa-minus"></i>
+                            <span id="deaths-change">Stable cette semaine</span>
+                        </div>
+                    </div>
+
+                    <!-- Variants/Sérotypes -->
+                    <div class="metric-card variants">
+                        <div class="metric-header">
+                            <div class="metric-icon variants">
+                                <i class="fas fa-dna"></i>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="variants">
+                            <span class="loading-spinner"></span>
+                        </div>
+                        <div class="metric-label">Variants/Sérotypes</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="variants-change">+1 nouveau variant</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="loading-spinner" id="loadingSpinner">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Chargement...</span>
-                </div>
-                <p class="mt-3">Chargement des données...</p>
+            <!-- Section Filtres -->
+            <div class="filters-section fade-in">
+                <h3 class="filters-title">
+                    <i class="fas fa-filter text-primary me-2"></i>
+                    Filtres de Navigation
+                </h3>
+                
+                <form id="filters-form">
+                    <div class="filters-grid">
+                        <div>
+                            <label for="region-filter" class="form-label">Région</label>
+                            <select class="form-control" id="region-filter" name="region">
+                                <option value="Toutes">Toutes les régions</option>
+                                {% for region in regions %}
+                                <option value="{{ region }}">{{ region }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="district-filter" class="form-label">District</label>
+                            <select class="form-control" id="district-filter" name="district">
+                                <option value="Toutes">Tous les districts</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="year-filter" class="form-label">Année</label>
+                            <select class="form-control" id="year-filter" name="year">
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                <i class="fas fa-search me-2"></i>Appliquer les filtres
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="reset-filters">
+                                <i class="fas fa-undo me-2"></i>Réinitialiser
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <div class="chart-container">
-                <canvas id="evolutionChart"></canvas>
+            <!-- Section 2: Évolution Hebdomadaire -->
+            <div class="charts-section fade-in">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-line text-primary me-2"></i>
+                            Évolution Hebdomadaire
+                        </h3>
+                        <div class="chart-actions">
+                            <button class="btn-export" onclick="exportChart('weekly-chart', 'png')">
+                                <i class="fas fa-download"></i>PNG
+                            </button>
+                            <button class="btn-export danger" onclick="exportChart('weekly-chart', 'pdf')">
+                                <i class="fas fa-file-pdf"></i>PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="weekly-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Évolution Mensuelle -->
+            <div class="charts-section fade-in">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-bar text-primary me-2"></i>
+                            Évolution Mensuelle
+                        </h3>
+                        <div class="chart-actions">
+                            <button class="btn-export" onclick="exportChart('monthly-chart', 'png')">
+                                <i class="fas fa-download"></i>PNG
+                            </button>
+                            <button class="btn-export danger" onclick="exportChart('monthly-chart', 'pdf')">
+                                <i class="fas fa-file-pdf"></i>PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="monthly-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Actions -->
+            <div class="actions-section fade-in">
+                <h3 class="actions-title">
+                    <i class="fas fa-cogs text-primary me-2"></i>
+                    Actions Rapides
+                </h3>
+                
+                <div class="actions-grid">
+                    <a href="/dashboard/indicateurs-powerbi" class="action-btn">
+                        <i class="fas fa-chart-bar fa-2x"></i>
+                        <div>
+                            <div class="fw-bold">Statistiques Avancées</div>
+                            <small>Indicateurs détaillés</small>
+                        </div>
+                    </a>
+                    
+                    <button class="action-btn secondary" onclick="exportFullReport()">
+                        <i class="fas fa-file-pdf fa-2x"></i>
+                        <div>
+                            <div class="fw-bold">Rapport Complet</div>
+                            <small>Export PDF</small>
+                        </div>
+                    </button>
+                    
+                    <button class="action-btn accent" onclick="refreshData()">
+                        <i class="fas fa-sync-alt fa-2x"></i>
+                        <div>
+                            <div class="fw-bold">Actualiser</div>
+                            <small>Nouvelles données</small>
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="/static/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/static/assets/js/core/popper.min.js"></script>
+    <script src="/static/assets/js/core/bootstrap.min.js"></script>
+    <script src="/static/assets/js/kaiadmin.min.js"></script>
+
     <script>
         // Variables globales
-        let evolutionChart = null;
-        let currentData = null;
+        let weeklyChart, monthlyChart;
+        let currentFilters = {
+            region: 'Toutes',
+            district: 'Toutes',
+            year: '2025'
+        };
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            loadStats();
+            initializeCharts();
+            loadMetrics();
             loadChartData();
-            
-            // Écouteurs d'événements pour les filtres
-            document.getElementById('region-filter').addEventListener('change', loadChartData);
-            document.getElementById('period-filter').addEventListener('change', loadChartData);
+            setupEventListeners();
         });
 
-        // Charger les statistiques
-        async function loadStats() {
-            try {
-                const response = await fetch('/api/stats');
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                const stats = await response.json();
-                
-                // Mettre à jour les statistiques
-                document.getElementById('total-cases').innerText = stats.semaine_en_cours.total_cases?.toLocaleString() || '--';
-                document.getElementById('hospitalized').innerText = stats.semaine_en_cours.total_hospitalized?.toLocaleString() || '--';
-                document.getElementById('deaths').innerText = stats.semaine_en_cours.total_deaths?.toLocaleString() || '--';
-                document.getElementById('regions').innerText = stats.semaine_en_cours.nb_top_region || '--';
-                
-            } catch (error) {
-                console.error('Erreur lors du chargement des statistiques:', error);
-                showError('Erreur lors du chargement des statistiques');
-            }
+        // Configuration des événements
+        function setupEventListeners() {
+            // Filtres
+            document.getElementById('filters-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                applyFilters();
+            });
+
+            document.getElementById('reset-filters').addEventListener('click', function() {
+                resetFilters();
+            });
+
+            // Changement de région
+            document.getElementById('region-filter').addEventListener('change', function() {
+                updateDistricts();
+            });
         }
 
-        // Charger les données du graphique
-        async function loadChartData() {
-            const region = document.getElementById('region-filter').value;
-            const period = document.getElementById('period-filter').value;
-            
-            showLoading(true);
-            
-            try {
-                const params = new URLSearchParams({
-                    date_debut: getDateFromPeriod(period),
-                    date_fin: new Date().toISOString().split('T')[0],
-                    region: region || 'Toutes'
-                });
-                
-                const response = await fetch(`/indicateurs/api/dashboard?${params}`);
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                currentData = data;
-                
-                if (data && data.length > 0) {
-                    updateChart(data);
-                } else {
-                    showNoData();
-                }
-                
-            } catch (error) {
-                console.error('Erreur lors du chargement des données:', error);
-                showError('Erreur lors du chargement des données du graphique');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        // Calculer la date de début basée sur la période
-        function getDateFromPeriod(period) {
-            const today = new Date();
-            const daysAgo = new Date(today);
-            daysAgo.setDate(today.getDate() - parseInt(period));
-            return daysAgo.toISOString().split('T')[0];
-        }
-
-        // Mettre à jour le graphique
-        function updateChart(data) {
-            const ctx = document.getElementById('evolutionChart').getContext('2d');
-            
-            // Détruire le graphique existant s'il y en a un
-            if (evolutionChart) {
-                evolutionChart.destroy();
-            }
-            
-            // Préparer les données
-            const labels = data.map(item => item.date || item.date_notification);
-            const cases = data.map(item => item.nombre_cas || item.cas_confirmes || 0);
-            const deaths = data.map(item => item.nombre_deces || item.deces || 0);
-            const hospitalized = data.map(item => item.nombre_hospitalisations || item.hospitalisations || 0);
-            
-            // Créer le nouveau graphique
-            evolutionChart = new Chart(ctx, {
+        // Initialisation des graphiques
+        function initializeCharts() {
+            // Graphique hebdomadaire
+            const weeklyCtx = document.getElementById('weekly-chart').getContext('2d');
+            weeklyChart = new Chart(weeklyCtx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: [],
                     datasets: [
                         {
-                            label: 'Cas Confirmés',
-                            data: cases,
-                            borderColor: '#2E86AB',
-                            backgroundColor: 'rgba(46, 134, 171, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.4
+                            label: 'Cas',
+                            data: [],
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            fill: true
                         },
                         {
-                            label: 'Hospitalisations',
-                            data: hospitalized,
-                            borderColor: '#ffc107',
-                            backgroundColor: 'rgba(255, 193, 7, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.4
+                            label: 'Hospitalisés',
+                            data: [],
+                            borderColor: '#F59E0B',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Positifs',
+                            data: [],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
                         },
                         {
                             label: 'Décès',
-                            data: deaths,
-                            borderColor: '#dc3545',
-                            backgroundColor: 'rgba(220, 53, 69, 0.1)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.4
+                            data: [],
+                            borderColor: '#EF4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            fill: true
                         }
                     ]
                 },
@@ -791,46 +939,27 @@
                             position: 'top',
                             labels: {
                                 usePointStyle: true,
-                                padding: 20,
-                                font: {
-                                    size: 12,
-                                    weight: 'bold'
-                                }
+                                padding: 20
                             }
                         },
                         tooltip: {
                             mode: 'index',
                             intersect: false,
                             backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleColor: 'white',
-                            bodyColor: 'white',
-                            borderColor: '#2E86AB',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#fff',
                             borderWidth: 1
                         }
                     },
                     scales: {
                         x: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Date',
-                                font: {
-                                    weight: 'bold'
-                                }
-                            },
                             grid: {
                                 display: false
                             }
                         },
                         y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Nombre de cas',
-                                font: {
-                                    weight: 'bold'
-                                }
-                            },
+                            beginAtZero: true,
                             grid: {
                                 color: 'rgba(0, 0, 0, 0.1)'
                             }
@@ -843,49 +972,348 @@
                     }
                 }
             });
+
+            // Graphique mensuel
+            const monthlyCtx = document.getElementById('monthly-chart').getContext('2d');
+            monthlyChart = new Chart(monthlyCtx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Cas',
+                            data: [],
+                            backgroundColor: '#3B82F6',
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Hospitalisés',
+                            data: [],
+                            backgroundColor: '#F59E0B',
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Positifs',
+                            data: [],
+                            backgroundColor: '#10B981',
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Décès',
+                            data: [],
+                            backgroundColor: '#EF4444',
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
         }
 
-        // Afficher le spinner de chargement
-        function showLoading(show) {
-            const spinner = document.getElementById('loadingSpinner');
-            const chartContainer = document.querySelector('.chart-container');
-            
-            if (show) {
-                spinner.style.display = 'block';
-                chartContainer.style.display = 'none';
-            } else {
-                spinner.style.display = 'none';
-                chartContainer.style.display = 'block';
+        // Chargement des métriques
+        async function loadMetrics() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                // Mise à jour des métriques
+                updateMetric('total-cases', data.semaine_en_cours.total_cases || 0);
+                updateMetric('positive-tests', data.semaine_en_cours.total_positives || 0);
+                updateMetric('hospitalizations', data.semaine_en_cours.total_hospitalized || 0);
+                updateMetric('deaths', data.semaine_en_cours.total_deaths || 0);
+                updateMetric('variants', data.semaine_en_cours.variants || 0);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des métriques:', error);
+                showError('Erreur lors du chargement des métriques');
             }
         }
 
-        // Afficher un message d'erreur
+        // Mise à jour d'une métrique
+        function updateMetric(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = value.toLocaleString();
+            }
+        }
+
+        // Chargement des données des graphiques
+        async function loadChartData() {
+            try {
+                // Données hebdomadaires
+                const weeklyResponse = await fetch(`/api/data/hebdomadaires?annee=${currentFilters.year}&mois=${currentFilters.month}&region=${currentFilters.region}&district=${currentFilters.district}`);
+                const weeklyData = await weeklyResponse.json();
+                updateWeeklyChart(weeklyData);
+
+                // Données mensuelles
+                const monthlyResponse = await fetch(`/api/data/mensuels?annee=${currentFilters.year}&region=${currentFilters.region}&district=${currentFilters.district}`);
+                const monthlyData = await monthlyResponse.json();
+                updateMonthlyChart(monthlyData);
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des données:', error);
+                showError('Erreur lors du chargement des graphiques');
+            }
+        }
+
+        // Mise à jour du graphique hebdomadaire
+        function updateWeeklyChart(data) {
+            if (!weeklyChart) return;
+
+            const labels = data.map(item => item.semaine || item.period);
+            const cases = data.map(item => item.cas || 0);
+            const hospitalized = data.map(item => item.hospitalises || 0);
+            const positive = data.map(item => item.positifs || 0);
+            const deaths = data.map(item => item.deces || 0);
+
+            weeklyChart.data.labels = labels;
+            weeklyChart.data.datasets[0].data = cases;
+            weeklyChart.data.datasets[1].data = hospitalized;
+            weeklyChart.data.datasets[2].data = positive;
+            weeklyChart.data.datasets[3].data = deaths;
+            weeklyChart.update();
+        }
+
+        // Mise à jour du graphique mensuel
+        function updateMonthlyChart(data) {
+            if (!monthlyChart) return;
+
+            const labels = data.map(item => item.mois);
+            const cases = data.map(item => item.cas || 0);
+            const hospitalized = data.map(item => item.hospitalises || 0);
+            const positive = data.map(item => item.positifs || 0);
+            const deaths = data.map(item => item.deces || 0);
+
+            monthlyChart.data.labels = labels;
+            monthlyChart.data.datasets[0].data = cases;
+            monthlyChart.data.datasets[1].data = hospitalized;
+            monthlyChart.data.datasets[2].data = positive;
+            monthlyChart.data.datasets[3].data = deaths;
+            monthlyChart.update();
+        }
+
+        // Application des filtres
+        function applyFilters() {
+            currentFilters.region = document.getElementById('region-filter').value;
+            currentFilters.district = document.getElementById('district-filter').value;
+            currentFilters.year = document.getElementById('year-filter').value;
+
+            loadChartData();
+            showSuccess('Filtres appliqués avec succès');
+        }
+
+        // Réinitialisation des filtres
+        function resetFilters() {
+            document.getElementById('region-filter').value = 'Toutes';
+            document.getElementById('district-filter').value = 'Toutes';
+            document.getElementById('year-filter').value = '2025';
+            
+            currentFilters = {
+                region: 'Toutes',
+                district: 'Toutes',
+                year: '2025'
+            };
+
+            updateDistricts();
+            loadChartData();
+            showSuccess('Filtres réinitialisés');
+        }
+
+        // Mise à jour des districts selon la région
+        async function updateDistricts() {
+            const region = document.getElementById('region-filter').value;
+            const districtSelect = document.getElementById('district-filter');
+            
+            if (region === 'Toutes') {
+                districtSelect.innerHTML = '<option value="Toutes">Tous les districts</option>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/districts?region=${encodeURIComponent(region)}`);
+                const districts = await response.json();
+                
+                districtSelect.innerHTML = '<option value="Toutes">Tous les districts</option>';
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur lors du chargement des districts:', error);
+            }
+        }
+
+        // Export de graphique
+        function exportChart(chartId, format) {
+            const canvas = document.getElementById(chartId);
+            const chart = chartId === 'weekly-chart' ? weeklyChart : monthlyChart;
+            
+            if (format === 'png') {
+                const link = document.createElement('a');
+                link.download = `dashboard_${chartId}_${new Date().toISOString().split('T')[0]}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            } else if (format === 'pdf') {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save(`dashboard_${chartId}_${new Date().toISOString().split('T')[0]}.pdf`);
+            }
+        }
+
+        // Export du rapport complet
+        async function exportFullReport() {
+            try {
+                showLoading('Génération du rapport en cours...');
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                
+                // Titre
+                pdf.setFontSize(20);
+                pdf.text('Rapport de Surveillance Dengue', 20, 20);
+                
+                pdf.setFontSize(12);
+                pdf.text(`Généré le: ${new Date().toLocaleDateString('fr-FR')}`, 20, 30);
+                pdf.text(`Filtres: Région ${currentFilters.region}, District ${currentFilters.district}, Année ${currentFilters.year}`, 20, 40);
+                
+                // Métriques
+                pdf.setFontSize(16);
+                pdf.text('Métriques de la Semaine', 20, 60);
+                
+                const metrics = [
+                    ['Total des cas', document.getElementById('total-cases').textContent],
+                    ['Tests positifs', document.getElementById('positive-tests').textContent],
+                    ['Hospitalisations', document.getElementById('hospitalizations').textContent],
+                    ['Décès', document.getElementById('deaths').textContent],
+                    ['Variants', document.getElementById('variants').textContent]
+                ];
+                
+                let y = 80;
+                metrics.forEach(([label, value]) => {
+                    pdf.setFontSize(12);
+                    pdf.text(`${label}: ${value}`, 20, y);
+                    y += 10;
+                });
+                
+                // Graphiques
+                const charts = ['weekly-chart', 'monthly-chart'];
+                y += 20;
+                
+                for (let i = 0; i < charts.length; i++) {
+                    const canvas = document.getElementById(charts[i]);
+                    const imgData = canvas.toDataURL('image/png');
+                    
+                    pdf.addPage();
+                    pdf.setFontSize(16);
+                    pdf.text(charts[i] === 'weekly-chart' ? 'Évolution Hebdomadaire' : 'Évolution Mensuelle', 20, 20);
+                    
+                    const imgWidth = 170;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                    pdf.addImage(imgData, 'PNG', 20, 30, imgWidth, imgHeight);
+                }
+                
+                pdf.save(`rapport_dengue_${new Date().toISOString().split('T')[0]}.pdf`);
+                hideLoading();
+                showSuccess('Rapport exporté avec succès');
+                
+            } catch (error) {
+                console.error('Erreur lors de l\'export:', error);
+                hideLoading();
+                showError('Erreur lors de l\'export du rapport');
+            }
+        }
+
+        // Actualisation des données
+        async function refreshData() {
+            try {
+                showLoading('Actualisation des données...');
+                await loadMetrics();
+                await loadChartData();
+                hideLoading();
+                showSuccess('Données actualisées avec succès');
+            } catch (error) {
+                console.error('Erreur lors de l\'actualisation:', error);
+                hideLoading();
+                showError('Erreur lors de l\'actualisation');
+            }
+        }
+
+        // Fonctions utilitaires
+        function showLoading(message) {
+            // Implémentation d'un indicateur de chargement
+            console.log('Loading:', message);
+        }
+
+        function hideLoading() {
+            // Masquer l'indicateur de chargement
+            console.log('Loading finished');
+        }
+
+        function showSuccess(message) {
+            // Afficher un message de succès
+            console.log('Success:', message);
+        }
+
         function showError(message) {
-            const chartSection = document.querySelector('.chart-section');
-            const existingError = chartSection.querySelector('.error-message');
-            
-            if (existingError) {
-                existingError.remove();
-            }
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle me-2"></i>${message}`;
-            
-            chartSection.appendChild(errorDiv);
+            // Afficher un message d'erreur
+            console.error('Error:', message);
         }
 
-        // Afficher un message quand il n'y a pas de données
-        function showNoData() {
-            const chartContainer = document.querySelector('.chart-container');
-            chartContainer.innerHTML = `
-                <div class="no-data-message">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Aucune donnée disponible</h4>
-                    <p>Aucune donnée ne correspond aux critères sélectionnés. Veuillez ajuster vos filtres.</p>
-                </div>
-            `;
-        }
+        // Chargement initial des districts
+        updateDistricts();
     </script>
 </body>
 </html> 

@@ -11,6 +11,8 @@ import os
 from fastapi.responses import StreamingResponse, JSONResponse
 from sqlalchemy import and_, func, or_, not_
 from typing import List, Optional
+from sqlalchemy.sql import case, extract
+from calendar import month_name
 
 
 "======== Fonction pour vérifier et corriger le CSV ========"
@@ -24,7 +26,7 @@ def analyser_et_corriger_csv(file_contents: bytes, consentement_correction = "tr
     global totat_erreur
     
     # Colonnes attendues
-    colonnes = ["idCas","date_consultation","region","district","sexe","age","resultat_test","serotype","hospitalise","issue"]
+    colonnes = ["date_consultation","region","district","sexe","age","resultat_test","serotype","hospitalise","issue"]
     df_columns = df.columns.tolist()
     if sum([c in df_columns for c in colonnes]) != len(colonnes):
         raise HTTPException(status_code=400, detail=f"Le fichier doit contenir toutes les colonnes requises. Colonnes attendues : {colonnes}")
@@ -161,7 +163,7 @@ def inserer_donnees_csv_corrigees(df,idSource, db: Session = Depends(get_db)):
     try:
         for _, row in df.iterrows():
             nouvelle_entree = models.ModelCasDengue(
-                idCas=str(row["idCas"]),
+                #idCas=str(row["idCas"]),
                 date_consultation=row["date_consultation"],
                 region=row["region"],
                 district=row["district"],
@@ -414,8 +416,8 @@ def statistiques_base(
 
 def get_stats(db: Session = Depends(get_db)):
     
-    #today = date.today()
-    today = date(2023, 2, 1) # pour tester
+    today = date.today()
+    #today = date(2025, 2, 1) # pour tester
     # Dates pour l'année en cours
     start_year = date(today.year, 1, 1)
     end_year = today
@@ -437,6 +439,12 @@ def get_stats(db: Session = Depends(get_db)):
             models.ModelCasDengue.date_consultation >= start,
             models.ModelCasDengue.date_consultation <= end
         ).scalar() or 0
+
+        variants = db.query(func.count(func.distinct(models.ModelCasDengue.serotype))).filter(
+            models.ModelCasDengue.date_consultation >= start,
+            models.ModelCasDengue.date_consultation <= end
+        ).scalar() or 0
+
         # Décès
         total_deaths = db.query(func.count(models.ModelCasDengue.idCas)).filter(
             models.ModelCasDengue.date_consultation >= start,
@@ -490,6 +498,8 @@ def get_stats(db: Session = Depends(get_db)):
         else:
             top_district = "Aucune donnée"
             nb_cases_top_district = 0
+
+        
         return {
             "total_cases": total_cases,
             "total_deaths": total_deaths,
@@ -501,7 +511,8 @@ def get_stats(db: Session = Depends(get_db)):
             "nb_top_district": nb_top_district,
             "nb_cases_top_region": nb_cases_top_region,
             "nb_cases_top_district": nb_cases_top_district,
-            "current_year": today.year
+            "current_year": today.year,
+            "variants": variants
         }
 
     # Stats année en cours et année précédente
@@ -531,8 +542,160 @@ def get_stats(db: Session = Depends(get_db)):
         }
     }
 
+def hebdo_data(
+    annee: int = date.today().year,
+    mois: int = None,
+    region: str = "Toutes",
+    district: str = "Toutes",
+    db: Session = Depends(get_db)
+):
+    # Validation des paramètres
+    if annee is None or str(annee) == "undefined":
+        annee = date.today().year
+    if mois is None or str(mois) == "undefined" or mois == 0:
+        mois = None
+    
+    # Construire la requête de base
+    query = db.query(
+        func.date_trunc("week", models.ModelCasDengue.date_consultation).label("semaine"),
+        func.count(models.ModelCasDengue.idCas).label("cas"),
+        func.sum(case((models.ModelCasDengue.issue == "Décédé", 1), else_=0)).label("deces"),
+        func.sum(case((models.ModelCasDengue.hospitalise == "Oui", 1), else_=0)).label("hospitalises"),
+        func.sum(case((models.ModelCasDengue.resultat_test == "Positif", 1), else_=0)).label("positifs"),
+        func.extract("week", models.ModelCasDengue.date_consultation).label("num_semaine"),
+        func.extract("year", models.ModelCasDengue.date_consultation).label("annee")
+    )
+    
+    # Filtrer par année
+    query = query.filter(func.extract("year", models.ModelCasDengue.date_consultation) == annee)
+    
+    # Filtrer par mois seulement si spécifié et valide
+    if mois and mois > 0 and mois <= 12:
+        query = query.filter(func.extract("month", models.ModelCasDengue.date_consultation) == mois)
+
+    if region != "Toutes":
+        query = query.filter(models.ModelCasDengue.region == region)
+    if district != "Toutes":
+        query = query.filter(models.ModelCasDengue.district == district)
+
+    resultats = query.group_by("semaine", "num_semaine", "annee").order_by("semaine").all()
+
+    return [
+        {
+            "annee": int(r.annee),
+            "semaine": f"S{int(r.num_semaine)}",  # ex: S1, S2
+            "cas": r.cas,
+            "deces": r.deces,
+            "hospitalises": r.hospitalises,
+            "positifs": r.positifs,
+        }
+        for r in resultats
+    ]
+
+def mensuel_data(
+    annee: int = None,
+    region: str = "Toutes",
+    district: str = "Toutes",
+    db: Session = Depends(get_db)
+):
+    # Validation des paramètres
+    if annee is None or str(annee) == "undefined":
+        annee = date.today().year
+    if region is None or str(region) == "undefined":
+        region = "Toutes"
+    if district is None or str(district) == "undefined":
+        district = "Toutes"
+    query = db.query(
+        func.extract("month", models.ModelCasDengue.date_consultation).label("mois"),
+        func.count(models.ModelCasDengue.idCas).label("cas"),
+        func.sum(case((models.ModelCasDengue.issue == "Décédé", 1), else_=0)).label("deces"),
+        func.sum(case((models.ModelCasDengue.hospitalise == "Oui", 1), else_=0)).label("hospitalises"),
+        func.sum(case((models.ModelCasDengue.resultat_test == "Positif", 1), else_=0)).label("positifs"),
+    ).filter(
+        func.extract("year", models.ModelCasDengue.date_consultation) == annee
+    )
+
+    if region != "Toutes":
+        query = query.filter(models.ModelCasDengue.region == region)
+    if district != "Toutes":
+        query = query.filter(models.ModelCasDengue.district == district)
+
+    resultats = query.group_by("mois").order_by("mois").all()
+
+    return [
+        {
+            "mois": month_name[int(r.mois)],  # Ex: "Janvier", "Février"
+            "cas": r.cas,
+            "deces": r.deces,
+            "hospitalises": r.hospitalises,
+            "positifs": r.positifs,
+        }
+        for r in resultats
+    ]
 
 """======== Fonction pour la gestion des alertes épidémiologiques ========"""
+
+# configuration des seuils d'alerte
+def seuils_alertes_config(data: dict, db: Session = Depends(get_db)):
+    """Configure les seuils d'alerte pour un utilisateur"""
+    try:
+        # Récupérer les données JSON du body
+        #data = await request.json()
+        
+        # Extraire les valeurs avec des valeurs par défaut
+        usermail = data.get("usermail", "admin@gmail.com")
+        seuil_positivite = data.get("seuil_positivite", 10)
+        seuil_hospitalisation = data.get("seuil_hospitalisation", 10)
+        seuil_deces = data.get("seuil_deces", 5)
+        seuil_positivite_region = data.get("seuil_positivite_region", 15)
+        seuil_hospitalisation_region = data.get("seuil_hospitalisation_region", 15)
+        seuil_deces_region = data.get("seuil_deces_region", 8)
+        seuil_positivite_district = data.get("seuil_positivite_district", 20)
+        seuil_hospitalisation_district = data.get("seuil_hospitalisation_district", 20)
+        seuil_deces_district = data.get("seuil_deces_district", 10)
+        intervalle = data.get("intervalle", "1")  # 1: hebdomadaire, 2: mensuel, 3: annuel
+        
+        # Vérifier si l'utilisateur a déjà des seuils
+        seuils_existants = db.query(models.SeuilAlert).filter(
+            models.SeuilAlert.usermail == usermail
+        ).first()
+        
+        if seuils_existants:
+            # Mettre à jour les seuils existants
+            seuils_existants.seuil_positivite = seuil_positivite
+            seuils_existants.seuil_hospitalisation = seuil_hospitalisation
+            seuils_existants.seuil_deces = seuil_deces
+            seuils_existants.seuil_positivite_region = seuil_positivite_region
+            seuils_existants.seuil_hospitalisation_region = seuil_hospitalisation_region
+            seuils_existants.seuil_deces_region = seuil_deces_region
+            seuils_existants.seuil_positivite_district = seuil_positivite_district
+            seuils_existants.seuil_hospitalisation_district = seuil_hospitalisation_district
+            seuils_existants.seuil_deces_district = seuil_deces_district
+            seuils_existants.intervalle = intervalle
+            seuils_existants.created_at = datetime.now()
+        else:
+            # Créer de nouveaux seuils
+            nouveaux_seuils = models.SeuilAlert(
+                usermail=usermail,
+                seuil_positivite=seuil_positivite,
+                seuil_hospitalisation=seuil_hospitalisation,
+                seuil_deces=seuil_deces,
+                seuil_positivite_region=seuil_positivite_region,
+                seuil_hospitalisation_region=seuil_hospitalisation_region,
+                seuil_deces_region=seuil_deces_region,
+                seuil_positivite_district=seuil_positivite_district,
+                seuil_hospitalisation_district=seuil_hospitalisation_district,
+                seuil_deces_district=seuil_deces_district,
+                intervalle=intervalle
+            )
+            db.add(nouveaux_seuils)
+        
+        db.commit()
+        return {"success": True, "message": "Seuils configurés avec succès"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la configuration: {str(e)}")
+
+
 
 def recuperer_seuils_utilisateur(db: Session, usermail: str) -> dict:
     """
@@ -591,7 +754,7 @@ def recuperer_seuils_utilisateur(db: Session, usermail: str) -> dict:
         "seuil_deces_district": seuils_perso.seuil_deces_district
     }
 
-
+# Fonction pour calculer les indicateurs épidémiologiques 
 def calculer_indicateurs_epidemiologiques(
     db: Session,
     date_debut: str,
@@ -612,6 +775,7 @@ def calculer_indicateurs_epidemiologiques(
     Returns:
         dict: Indicateurs calculés
     """
+    
     # Construire la requête de base
     query = db.query(models.ModelCasDengue).filter(
         and_(
@@ -881,6 +1045,20 @@ def gestion_alertes_epidemiologiques(
     }
     
     return resume
+
+
+def recuperer_regions_distinctes(db: Session) -> List[str]:
+    """
+    Récupère toutes les régions distinctes depuis la base de données
+    
+    Args:
+        db: Session de base de données
+    
+    Returns:
+        List[str]: Liste des régions distinctes
+    """
+    regions = db.query(models.ModelCasDengue.region).distinct().all()
+    return [r[0] for r in regions if r[0]]
 
 
 def verification_automatique_alertes(db: Session) -> dict:

@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guide API - Surveillance Dengue</title>
+    <title>Documentation Complète - Système de Surveillance Dengue</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     
     <style>
         :root {
-            --primary-color: #2E86AB;
-            --secondary-color: #A23B72;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --info-color: #17a2b8;
-            --light-bg: #f8f9fa;
-            --dark-bg: #343a40;
-            --code-bg: #2d3748;
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --dark-bg: #1e293b;
+            --code-bg: #1e293b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Public Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
             padding: 0;
@@ -30,7 +30,7 @@
         }
 
         .main-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -44,18 +44,18 @@
         .header-section {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             text-align: center;
         }
 
         .header-section h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 3.5rem;
+            font-weight: 800;
             margin-bottom: 1rem;
         }
 
         .header-section p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
             margin-bottom: 0;
         }
@@ -70,6 +70,7 @@
             background: var(--light-bg);
             border-radius: 15px;
             padding: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .nav-tabs-modern .nav-link {
@@ -80,17 +81,18 @@
             color: var(--dark-bg);
             transition: all 0.3s ease;
             margin: 0 0.25rem;
+            white-space: nowrap;
         }
 
         .nav-tabs-modern .nav-link:hover {
-            background: rgba(46, 134, 171, 0.1);
+            background: rgba(102, 126, 234, 0.1);
             color: var(--primary-color);
         }
 
         .nav-tabs-modern .nav-link.active {
             background: var(--primary-color);
             color: white;
-            box-shadow: 0 4px 15px rgba(46, 134, 171, 0.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .tab-content {
@@ -111,12 +113,23 @@
 
         .section-title {
             color: var(--primary-color);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
+        }
+
+        .subsection-title {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .endpoint-card {
@@ -138,22 +151,22 @@
         }
 
         .method-get {
-            background: rgba(40, 167, 69, 0.1);
+            background: rgba(34, 197, 94, 0.1);
             color: var(--success-color);
         }
 
         .method-post {
-            background: rgba(23, 162, 184, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             color: var(--info-color);
         }
 
         .method-put {
-            background: rgba(255, 193, 7, 0.1);
+            background: rgba(245, 158, 11, 0.1);
             color: var(--warning-color);
         }
 
         .method-delete {
-            background: rgba(220, 53, 69, 0.1);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--danger-color);
         }
 
@@ -238,31 +251,7 @@
         }
 
         .table-modern tr:hover {
-            background: rgba(46, 134, 171, 0.05);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-success {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success-color);
-        }
-
-        .status-error {
-            background: rgba(220, 53, 69, 0.1);
-            color: var(--danger-color);
-        }
-
-        .status-warning {
-            background: rgba(255, 193, 7, 0.1);
-            color: var(--warning-color);
+            background: rgba(102, 126, 234, 0.05);
         }
 
         .feature-grid {
@@ -279,6 +268,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .feature-card:hover {
@@ -314,18 +304,50 @@
         }
 
         .alert-info {
-            background: rgba(23, 162, 184, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             color: var(--info-color);
         }
 
         .alert-success {
-            background: rgba(40, 167, 69, 0.1);
+            background: rgba(34, 197, 94, 0.1);
             color: var(--success-color);
         }
 
         .alert-warning {
-            background: rgba(255, 193, 7, 0.1);
+            background: rgba(245, 158, 11, 0.1);
             color: var(--warning-color);
+        }
+
+        .page-example {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--primary-color);
+        }
+
+        .page-example h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .param-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .param-table th {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .param-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
         }
 
         .footer {
@@ -334,48 +356,6 @@
             text-align: center;
             padding: 2rem;
             font-size: 0.9rem;
-        }
-
-        .interactive-demo {
-            background: var(--light-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .demo-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .demo-input {
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 0.75rem;
-            font-size: 0.9rem;
-        }
-
-        .demo-input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-
-        .demo-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .demo-btn:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
         }
 
         @media (max-width: 768px) {
@@ -414,44 +394,54 @@
         <div class="header-section">
             <h1>
                 <i class="fas fa-book me-3"></i>
-                Guide API - Surveillance Dengue
+                Documentation Complète
             </h1>
-            <p>Documentation complète pour l'utilisation de l'API de surveillance sanitaire</p>
+            <p>Système de Surveillance Épidémiologique de la Dengue</p>
         </div>
 
         <!-- Content Section -->
         <div class="content-section">
             <!-- Navigation Tabs -->
-            <ul class="nav nav-tabs nav-tabs-modern" id="apiTabs" role="tablist">
+            <ul class="nav nav-tabs nav-tabs-modern" id="guideTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
                         <i class="fas fa-home me-2"></i>Vue d'ensemble
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="endpoints-tab" data-bs-toggle="tab" data-bs-target="#endpoints" type="button" role="tab">
-                        <i class="fas fa-link me-2"></i>Endpoints
+                    <button class="nav-link" id="pages-tab" data-bs-toggle="tab" data-bs-target="#pages" type="button" role="tab">
+                        <i class="fas fa-globe me-2"></i>Pages Web
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="api-tab" data-bs-toggle="tab" data-bs-target="#api" type="button" role="tab">
+                        <i class="fas fa-code me-2"></i>API Endpoints
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="examples-tab" data-bs-toggle="tab" data-bs-target="#examples" type="button" role="tab">
-                        <i class="fas fa-code me-2"></i>Exemples
+                        <i class="fas fa-lightbulb me-2"></i>Exemples
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="models-tab" data-bs-toggle="tab" data-bs-target="#models" type="button" role="tab">
-                        <i class="fas fa-database me-2"></i>Modèles
+                    <button class="nav-link" id="integration-tab" data-bs-toggle="tab" data-bs-target="#integration" type="button" role="tab">
+                        <i class="fas fa-plug me-2"></i>Intégration
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="errors-tab" data-bs-toggle="tab" data-bs-target="#errors" type="button" role="tab">
-                        <i class="fas fa-exclamation-triangle me-2"></i>Erreurs
+                    <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab">
+                        <i class="fas fa-shield-alt me-2"></i>Sécurité
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="maintenance-tab" data-bs-toggle="tab" data-bs-target="#maintenance" type="button" role="tab">
+                        <i class="fas fa-tools me-2"></i>Maintenance
                     </button>
                 </li>
             </ul>
 
             <!-- Tab Content -->
-            <div class="tab-content" id="apiTabsContent">
+            <div class="tab-content" id="guideTabsContent">
                 <!-- Overview Tab -->
                 <div class="tab-pane fade show active" id="overview" role="tabpanel">
                     <div class="section-card">
@@ -459,90 +449,397 @@
                             <i class="fas fa-info-circle"></i>
                             Introduction
                         </h2>
-                        <p>Cette API permet de consulter, ajouter et exporter des données liées aux cas de dengue au Burkina Faso. Elle s'adresse aux professionnels de santé, chercheurs et développeurs d'applications.</p>
+                        <p>Le Système de Surveillance Épidémiologique de la Dengue est une plateforme complète permettant la collecte, l'analyse et la visualisation des données épidémiologiques en temps réel. Cette documentation couvre tous les aspects du système, des interfaces utilisateur aux APIs techniques.</p>
                     </div>
 
                     <div class="feature-grid">
                         <div class="feature-card">
                             <div class="feature-icon">
-                                <i class="fas fa-plus-circle"></i>
-                            </div>
-                            <h3 class="feature-title">Ajout de Données</h3>
-                            <p class="feature-description">Enregistrez facilement de nouveaux cas et patients avec des endpoints REST simples.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
                                 <i class="fas fa-chart-line"></i>
                             </div>
-                            <h3 class="feature-title">Consultation</h3>
-                            <p class="feature-description">Récupérez les données et statistiques avec des requêtes flexibles et performantes.</p>
+                            <h3 class="feature-title">Surveillance en Temps Réel</h3>
+                            <p class="feature-description">Suivi continu des indicateurs épidémiologiques avec alertes automatiques et tableaux de bord interactifs.</p>
                         </div>
                         <div class="feature-card">
                             <div class="feature-icon">
-                                <i class="fas fa-download"></i>
+                                <i class="fas fa-search"></i>
                             </div>
-                            <h3 class="feature-title">Export</h3>
-                            <p class="feature-description">Exportez vos données en CSV, Excel ou JSON pour analyse externe.</p>
+                            <h3 class="feature-title">Exploration Avancée</h3>
+                            <p class="feature-description">Filtres sophistiqués, export multi-format et analyse détaillée des données épidémiologiques.</p>
                         </div>
                         <div class="feature-card">
                             <div class="feature-icon">
-                                <i class="fas fa-shield-alt"></i>
+                                <i class="fas fa-upload"></i>
                             </div>
-                            <h3 class="feature-title">Sécurité</h3>
-                            <p class="feature-description">Authentification par clé API et validation stricte des données.</p>
+                            <h3 class="feature-title">Collecte de Données</h3>
+                            <p class="feature-description">Interface intuitive pour l'ajout et la modification des cas avec validation automatique.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h3 class="feature-title">Visualisations PowerBI</h3>
+                            <p class="feature-description">Intégration PowerBI pour des rapports avancés et des analyses prédictives.</p>
                         </div>
                     </div>
 
                     <div class="alert-modern alert-info">
                         <i class="fas fa-lightbulb"></i>
                         <div>
-                            <strong>Conseil :</strong> Utilisez les outils interactifs Swagger UI et ReDoc pour explorer l'API de manière visuelle.
+                            <strong>Conseil :</strong> Cette documentation est organisée par sections pour faciliter la navigation. Utilisez les onglets ci-dessus pour accéder aux informations spécifiques.
                         </div>
                     </div>
                 </div>
 
-                <!-- Endpoints Tab -->
-                <div class="tab-pane fade" id="endpoints" role="tabpanel">
+                <!-- Pages Web Tab -->
+                <div class="tab-pane fade" id="pages" role="tabpanel">
                     <div class="section-card">
                         <h2 class="section-title">
-                            <i class="fas fa-link"></i>
-                            Endpoints Disponibles
+                            <i class="fas fa-globe"></i>
+                            Pages Web du Système
+                        </h2>
+                        
+                        <h3 class="subsection-title">
+                            <i class="fas fa-home"></i>
+                            1. Page d'Accueil (`/`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Interface principale du système offrant une vue d'ensemble complète des données épidémiologiques.</p>
+                            
+                            <h4>Fonctionnalités Principales</h4>
+                            <ul>
+                                <li><strong>Tableau de bord en temps réel</strong> : Statistiques actualisées automatiquement</li>
+                                <li><strong>Navigation centralisée</strong> : Accès à toutes les sections du système</li>
+                                <li><strong>Alertes épidémiologiques</strong> : Notifications des événements importants</li>
+                                <li><strong>Indicateurs de performance</strong> : Métriques clés de surveillance</li>
+                            </ul>
+                            
+                            <h4>Composants Visuels</h4>
+                            <ul>
+                                <li>Cartes de statistiques (Total cas, Régions touchées, Districts touchés)</li>
+                                <li>Graphiques de tendances avec animations</li>
+                                <li>Liste des alertes actives avec statuts</li>
+                                <li>Indicateurs de performance avec comparaisons</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-line"></i>
+                            2. Dashboard (`/api/dashboard`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Interface de visualisation avancée des données épidémiologiques avec graphiques interactifs.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Graphiques interactifs</strong> : Visualisations dynamiques et personnalisables</li>
+                                <li><strong>Filtres temporels</strong> : Sélection de périodes d'analyse</li>
+                                <li><strong>Export de rapports</strong> : Génération de rapports automatisés</li>
+                            </ul>
+                            
+                            <h4>Composants</h4>
+                            <ul>
+                                <li>Graphiques de tendances temporelles</li>
+                                <li>Cartes géographiques interactives</li>
+                                <li>Tableaux de données avec tri et filtrage</li>
+                                <li>Indicateurs de performance en temps réel</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-search"></i>
+                            3. Exploration des Données (`/exploration`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Interface d'exploration et d'analyse approfondie des données épidémiologiques.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Filtres avancés</strong> : Sélection par date, région, district</li>
+                                <li><strong>Tableau interactif</strong> : DataTables avec pagination et recherche</li>
+                                <li><strong>Export multi-format</strong> : JSON, CSV, Excel</li>
+                            </ul>
+                            
+                            <h4>Paramètres de Filtrage</h4>
+                            <div class="param-table">
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th>Paramètre</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Exemple</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>dateDebut</code></td>
+                                            <td>Date</td>
+                                            <td>Date de début (format YYYY-MM-DD)</td>
+                                            <td>2024-01-01</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>dateFin</code></td>
+                                            <td>Date</td>
+                                            <td>Date de fin (format YYYY-MM-DD)</td>
+                                            <td>2024-12-31</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>region</code></td>
+                                            <td>String</td>
+                                            <td>Nom de la région</td>
+                                            <td>Dakar</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>district</code></td>
+                                            <td>String</td>
+                                            <td>Nom du district</td>
+                                            <td>District A</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>limit</code></td>
+                                            <td>Number</td>
+                                            <td>Limite de données (1-10000)</td>
+                                            <td>1000</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>pageSize</code></td>
+                                            <td>Number</td>
+                                            <td>Éléments par page</td>
+                                            <td>25</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-upload"></i>
+                            4. Mise à Jour des Données (`/mise-a-jour-form`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Interface d'ajout et de modification des données épidémiologiques avec validation automatique.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Formulaire d'ajout de cas</strong> : Interface intuitive pour la saisie</li>
+                                <li><strong>Import en lot</strong> : Chargement de fichiers CSV/Excel</li>
+                                <li><strong>Validation des données</strong> : Contrôles automatiques de qualité</li>
+                            </ul>
+                            
+                            <h4>Champs du Formulaire</h4>
+                            <ul>
+                                <li><strong>Informations patient</strong> : Âge, sexe, région, district</li>
+                                <li><strong>Données médicales</strong> : Résultat test, sérotype, hospitalisation</li>
+                                <li><strong>Date de consultation</strong> : Horodatage automatique</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-bar"></i>
+                            5. Indicateurs PowerBI (`/dashboard/indicateurs-powerbi`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Intégration PowerBI pour visualisations avancées et rapports automatisés.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Tableaux de bord interactifs</strong> : Visualisations PowerBI intégrées</li>
+                                <li><strong>Rapports automatisés</strong> : Génération périodique de rapports</li>
+                                <li><strong>Alertes configurables</strong> : Notifications personnalisées</li>
+                            </ul>
+                            
+                            <h4>Composants</h4>
+                            <ul>
+                                <li>Graphiques PowerBI interactifs</li>
+                                <li>Filtres dynamiques</li>
+                                <li>Export de rapports</li>
+                                <li>Partage de tableaux de bord</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Endpoints Tab -->
+                <div class="tab-pane fade" id="api" role="tabpanel">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-code"></i>
+                            Endpoints API
                         </h2>
 
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-bar"></i>
+                            1. Statistiques (`/api/stats`)
+                        </h3>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/api/stats</div>
+                            <div class="endpoint-description">Récupération des statistiques en temps réel</div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('stats-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="stats-response"><code class="language-json">{
+  "semaine_en_cours": {
+    "total_cases": 1250,
+    "top_region": "Dakar",
+    "top_district": "District A",
+    "total_positives": 450,
+    "growth_cases": 12.5,
+    "growth_positives": -5.2,
+    "nb_cases_top_region": 320,
+    "nb_cases_top_district": 150,
+    "current_year": 2024
+  },
+  "annee_en_cours": {
+    "total_cases": 15420,
+    "total_deaths": 45,
+    "nb_top_region": 14,
+    "nb_top_district": 78
+  }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-database"></i>
+                            2. Données Épidémiologiques (`/affichage-donnees`)
+                        </h3>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-post">POST</span>
-                            <div class="endpoint-url">/api/cas_sante/</div>
-                            <div class="endpoint-description">Ajouter un nouveau cas de santé</div>
+                            <div class="endpoint-url">/affichage-donnees</div>
+                            <div class="endpoint-description">Récupération des données filtrées</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('data-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="data-params"><code class="language-json">{
+  "dateDebut": "2024-01-01",
+  "dateFin": "2024-12-31",
+  "region": "Dakar",
+  "district": "Toutes",
+  "limit": 1000,
+  "pageSize": 25
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('data-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="data-response"><code class="language-json">{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "date_consultation": "2024-01-15",
+      "region": "Dakar",
+      "district": "District A",
+      "sexe": "M",
+      "age": 25,
+      "resultat_test": "Positif",
+      "serotype": "DENV-1",
+      "hospitalise": "Oui",
+      "issue": "Guéri"
+    }
+  ],
+  "total": 1250,
+  "statistics": {
+    "total_cases": 1250,
+    "positive_cases": 450,
+    "hospitalized_cases": 89,
+    "death_cases": 2
+  }
+}</code></pre>
+                            </div>
                         </div>
 
-                        <div class="endpoint-card">
-                            <span class="endpoint-method method-post">POST</span>
-                            <div class="endpoint-url">/api/patients/</div>
-                            <div class="endpoint-description">Enregistrer un nouveau patient</div>
-                        </div>
-
+                        <h3 class="subsection-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            3. Alertes (`/api/alerts/logs`)
+                        </h3>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/cas_sante/</div>
-                            <div class="endpoint-description">Liste des cas avec filtres optionnels</div>
+                            <div class="endpoint-url">/api/alerts/logs</div>
+                            <div class="endpoint-description">Récupération des alertes épidémiologiques</div>
+                            
+                            <h4>Paramètres</h4>
+                            <ul>
+                                <li><code>limit</code> : Nombre d'alertes à récupérer (défaut: 10)</li>
+                                <li><code>severity</code> : Niveau de gravité (critical, warning, info)</li>
+                            </ul>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('alerts-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="alerts-response"><code class="language-json">{
+  "data": [
+    {
+      "id": 1,
+      "message": "Augmentation significative des cas dans la région Dakar",
+      "description": "Le taux de positivité a augmenté de 25% cette semaine",
+      "severity": "warning",
+      "region": "Dakar",
+      "indicator_type": "Taux de positivité",
+      "threshold_value": 15.0,
+      "status": "active",
+      "created_at": "2024-01-15T10:30:00Z"
+    }
+  ]
+}</code></pre>
+                            </div>
                         </div>
 
+                        <h3 class="subsection-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            4. Régions et Districts (`/api/regions`, `/api/districts`)
+                        </h3>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/indicateurs/</div>
-                            <div class="endpoint-description">Statistiques globales et indicateurs</div>
-                        </div>
-
-                        <div class="endpoint-card">
-                            <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/export/csv</div>
-                            <div class="endpoint-description">Export des données en format CSV</div>
-                        </div>
-
-                        <div class="endpoint-card">
-                            <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/export/xlsx</div>
-                            <div class="endpoint-description">Export des données en format Excel</div>
+                            <div class="endpoint-url">/api/regions</div>
+                            <div class="endpoint-description">Récupération des listes de régions et districts</div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('regions-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="regions-response"><code class="language-json">{
+  "regions": ["Dakar", "Thiès", "Saint-Louis", "Ziguinchor"],
+  "districts": {
+    "Dakar": ["District A", "District B", "District C"],
+    "Thiès": ["District D", "District E"]
+  }
+}</code></pre>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -551,299 +848,257 @@
                 <div class="tab-pane fade" id="examples" role="tabpanel">
                     <div class="section-card">
                         <h2 class="section-title">
-                            <i class="fas fa-code"></i>
-                            Exemples d'Utilisation
+                            <i class="fas fa-lightbulb"></i>
+                            Exemples d'Intégration
                         </h2>
 
-                        <div class="interactive-demo">
-                            <h4>Test Interactif - Ajout d'un Patient</h4>
-                            <div class="demo-form">
-                                <input type="text" class="demo-input" id="demoNom" placeholder="Nom du patient">
-                                <input type="number" class="demo-input" id="demoAge" placeholder="Âge">
-                                <select class="demo-input" id="demoSexe">
-                                    <option value="">Sélectionner le sexe</option>
-                                    <option value="M">Masculin</option>
-                                    <option value="F">Féminin</option>
-                                </select>
-                                <button class="demo-btn" onclick="generateDemoCode()">
-                                    <i class="fas fa-code me-2"></i>Générer le Code
-                                </button>
-                            </div>
-                        </div>
-
+                        <h3 class="subsection-title">
+                            <i class="fab fa-js-square"></i>
+                            Intégration JavaScript
+                        </h3>
+                        
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-language">JavaScript</span>
-                                <button class="copy-btn" onclick="copyCode('js-example')">
+                                <button class="copy-btn" onclick="copyCode('js-stats')">
                                     <i class="fas fa-copy me-1"></i>Copier
                                 </button>
                             </div>
-                            <pre class="code-content" id="js-example"><code class="language-javascript">// Exemple d'ajout d'un patient
-const response = await fetch('/api/patients/', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_KEY'
-  },
-  body: JSON.stringify({
-    nom: 'Kaboré',
-    age: 35,
-    sexe: 'M'
-  })
-});
+                            <pre class="code-content" id="js-stats"><code class="language-javascript">// Récupération des statistiques
+async function fetchStats() {
+    try {
+        const response = await fetch('/api/stats');
+        const stats = await response.json();
+        
+        // Mise à jour de l'interface
+        document.getElementById('total-cases').innerText = 
+            stats.semaine_en_cours.total_cases.toLocaleString();
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
 
-const data = await response.json();
-console.log('Patient ajouté:', data);</code></pre>
+// Exploration des données
+async function exploreData(filters) {
+    try {
+        const response = await fetch('/affichage-donnees', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filters)
+        });
+        const data = await response.json();
+        
+        // Mise à jour du tableau
+        updateDataTable(data.data);
+        updateStatistics(data.statistics);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}</code></pre>
                         </div>
 
+                        <h3 class="subsection-title">
+                            <i class="fab fa-python"></i>
+                            Intégration Python
+                        </h3>
+                        
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-language">Python</span>
-                                <button class="copy-btn" onclick="copyCode('python-example')">
+                                <button class="copy-btn" onclick="copyCode('python-integration')">
                                     <i class="fas fa-copy me-1"></i>Copier
                                 </button>
                             </div>
-                            <pre class="code-content" id="python-example"><code class="language-python">import requests
+                            <pre class="code-content" id="python-integration"><code class="language-python">import requests
+import json
 
-# Exemple d'ajout d'un patient
-url = 'http://localhost:8000/api/patients/'
-headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_KEY'
-}
-data = {
-    'nom': 'Kaboré',
-    'age': 35,
-    'sexe': 'M'
-}
+# Configuration
+BASE_URL = "http://localhost:5000"
 
-response = requests.post(url, json=data, headers=headers)
-print('Patient ajouté:', response.json())</code></pre>
-                        </div>
+# Récupération des statistiques
+def get_stats():
+    response = requests.get(f"{BASE_URL}/api/stats")
+    return response.json()
 
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-language">cURL</span>
-                                <button class="copy-btn" onclick="copyCode('curl-example')">
-                                    <i class="fas fa-copy me-1"></i>Copier
-                                </button>
-                            </div>
-                            <pre class="code-content" id="curl-example"><code class="language-bash">curl -X POST "http://localhost:8000/api/patients/" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -d '{
-    "nom": "Kaboré",
-    "age": 35,
-    "sexe": "M"
-  }'</code></pre>
+# Exploration des données
+def explore_data(filters):
+    response = requests.post(
+        f"{BASE_URL}/affichage-donnees",
+        json=filters
+    )
+    return response.json()
+
+# Exemple d'utilisation
+stats = get_stats()
+print(f"Total cas cette semaine: {stats['semaine_en_cours']['total_cases']}")
+
+data = explore_data({
+    "dateDebut": "2024-01-01",
+    "dateFin": "2024-12-31",
+    "region": "Dakar",
+    "limit": 100
+})
+print(f"Données récupérées: {len(data['data'])} enregistrements")</code></pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Models Tab -->
-                <div class="tab-pane fade" id="models" role="tabpanel">
+                <!-- Integration Tab -->
+                <div class="tab-pane fade" id="integration" role="tabpanel">
                     <div class="section-card">
                         <h2 class="section-title">
-                            <i class="fas fa-database"></i>
-                            Modèles de Données
+                            <i class="fas fa-plug"></i>
+                            Guide d'Intégration
                         </h2>
 
-                        <h3>Modèle <code>CasSante</code></h3>
-                        <table class="table-modern">
-                            <thead>
-                                <tr>
-                                    <th>Champ</th>
-                                    <th>Type</th>
-                                    <th>Obligatoire</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>id</code></td>
-                                    <td><span class="status-badge status-success">int</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Identifiant unique du cas</td>
-                                </tr>
-                                <tr>
-                                    <td><code>date</code></td>
-                                    <td><span class="status-badge status-success">date</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Date de déclaration du cas</td>
-                                </tr>
-                                <tr>
-                                    <td><code>patient_id</code></td>
-                                    <td><span class="status-badge status-success">int</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Référence au patient</td>
-                                </tr>
-                                <tr>
-                                    <td><code>centre_id</code></td>
-                                    <td><span class="status-badge status-success">int</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Référence au centre médical</td>
-                                </tr>
-                                <tr>
-                                    <td><code>symptomes</code></td>
-                                    <td><span class="status-badge status-warning">string</span></td>
-                                    <td><span class="status-badge status-error">Non</span></td>
-                                    <td>Description des symptômes</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h3 class="subsection-title">
+                            <i class="fas fa-user-md"></i>
+                            Pour les Épidémiologistes
+                        </h3>
+                        <div class="page-example">
+                            <h4>Interprétation des Statistiques</h4>
+                            <ul>
+                                <li><strong>Total des cas</strong> : Nombre total de consultations pour suspicion de dengue</li>
+                                <li><strong>Cas positifs</strong> : Nombre de cas confirmés par test de laboratoire</li>
+                                <li><strong>Taux de positivité</strong> : Pourcentage de cas positifs par rapport au total</li>
+                                <li><strong>Hospitalisations</strong> : Nombre de cas nécessitant une hospitalisation</li>
+                            </ul>
+                            
+                            <h4>Utilisation des Filtres Avancés</h4>
+                            <ul>
+                                <li>Sélectionnez des périodes spécifiques pour analyser les tendances</li>
+                                <li>Filtrez par région/district pour des analyses géographiques</li>
+                                <li>Utilisez les exports pour des analyses externes</li>
+                            </ul>
+                        </div>
 
-                        <h3>Modèle <code>Patient</code></h3>
-                        <table class="table-modern">
-                            <thead>
-                                <tr>
-                                    <th>Champ</th>
-                                    <th>Type</th>
-                                    <th>Obligatoire</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>id</code></td>
-                                    <td><span class="status-badge status-success">int</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Identifiant unique du patient</td>
-                                </tr>
-                                <tr>
-                                    <td><code>nom</code></td>
-                                    <td><span class="status-badge status-success">string</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Nom complet du patient</td>
-                                </tr>
-                                <tr>
-                                    <td><code>age</code></td>
-                                    <td><span class="status-badge status-success">int</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Âge du patient</td>
-                                </tr>
-                                <tr>
-                                    <td><code>sexe</code></td>
-                                    <td><span class="status-badge status-success">string</span></td>
-                                    <td><span class="status-badge status-success">Oui</span></td>
-                                    <td>Sexe (M/F)</td>
-                                </tr>
-                                <tr>
-                                    <td><code>region</code></td>
-                                    <td><span class="status-badge status-warning">string</span></td>
-                                    <td><span class="status-badge status-error">Non</span></td>
-                                    <td>Région de résidence</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h3 class="subsection-title">
+                            <i class="fas fa-code"></i>
+                            Pour les Développeurs
+                        </h3>
+                        <div class="page-example">
+                            <h4>Intégration des APIs</h4>
+                            <ul>
+                                <li>Utilisez les endpoints REST pour récupérer les données</li>
+                                <li>Implémentez l'authentification pour les endpoints protégés</li>
+                                <li>Gérez les erreurs et les cas limites</li>
+                            </ul>
+                            
+                            <h4>Personnalisation des Interfaces</h4>
+                            <ul>
+                                <li>Adaptez les visualisations selon vos besoins</li>
+                                <li>Intégrez les données dans vos applications existantes</li>
+                                <li>Créez des alertes personnalisées</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-user-cog"></i>
+                            Pour les Administrateurs
+                        </h3>
+                        <div class="page-example">
+                            <h4>Configuration du Système</h4>
+                            <ul>
+                                <li>Gestion des utilisateurs et des permissions</li>
+                                <li>Configuration des alertes et seuils</li>
+                                <li>Paramétrage des exports et rapports</li>
+                            </ul>
+                            
+                            <h4>Maintenance et Monitoring</h4>
+                            <ul>
+                                <li>Surveillance des performances du système</li>
+                                <li>Gestion des sauvegardes et récupération</li>
+                                <li>Mise à jour et maintenance des composants</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Errors Tab -->
-                <div class="tab-pane fade" id="errors" role="tabpanel">
+                <!-- Security Tab -->
+                <div class="tab-pane fade" id="security" role="tabpanel">
                     <div class="section-card">
                         <h2 class="section-title">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Gestion des Erreurs
+                            <i class="fas fa-shield-alt"></i>
+                            Sécurité et Authentification
                         </h2>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-unlock"></i>
+                            Endpoints Publics
+                        </h3>
+                        <div class="page-example">
+                            <ul>
+                                <li><code>/</code> : Page d'accueil</li>
+                                <li><code>/api/stats</code> : Statistiques publiques</li>
+                                <li><code>/exploration</code> : Exploration des données</li>
+                                <li><code>/docs</code> : Documentation</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-lock"></i>
+                            Endpoints Protégés
+                        </h3>
+                        <div class="page-example">
+                            <ul>
+                                <li><code>/mise-a-jour-form</code> : Nécessite authentification</li>
+                                <li><code>/api/alerts/configure</code> : Configuration des alertes</li>
+                                <li><code>/api/data/import</code> : Import de données</li>
+                                <li><code>/api/users/*</code> : Gestion des utilisateurs</li>
+                            </ul>
+                        </div>
 
                         <div class="alert-modern alert-warning">
-                            <i class="fas fa-info-circle"></i>
+                            <i class="fas fa-exclamation-triangle"></i>
                             <div>
-                                <strong>Note :</strong> Toutes les erreurs retournent un objet JSON avec les détails de l'erreur.
+                                <strong>Important :</strong> Les endpoints protégés nécessitent une authentification appropriée. Contactez l'administrateur système pour obtenir les accès nécessaires.
                             </div>
-                        </div>
-
-                        <table class="table-modern">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                    <th>Solution</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="status-badge status-error">400</span></td>
-                                    <td>Bad Request</td>
-                                    <td>Requête malformée ou paramètres invalides</td>
-                                    <td>Vérifiez le format de votre requête</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="status-badge status-error">401</span></td>
-                                    <td>Unauthorized</td>
-                                    <td>Clé API manquante ou invalide</td>
-                                    <td>Vérifiez votre clé API</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="status-badge status-error">404</span></td>
-                                    <td>Not Found</td>
-                                    <td>Ressource non trouvée</td>
-                                    <td>Vérifiez l'URL de l'endpoint</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="status-badge status-error">422</span></td>
-                                    <td>Unprocessable Entity</td>
-                                    <td>Erreur de validation des données</td>
-                                    <td>Vérifiez le format des données</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="status-badge status-error">500</span></td>
-                                    <td>Internal Server Error</td>
-                                    <td>Erreur serveur interne</td>
-                                    <td>Contactez l'équipe technique</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="code-block">
-                            <div class="code-header">
-                                <span class="code-language">Exemple d'Erreur</span>
-                                <button class="copy-btn" onclick="copyCode('error-example')">
-                                    <i class="fas fa-copy me-1"></i>Copier
-                                </button>
-                            </div>
-                            <pre class="code-content" id="error-example"><code class="language-json">{
-  "error": "Validation Error",
-  "message": "Les données fournies sont invalides",
-  "details": {
-    "age": "L'âge doit être un nombre positif",
-    "sexe": "Le sexe doit être 'M' ou 'F'"
-  },
-  "status_code": 422
-}</code></pre>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Documentation Links -->
-            <div class="section-card">
-                <h2 class="section-title">
-                    <i class="fas fa-external-link-alt"></i>
-                    Documentation Interactive
-                </h2>
-                <p>Utilisez les outils suivants pour explorer l'API de manière interactive :</p>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-swagger"></i>
+                <!-- Maintenance Tab -->
+                <div class="tab-pane fade" id="maintenance" role="tabpanel">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-tools"></i>
+                            Maintenance et Support
+                        </h2>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-line"></i>
+                            Logs et Monitoring
+                        </h3>
+                        <div class="page-example">
+                            <ul>
+                                <li><strong>Logs d'accès</strong> : Suivi des accès aux endpoints</li>
+                                <li><strong>Monitoring des performances</strong> : Surveillance des temps de réponse</li>
+                                <li><strong>Alertes en cas d'erreur</strong> : Notifications automatiques</li>
+                                <li><strong>Métriques système</strong> : Indicateurs de santé du système</li>
+                            </ul>
                         </div>
-                        <h3 class="feature-title">Swagger UI</h3>
-                        <p class="feature-description">Interface interactive pour tester les endpoints en temps réel.</p>
-                        <a href="/docs" target="_blank" class="demo-btn">
-                            <i class="fas fa-external-link-alt me-2"></i>Ouvrir Swagger
-                        </a>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-book-open"></i>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-database"></i>
+                            Sauvegarde et Récupération
+                        </h3>
+                        <div class="page-example">
+                            <ul>
+                                <li><strong>Sauvegarde automatique</strong> : Sauvegarde quotidienne des données</li>
+                                <li><strong>Procédures de récupération</strong> : Plans de restauration documentés</li>
+                                <li><strong>Tests de restauration</strong> : Validation périodique des sauvegardes</li>
+                                <li><strong>Rétention des données</strong> : Politique de conservation des données</li>
+                            </ul>
                         </div>
-                        <h3 class="feature-title">ReDoc</h3>
-                        <p class="feature-description">Documentation alternative avec une interface plus claire.</p>
-                        <a href="/redoc" target="_blank" class="demo-btn">
-                            <i class="fas fa-external-link-alt me-2"></i>Ouvrir ReDoc
-                        </a>
+
+                        <div class="alert-modern alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <strong>Support :</strong> Pour toute question technique ou problème, contactez l'équipe de support via l'interface d'administration.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -851,72 +1106,118 @@ print('Patient ajouté:', response.json())</code></pre>
 
         <!-- Footer -->
         <div class="footer">
-            <p class="mb-0">
-                <i class="fas fa-heart text-danger me-1"></i>
-                2024 - Plateforme de Surveillance Sanitaire | Burkina Faso
-            </p>
+            <p>&copy; 2024 Système de Surveillance Épidémiologique de la Dengue. Tous droits réservés.</p>
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     
     <script>
-        // Copy code functionality
+        // Fonction de copie de code
         function copyCode(elementId) {
             const element = document.getElementById(elementId);
             const text = element.textContent;
             
             navigator.clipboard.writeText(text).then(() => {
-                const btn = element.parentElement.querySelector('.copy-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check me-1"></i>Copié!';
-                btn.style.background = 'rgba(40, 167, 69, 0.2)';
+                // Feedback visuel
+                const button = element.parentElement.querySelector('.copy-btn');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copié!';
+                button.style.background = 'rgba(34, 197, 94, 0.2)';
+                button.style.color = '#22c55e';
                 
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.innerHTML = originalText;
+                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.style.color = '#e2e8f0';
                 }, 2000);
+            }).catch(err => {
+                console.error('Erreur lors de la copie:', err);
             });
         }
 
-        // Interactive demo
-        function generateDemoCode() {
-            const nom = document.getElementById('demoNom').value || 'Kaboré';
-            const age = document.getElementById('demoAge').value || '35';
-            const sexe = document.getElementById('demoSexe').value || 'M';
-            
-            const jsCode = `const response = await fetch('/api/patients/', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer YOUR_API_KEY'
-  },
-  body: JSON.stringify({
-    nom: '${nom}',
-    age: ${age},
-    sexe: '${sexe}'
-  })
-});`;
-            
-            const jsElement = document.querySelector('#js-example code');
-            jsElement.textContent = jsCode;
-            
-            // Highlight the code
-            if (window.Prism) {
-                Prism.highlightElement(jsElement);
-            }
-        }
-
-        // Initialize tooltips
+        // Initialisation des onglets Bootstrap
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Bootstrap tooltips
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+            // Activation du premier onglet par défaut
+            const firstTab = document.querySelector('#guideTabs .nav-link');
+            if (firstTab) {
+                firstTab.classList.add('active');
+            }
+
+            // Gestion des onglets
+            const tabLinks = document.querySelectorAll('#guideTabs .nav-link');
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Retirer la classe active de tous les onglets
+                    tabLinks.forEach(l => l.classList.remove('active'));
+                    // Ajouter la classe active à l'onglet cliqué
+                    this.classList.add('active');
+                });
+            });
+
+            // Animation d'apparition des sections
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observer les sections
+            document.querySelectorAll('.section-card, .endpoint-card, .feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
             });
         });
+
+        // Fonction de recherche dans la documentation
+        function searchInDocs(query) {
+            const searchTerm = query.toLowerCase();
+            const sections = document.querySelectorAll('.section-card, .endpoint-card');
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    section.style.display = 'block';
+                    section.style.backgroundColor = searchTerm ? 'rgba(102, 126, 234, 0.05)' : 'white';
+                } else if (searchTerm) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                    section.style.backgroundColor = 'white';
+                }
+            });
+        }
+
+        // Fonction d'export de la documentation
+        function exportDocs(format) {
+            const content = document.querySelector('.content-section').innerText;
+            
+            if (format === 'pdf') {
+                // Logique d'export PDF (nécessiterait une bibliothèque comme jsPDF)
+                alert('Export PDF - Fonctionnalité à implémenter');
+            } else if (format === 'txt') {
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'documentation-systeme-dengue.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
     </script>
 </body>
-</html> 
+</html>

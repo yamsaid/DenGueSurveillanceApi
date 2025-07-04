@@ -13,7 +13,7 @@
         }
         
         /* Header moderne */
-        .modern-header {
+      .modern-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
@@ -22,7 +22,7 @@
         }
         
         .header-logo {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: white;
             text-decoration: none;
@@ -57,7 +57,11 @@
         }
         
         .status-indicator {
-            display: inline-flex;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+            max-width: 250px;
+            white-space: nowrap;
+            display: flex;
             align-items: center;
             gap: 0.25rem;
             padding: 0.25rem 0.75rem;
@@ -133,6 +137,8 @@
                 padding: 1rem;
             }
         }
+
+
 
         /* Page Content */
         .page-content {
@@ -374,67 +380,37 @@
 <body>
     <!-- Header moderne -->
     <header class="modern-header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container mx-auto px-4 py-3">
-                <!-- Logo -->
-                <a href="/" class="header-logo">
-                    <i class="fas fa-shield-virus me-2"></i>
-                    Surveillance Dengue
-                </a>
-                
-                <!-- Indicateur de statut -->
-                <div class="status-indicator d-none d-md-flex">
-                    <div class="status-dot"></div>
-                    <span>Système Opérationnel</span>
-                </div>
-                
-                <!-- Bouton hamburger pour mobile -->
-                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <!-- Navigation -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link-modern">
-                                <i class="fas fa-home me-1"></i>Accueil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/api/dashboard" class="nav-link-modern">
-                                <i class="fas fa-chart-line me-1"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/exploration" class="nav-link-modern">
-                                <i class="fas fa-search me-1"></i>Exploration
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/mise-a-jour-form" class="nav-link-modern">
-                                <i class="fas fa-upload me-1"></i> Mise à jour
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
-                                <i class="fas fa-chart-bar me-1"></i>Indicateurs
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a href="/docs" class="nav-link-modern">
-                                <i class="fas fa-book me-1"></i>Documentation
-                            </a>
-                        </li>
-                        <li class="nav-item ms-lg-3">
-                            <a href="/login" class="btn-login">
-                                <i class="fas fa-sign-in-alt me-1"></i>Connexion
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <nav class="navbar navbar-expand-lg modern-header">
+            <div class="container mx-auto px-0 py-2 align-items-center justify-content-center justify-content-lg-between flex-wrap">
+                <!-- <div class="container mx-auto px-4 py-3 d-flex flex-wrap align-items-center justify-content-between"> -->
+                    <!-- Logo -->
+                    <a href="/" class="header-logo">
+                        <i class="fas fa-shield-virus me-2"></i>
+                        Surveillance <br>Dengue
+                    </a>
+                    <!-- Indicateur de statut -->
+                    <div class="status-indicator d-none d-md-flex">
+                        <div class="status-dot"></div>
+                        <span>Système Opérationnel</span>
+                      </div>
+                    <!-- Bouton hamburger pour mobile -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Navigation -->
+                    <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
+                        <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-2 gap-lg-4">
+                            <li class="nav-item"><a href="/" class="nav-link-modern"><i class="fas fa-home me-1"></i><br>Accueil</a></li>
+                            <li class="nav-item"><a href="/api/dashboard" class="nav-link-modern"><i class="fas fa-chart-line me-1"></i><br>Dashboard</a></li>
+                            <li class="nav-item"><a href="/exploration" class="nav-link-modern"><i class="fas fa-search me-1"></i><br>Exploration</a></li>
+                            <li class="nav-item"><a href="/mise-a-jour-form" class="nav-link-modern"><i class="fas fa-upload me-1"></i><br>Mise à jour</a></li>
+                            <li class="nav-item"><a href="/dashboard/indicateurs-powerbi" class="nav-link-modern"><i class="fas fa-chart-bar me-1"></i><br>Indicateurs</a></li>
+                            <!-- <li class="nav-item"><a href="/configuration-alertes" class="nav-link-modern"><i class="fas fa-bell me-1"></i><br>Alertes</a></li> -->
+                            <li class="nav-item"><a href="/docs" class="nav-link-modern"><i class="fas fa-book me-1"></i><br>Documentation</a></li>
+                            <li class="nav-item ms-lg-3"><a href="/login" class="btn-login"><i class="fas fa-sign-in-alt me-1"></i>Connexion</a></li>
+                        </ul>
+                    </div>
+              </div>
         </nav>
     </header>
 
@@ -461,7 +437,7 @@
 
             <!-- Statistiques actuelles -->
             <div class="stats-section">
-                <div class="stats-grid">
+                <!-- <div class="stats-gr/"> -->
                     <div class="stats-card">
                         <div class="stats-number" id="current-positivity">--</div>
                         <div class="stats-label">Taux de Positivité Actuel</div>
@@ -492,9 +468,12 @@
                             </h3>
                         </div>
 
-                        <form id="seuilsForm">
+                        <form id="seuilsForm" method="post">
+                            <!-- Champ caché pour l'email utilisateur -->
+                            <input type="hidden" id="usermail" name="usermail" value="admin@gmail.com">
+                            
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="seuil-section">
                                         <h5>
                                             <i class="fas fa-globe text-info"></i>
@@ -506,38 +485,59 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="seuil_hospitalisation" class="form-label">Taux d'Hospitalisation (%)</label>
-                                            <input type="number" class="form-control" id="seuil_hospitalisation" name="seuil_hospitalisation" value="5" min="0" max="100">
+                                            <input type="number" class="form-control" id="seuil_hospitalisation" name="seuil_hospitalisation" value="10" min="0" max="100">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="seuil_mortalite" class="form-label">Taux de Mortalité (%)</label>
-                                            <input type="number" class="form-control" id="seuil_mortalite" name="seuil_mortalite" value="1" min="0" max="100">
+                                            <label for="seuil_deces" class="form-label">Taux de Décès (%)</label>
+                                            <input type="number" class="form-control" id="seuil_deces" name="seuil_deces" value="5" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="intervalle" class="form-label">Intervalle de Vérification</label>
+                                            <select class="form-control" id="intervalle" name="intervalle">
+                                                <option value="1">Hebdomadaire</option>
+                                                <option value="2">Mensuel</option>
+                                                <option value="3">Annuel</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="seuil-section">
                                         <h5>
                                             <i class="fas fa-map-marker-alt text-warning"></i>
                                             Seuils par Région
                                         </h5>
                                         <div class="mb-3">
-                                            <label for="region" class="form-label">Région</label>
-                                            <select class="form-control" id="region" name="region">
-                                                <option value="">Toutes les régions</option>
-                                                <option value="Centre">Centre</option>
-                                                <option value="Nord">Nord</option>
-                                                <option value="Sud">Sud</option>
-                                                <option value="Est">Est</option>
-                                                <option value="Ouest">Ouest</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
                                             <label for="seuil_positivite_region" class="form-label">Taux de Positivité Régional (%)</label>
                                             <input type="number" class="form-control" id="seuil_positivite_region" name="seuil_positivite_region" value="15" min="0" max="100">
                                         </div>
                                         <div class="mb-3">
                                             <label for="seuil_hospitalisation_region" class="form-label">Taux d'Hospitalisation Régional (%)</label>
-                                            <input type="number" class="form-control" id="seuil_hospitalisation_region" name="seuil_hospitalisation_region" value="8" min="0" max="100">
+                                            <input type="number" class="form-control" id="seuil_hospitalisation_region" name="seuil_hospitalisation_region" value="15" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_deces_region" class="form-label">Taux de Décès Régional (%)</label>
+                                            <input type="number" class="form-control" id="seuil_deces_region" name="seuil_deces_region" value="8" min="0" max="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="seuil-section">
+                                        <h5>
+                                            <i class="fas fa-map text-success"></i>
+                                            Seuils par District
+                                        </h5>
+                                        <div class="mb-3">
+                                            <label for="seuil_positivite_district" class="form-label">Taux de Positivité District (%)</label>
+                                            <input type="number" class="form-control" id="seuil_positivite_district" name="seuil_positivite_district" value="20" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_hospitalisation_district" class="form-label">Taux d'Hospitalisation District (%)</label>
+                                            <input type="number" class="form-control" id="seuil_hospitalisation_district" name="seuil_hospitalisation_district" value="20" min="0" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="seuil_deces_district" class="form-label">Taux de Décès District (%)</label>
+                                            <input type="number" class="form-control" id="seuil_deces_district" name="seuil_deces_district" value="10" min="0" max="100">
                                         </div>
                                     </div>
                                 </div>
@@ -572,11 +572,11 @@
                         </div>
                         
                         <div class="d-grid gap-3">
-                            <a href="/alertes-detail" class="btn-action btn btn-outline-primary">
+                            <a href="/api/alerts/detail" class="btn-action btn btn-outline-primary">
                                 <i class="fas fa-list"></i>
                                 Voir Toutes les Alertes
                             </a>
-                            <a href="/api/alerts/logs" class="btn-action btn btn-outline-info">
+                            <a href="/api/historique-alertes" class="btn-action btn btn-outline-info">
                                 <i class="fas fa-history"></i>
                                 Historique des Alertes
                             </a>
@@ -653,7 +653,7 @@
             const data = Object.fromEntries(formData);
             
             try {
-                const response = await fetch('/api/alerts/thresholds', {
+                const response = await fetch('/api/alerts/config/seuils', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -676,7 +676,7 @@
         // Vérifier les alertes
         async function verifierAlertes() {
             try {
-                const response = await fetch('/api/alerts/verify', {
+                const response = await fetch('/api/alerts/verifier', {
                     method: 'POST'
                 });
                 

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Alertes - Système de Surveillance Dengue</title>
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/demo.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Public Sans', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        /* Header moderne */
+      .modern-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .header-logo:hover {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .nav-link-modern:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .nav-link-modern.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+        
+        .status-indicator {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+            max-width: 250px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .btn-login {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Menu hamburger pour mobile */
+        .navbar-toggler {
+            border: none;
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.375rem;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-logo {
+                font-size: 1.25rem;
+            }
+            
+            .nav-link-modern {
+                padding: 0.75rem 1rem !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-collapse {
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 0.5rem;
+                margin-top: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        
+        /* Page Content */
+        .page-content {
+            padding: 2rem 0;
+        }
+        
+        .page-header {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        /* Filtres */
+        .filters-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filters-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+        }
+        
+        /* Tableau */
+        .table-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .table {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table thead th {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-weight: 600;
+        }
+        
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8fafc;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table tbody td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+        
+        /* Badges de sévérité */
+        .badge-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .badge-critical {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .badge-info {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        /* Statut */
+        .status-active {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        
+        .status-resolved {
+            color: #6b7280;
+            font-weight: 600;
+        }
+        
+        /* Boutons */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-outline-secondary {
+            border: 2px solid #6b7280;
+            color: #6b7280;
+            background: transparent;
+            border-radius: 0.5rem;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-secondary:hover {
+            background: #6b7280;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Pagination */
+        .pagination {
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .page-link {
+            border-radius: 0.5rem;
+            margin: 0 0.25rem;
+            border: 1px solid #e5e7eb;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        .page-link:hover {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-color: #3b82f6;
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner-border {
+            color: #3b82f6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header moderne -->
+    <header class="modern-header">
+        <nav class="navbar navbar-expand-lg modern-header">
+            <div class="container mx-auto px-0 py-2 align-items-center justify-content-center justify-content-lg-between flex-wrap">
+                <!-- <div class="container mx-auto px-4 py-3 d-flex flex-wrap align-items-center justify-content-between"> -->
+                    <!-- Logo -->
+                    <a href="/" class="header-logo">
+                        <i class="fas fa-shield-virus me-2"></i>
+                        Surveillance <br>Dengue
+                    </a>
+                    <!-- Indicateur de statut -->
+                    <div class="status-indicator d-none d-md-flex">
+                        <div class="status-dot"></div>
+                        <span>Système Opérationnel</span>
+                      </div>
+                    <!-- Bouton hamburger pour mobile -->
+                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Navigation -->
+                    <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
+                        <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-2 gap-lg-4">
+                            <li class="nav-item"><a href="/" class="nav-link-modern"><i class="fas fa-home me-1"></i><br>Accueil</a></li>
+                            <li class="nav-item"><a href="/api/dashboard" class="nav-link-modern"><i class="fas fa-chart-line me-1"></i><br>Dashboard</a></li>
+                            <li class="nav-item"><a href="/exploration" class="nav-link-modern"><i class="fas fa-search me-1"></i><br>Exploration</a></li>
+                            <li class="nav-item"><a href="/mise-a-jour-form" class="nav-link-modern"><i class="fas fa-upload me-1"></i><br>Mise à jour</a></li>
+                            <li class="nav-item"><a href="/dashboard/indicateurs-powerbi" class="nav-link-modern"><i class="fas fa-chart-bar me-1"></i><br>Indicateurs</a></li>
+                            <!-- <li class="nav-item"><a href="/configuration-alertes" class="nav-link-modern"><i class="fas fa-bell me-1"></i><br>Alertes</a></li> -->
+                            <li class="nav-item"><a href="/docs" class="nav-link-modern"><i class="fas fa-book me-1"></i><br>Documentation</a></li>
+                            <li class="nav-item ms-lg-3"><a href="/login" class="btn-login"><i class="fas fa-sign-in-alt me-1"></i>Connexion</a></li>
+                        </ul>
+                    </div>
+              </div>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="page-content">
+        <div class="container">
+            <!-- En-tête de page -->
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-history text-primary me-3"></i>
+                    Historique des Alertes
+                </h1>
+                <p class="page-subtitle">
+                    Consultez l'historique complet des alertes épidémiologiques générées par le système de surveillance.
+                </p>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters-card">
+                <h3 class="filters-title">
+                    <i class="fas fa-filter text-warning"></i>
+                    Filtres de Recherche
+                </h3>
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="region-filter" class="form-label">Région</label>
+                        <select class="form-control" id="region-filter">
+                            <option value="">Toutes les régions</option>
+                            {% for region in regions %}
+                            <option value="{{ region }}">{{ region }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="severity-filter" class="form-label">Sévérité</label>
+                        <select class="form-control" id="severity-filter">
+                            <option value="">Toutes</option>
+                            <option value="warning">Warning</option>
+                            <option value="critical">Critical</option>
+                            <option value="info">Info</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="status-filter" class="form-label">Statut</label>
+                        <select class="form-control" id="status-filter">
+                            <option value="">Tous</option>
+                            <option value="active">Actif</option>
+                            <option value="resolved">Résolu</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="limit-filter" class="form-label">Nombre d'alertes</label>
+                        <select class="form-control" id="limit-filter">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="date-debut" class="form-label">Date de début</label>
+                        <input type="date" class="form-control" id="date-debut">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="date-fin" class="form-label">Date de fin</label>
+                        <input type="date" class="form-control" id="date-fin">
+                    </div>
+                    <div class="col-md-4 mb-3 d-flex align-items-end">
+                        <button type="button" class="btn btn-primary me-2" onclick="appliquerFiltres()">
+                            <i class="fas fa-search me-2"></i>
+                            Appliquer
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="reinitialiserFiltres()">
+                            <i class="fas fa-undo me-2"></i>
+                            Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tableau des alertes -->
+            <div class="table-card">
+                <div class="table-title">
+                    <span>
+                        <i class="fas fa-table text-primary"></i>
+                        Liste des Alertes
+                    </span>
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="exporterAlertes()">
+                            <i class="fas fa-download me-2"></i>
+                            Exporter
+                        </button>
+                        <span class="badge bg-primary" id="total-alertes">0 alertes</span>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div class="loading" id="loading">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Chargement...</span>
+                    </div>
+                    <p class="mt-2">Chargement des alertes...</p>
+                </div>
+
+                <!-- Tableau -->
+                <div class="table-responsive">
+                    <table class="table" id="alertes-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Région</th>
+                                <th>District</th>
+                                <th>Message</th>
+                                <th>Sévérité</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alertes-tbody">
+                            <!-- Les données seront chargées dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Pagination des alertes">
+                    <ul class="pagination" id="pagination">
+                        <!-- La pagination sera générée dynamiquement -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/assets/js/core/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentFilters = {};
+
+        // Charger les alertes au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            chargerAlertes();
+        });
+
+        // Fonction pour charger les alertes
+        async function chargerAlertes(page = 1) {
+            const loading = document.getElementById('loading');
+            const tbody = document.getElementById('alertes-tbody');
+            
+            loading.style.display = 'block';
+            tbody.innerHTML = '';
+
+            try {
+                // Construire les paramètres de requête
+                const params = new URLSearchParams({
+                    limit: currentFilters.limit || 10,
+                    page: page
+                });
+
+                if (currentFilters.region) params.append('region', currentFilters.region);
+                if (currentFilters.severity) params.append('severity', currentFilters.severity);
+                if (currentFilters.status) params.append('status', currentFilters.status);
+                if (currentFilters.date_debut) params.append('date_debut', currentFilters.date_debut);
+                if (currentFilters.date_fin) params.append('date_fin', currentFilters.date_fin);
+
+                const response = await fetch(`/api/alerts/logs?${params.toString()}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    afficherAlertes(data.data);
+                    document.getElementById('total-alertes').textContent = `${data.total || data.data.length} alertes`;
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger">Erreur lors du chargement des alertes</td></tr>';
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-danger">Erreur de connexion</td></tr>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Fonction pour afficher les alertes
+        function afficherAlertes(alertes) {
+            const tbody = document.getElementById('alertes-tbody');
+            
+            if (alertes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">Aucune alerte trouvée</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = alertes.map(alerte => `
+                <tr>
+                    <td>${alerte.id}</td>
+                    <td>${formaterDate(alerte.created_at)}</td>
+                    <td>${alerte.region || 'Toutes'}</td>
+                    <td>${alerte.district || 'Tous'}</td>
+                    <td>
+                        <div class="text-wrap" style="max-width: 300px;">
+                            ${alerte.message}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge-${getSeverityClass(alerte.severity)}">
+                            ${alerte.severity}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-${alerte.status === '1' ? 'active' : 'resolved'}">
+                            ${alerte.status === '1' ? 'Actif' : 'Résolu'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="voirDetails(${alerte.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-success" onclick="marquerResolu(${alerte.id})">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Fonction pour appliquer les filtres
+        function appliquerFiltres() {
+            currentFilters = {
+                region: document.getElementById('region-filter').value,
+                severity: document.getElementById('severity-filter').value,
+                status: document.getElementById('status-filter').value,
+                limit: document.getElementById('limit-filter').value,
+                date_debut: document.getElementById('date-debut').value,
+                date_fin: document.getElementById('date-fin').value
+            };
+            
+            currentPage = 1;
+            chargerAlertes(currentPage);
+        }
+
+        // Fonction pour réinitialiser les filtres
+        function reinitialiserFiltres() {
+            document.getElementById('region-filter').value = '';
+            document.getElementById('severity-filter').value = '';
+            document.getElementById('status-filter').value = '';
+            document.getElementById('limit-filter').value = '10';
+            document.getElementById('date-debut').value = '';
+            document.getElementById('date-fin').value = '';
+            
+            currentFilters = {};
+            currentPage = 1;
+            chargerAlertes(currentPage);
+        }
+
+        // Fonction pour formater la date
+        function formaterDate(dateString) {
+            if (!dateString) return '--';
+            const date = new Date(dateString);
+            return date.toLocaleString('fr-FR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Fonction pour obtenir la classe CSS de sévérité
+        function getSeverityClass(severity) {
+            switch (severity) {
+                case 'warning': return 'warning';
+                case 'critical': return 'critical';
+                case 'info': return 'info';
+                default: return 'info';
+            }
+        }
+
+        // Fonction pour voir les détails d'une alerte
+        function voirDetails(id) {
+            alert(`Détails de l'alerte ${id} - Fonctionnalité à implémenter`);
+        }
+
+        // Fonction pour marquer une alerte comme résolue
+        async function marquerResolu(id) {
+            if (confirm('Êtes-vous sûr de vouloir marquer cette alerte comme résolue ?')) {
+                try {
+                    const response = await fetch(`/api/alerts/${id}/resolve`, {
+                        method: 'PUT'
+                    });
+                    
+                    if (response.ok) {
+                        alert('Alerte marquée comme résolue');
+                        chargerAlertes(currentPage);
+                    } else {
+                        alert('Erreur lors de la mise à jour');
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    alert('Erreur de connexion');
+                }
+            }
+        }
+
+        // Fonction pour exporter les alertes
+        function exporterAlertes() {
+            const params = new URLSearchParams(currentFilters);
+            const url = `/api/alerts/logs/export?${params.toString()}`;
+            window.open(url, '_blank');
+        }
+
+        // Écouter les changements de filtres
+        document.getElementById('region-filter').addEventListener('change', appliquerFiltres);
+        document.getElementById('severity-filter').addEventListener('change', appliquerFiltres);
+        document.getElementById('status-filter').addEventListener('change', appliquerFiltres);
+        document.getElementById('limit-filter').addEventListener('change', appliquerFiltres);
+    </script>
+</body>
+</html> 

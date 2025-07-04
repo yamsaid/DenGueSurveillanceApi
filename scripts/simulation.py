@@ -86,15 +86,15 @@ from faker import Faker
 from datetime import datetime, timedelta
 
 fake = Faker('fr_FR')
-Faker.seed(42)
-random.seed(42)
+Faker.seed(20)
+random.seed(20)
 
 # Paramètres globaux
 positif_ratio = 0.5172
 femme_ratio = 0.5076
 hospitalise_ratio = 0.2816
 serotypes = ['DENV2', 'DENV3']
-mois_peak = [9, 10]  # Septembre et Octobre
+mois_peak = [5, 6]  # Septembre et Octobre
 
 # Données par district
 districts_data = [
@@ -116,7 +116,7 @@ districts_data = [
 # Simulation des données
 all_data = []
 id_counter = 1
-base_year = 2023
+base_year = 2024
 
 for region, district, n_cases, n_deaths in districts_data:
     deaths_set = set(random.sample(range(n_cases), n_deaths)) if n_deaths < n_cases else set()
@@ -131,7 +131,7 @@ for region, district, n_cases, n_deaths in districts_data:
         evolution = "Décédé" if i in deaths_set else random.choice(["Guéri", "En traitement","Inconnue"])
 
         all_data.append({
-            "idCas": id_counter,
+            
             "date_consultation": date_notification.date(),
             "region": region,
             "district": district,
@@ -142,10 +142,10 @@ for region, district, n_cases, n_deaths in districts_data:
             "hospitalise": hospitalise,
             "issue": evolution
         })
-        id_counter += 1
+        
 
 df_simule = pd.DataFrame(all_data)
-csv_path = "csv/data_simulate.csv"
+csv_path = "data_simulate_2024.csv"
 df_simule.to_csv(csv_path, index=False)
 
 print(f"✅ Données simulées enregistrées dans '{csv_path}'")

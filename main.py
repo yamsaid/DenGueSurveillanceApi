@@ -23,7 +23,7 @@ from fastapi.staticfiles import StaticFiles
 from schemas import schemas, utils
 import pandas as pd
 import  os
-from datetime import datetime
+from datetime import datetime, date
 from calendar import month_name
 from schemas import models
 from sqlalchemy import and_, or_, func, extract, case
@@ -234,7 +234,7 @@ def submit_data(
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Erreur lors de l'insertion des données corrigées: {str(e)}")
     
-    return {"message": "Les données corrigées ont été insérées avec succès."}
+    return {"message": "Les données ont été soumises avec succès."}
 
 
 "                       ********* Exporter des données de la base en csv  ********            "
@@ -248,10 +248,17 @@ async def afficher_formulaire(request: Request, db: Session = Depends(get_db)):
     regions = [r[0] for r in regions]
     regions.insert(0, "Toutes")
 
-    return templates.TemplateResponse("explorationForm.html", {
+    return templates.TemplateResponse("exploration.html", {
         "request": request,
         "donnees": None,
         "regions": regions,
+        "date_debut": "",
+        "date_fin": "",
+        "region": "Toutes",
+        "limit": 100,
+        "page_size": 25,
+        "page": 1,
+        "iscriteres": False
     })
 
 # Endpoint pour afficher les données avant exportation
@@ -261,7 +268,10 @@ async def affichage_donnees(
     date_debut: str = Form(...),
     date_fin: str = Form(...),
     region: str = Form("Toutes"),
-    limit: int = Form(10),
+    limit: int = Form(100),
+    page_size: int = Form(25),
+    page: int = Form(1),
+    scroll_to_table: str = Form(None),
     db: Session = Depends(get_db)
 ):
     errors = []
@@ -269,7 +279,9 @@ async def affichage_donnees(
         "date_debut": date_debut,
         "date_fin": date_fin,
         "region": region,
-        "limit": limit
+        "limit": limit,
+        "page_size": page_size,
+        "page": page
     }
 
     # ✅ Vérification du champ limit
@@ -295,7 +307,7 @@ async def affichage_donnees(
         regions = [r[0] for r in regions]
         regions.insert(0, "Toutes")
 
-        return templates.TemplateResponse("explorationForm.html", {
+        return templates.TemplateResponse("exploration.html", {
             "request": request,
             "errors": errors,
             "form_data": form_data,
@@ -303,6 +315,12 @@ async def affichage_donnees(
             "donnees": [],
             "regions": regions,
             "iscriteres": False,
+            "date_debut": date_debut,
+            "date_fin": date_fin,
+            "region": region,
+            "limit": limit,
+            "page_size": page_size,
+            "page": page
         })
 
     # ✅ Exécution de la requête
@@ -314,7 +332,15 @@ async def affichage_donnees(
     if region != "Toutes":
         query = query.filter(models.ModelCasDengue.region == region)
 
-    donnees = query.limit(limit).all()
+    # Récupérer le nombre total d'enregistrements
+    total_count = query.count()
+    
+    # Limiter le nombre total d'enregistrements récupérés
+    query = query.limit(limit)
+    
+    # Appliquer la pagination
+    offset = (page - 1) * page_size
+    donnees = query.offset(offset).limit(page_size).all()
 
     # ✅ Conversion des données en DataFrame
     data_dicts = [d.__dict__ for d in donnees]
@@ -323,20 +349,54 @@ async def affichage_donnees(
 
     df = pd.DataFrame(data_dicts)
 
+    # Calculer les informations de pagination
+    total_pages = min((total_count + page_size - 1) // page_size, (limit + page_size - 1) // page_size)
+    start_record = offset + 1
+    end_record = min(offset + page_size, total_count, limit)
+    
+    # Générer les liens de pagination
+    pagination_links = []
+    for p in range(max(1, page - 2), min(total_pages + 1, page + 3)):
+        pagination_links.append({
+            'page': p,
+            'active': p == page,
+            'disabled': False
+        })
+    
+    # Calculer les valeurs pour la navigation
+    prev_page = page - 1 if page > 1 else 1
+    next_page = page + 1 if page < total_pages else total_pages
+
     regions = db.query(models.ModelCasDengue.region).distinct().all()
     regions = [r[0] for r in regions]
     regions.insert(0, "Toutes")
 
-    return templates.TemplateResponse("explorationForm.html", {
+    return templates.TemplateResponse("exploration.html", {
         "request": request,
         "colonnes": df.columns.tolist(),
         "donnees": df.values.tolist(),
         "date_debut": date_debut,
         "date_fin": date_fin,
         "limit": limit,
+        "page_size": page_size,
+        "page": page,
         "region": region,
+        "scroll_to_table": scroll_to_table,
         "iscriteres": True,
         "regions": regions,
+        "pagination": {
+            "current_page": page,
+            "total_pages": total_pages,
+            "total_count": total_count,
+            "start_record": start_record,
+            "end_record": end_record,
+            "page_size": page_size,
+            "links": pagination_links,
+            "prev_page": prev_page,
+            "next_page": next_page,
+            "has_prev": page > 1,
+            "has_next": page < total_pages
+        }
     })
 
 # Endpoint pour exporter les données vers un fichier CSV
@@ -407,6 +467,8 @@ async def get_stats_api(db: Session = Depends(get_db)):
     """Endpoint pour récupérer les statistiques annuelles et hebdomadaires"""
     return utils.get_stats(db)
 
+
+
 @app.get("/api/series-hebdomadaires")
 async def get_series_hebdomadaires(
     date_debut: str,
@@ -458,61 +520,15 @@ async def verifier_alertes(
         raise HTTPException(status_code=500, detail=f"Erreur lors de la vérification: {str(e)}")
 
 # Endpoint pour configurer les seuils d'un utilisateur
-@app.post("/api/alerts/seuils")
+@app.post("/api/alerts/config/seuils")
 async def configurer_seuils(
-    usermail: str = Form(...),
-    seuil_positivite: int = Form(10),
-    seuil_hospitalisation: int = Form(10),
-    seuil_deces: int = Form(5),
-    seuil_positivite_region: int = Form(15),
-    seuil_hospitalisation_region: int = Form(15),
-    seuil_deces_region: int = Form(8),
-    seuil_positivite_district: int = Form(20),
-    seuil_hospitalisation_district: int = Form(20),
-    seuil_deces_district: int = Form(10),
-    intervalle: str = Form("1"), #-- 1: hebdomadaire, 2: mensuel, 3: annuel
+    request: Request,
     db: Session = Depends(get_db)
 ):
-    """Configure les seuils d'alerte pour un utilisateur"""
-    try:
-        # Vérifier si l'utilisateur a déjà des seuils
-        seuils_existants = db.query(models.SeuilAlert).filter(
-            models.SeuilAlert.usermail == usermail
-        ).first()
-        
-        if seuils_existants:
-            # Mettre à jour les seuils existants
-            seuils_existants.seuil_positivite = seuil_positivite
-            seuils_existants.seuil_hospitalisation = seuil_hospitalisation
-            seuils_existants.seuil_deces = seuil_deces
-            seuils_existants.seuil_positivite_region = seuil_positivite_region
-            seuils_existants.seuil_hospitalisation_region = seuil_hospitalisation_region
-            seuils_existants.seuil_deces_region = seuil_deces_region
-            seuils_existants.seuil_positivite_district = seuil_positivite_district
-            seuils_existants.seuil_hospitalisation_district = seuil_hospitalisation_district
-            seuils_existants.seuil_deces_district = seuil_deces_district
-            seuils_existants.intervalle = intervalle
-        else:
-            # Créer de nouveaux seuils
-            nouveaux_seuils = models.SeuilAlert(
-                usermail=usermail,
-                seuil_positivite=seuil_positivite,
-                seuil_hospitalisation=seuil_hospitalisation,
-                seuil_deces=seuil_deces,
-                seuil_positivite_region=seuil_positivite_region,
-                seuil_hospitalisation_region=seuil_hospitalisation_region,
-                seuil_deces_region=seuil_deces_region,
-                seuil_positivite_district=seuil_positivite_district,
-                seuil_hospitalisation_district=seuil_hospitalisation_district,
-                seuil_deces_district=seuil_deces_district,
-                intervalle=intervalle
-            )
-            db.add(nouveaux_seuils)
-        
-        db.commit()
-        return {"success": True, "message": "Seuils configurés avec succès"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur lors de la configuration: {str(e)}")
+    data = await request.json()
+    return utils.seuils_alertes_config(data, db)
+
+
 
 # Endpoint pour récupérer les seuils d'un utilisateur
 @app.get("/api/alerts/seuils/{usermail}")
@@ -544,12 +560,20 @@ async def verification_automatique(db: Session = Depends(get_db)):
 # Endpoint pour obtenir les indicateurs épidémiologiques actuels
 @app.get("/api/alerts/indicateurs")
 async def obtenir_indicateurs_actuels(
-    date_debut: str = Query(None),
-    date_fin: str = Query(None),
+    date_debut: Optional[datetime] = Query(None, description="Date de début pour filtrer les indicateurs"),
+    date_fin: Optional[datetime] = Query(None, description="Date de fin pour filtrer les indicateurs"),
     region: str = Query("Toutes"),
     district: str = Query("Toutes"),
     db: Session = Depends(get_db)
 ):
+    # si date_debut et date_fin sont vides, on prend la semaine en cours
+    """if date_debut is None:
+        date_debut = datetime.now() - timedelta(days=7)
+    if date_fin is None:
+        date_fin = datetime.now()"""
+    #r=test
+    date_debut = datetime(2025, 1, 1)
+    date_fin = datetime(2025, 6, 30)
     """Récupère les indicateurs épidémiologiques actuels"""
     try:
         indicateurs = utils.calculer_indicateurs_epidemiologiques(
@@ -558,6 +582,143 @@ async def obtenir_indicateurs_actuels(
         return {"success": True, "data": indicateurs}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors du calcul des indicateurs: {str(e)}")
+
+# Endpoint pour afficher la page de détails des alertes
+@app.get("/api/alerts/detail", response_class=HTMLResponse)
+def alertes_detail(request: Request, db: Session = Depends(get_db)):
+    """Affiche la page de détails des alertes"""
+    # Récupérer les régions distinctes depuis la base de données
+    regions = utils.recuperer_regions_distinctes(db)
+    
+    return templates.TemplateResponse("alertes-detail.html", {
+        "request": request,
+        "regions": regions
+    })
+
+# Endpoint pour afficher la page d'historique des alertes
+@app.get("/api/historique-alertes", response_class=HTMLResponse)
+def historique_alertes(request: Request, db: Session = Depends(get_db)):
+    """Affiche la page d'historique des alertes"""
+    # Récupérer les régions distinctes depuis la base de données
+    regions = db.query(models.ModelCasDengue.region).distinct().all()
+    regions = [r[0] for r in regions if r[0]]
+    regions.insert(0, "Toutes")
+    
+    return templates.TemplateResponse("historique-alertes.html", {
+        "request": request,
+        "regions": regions
+    })
+
+# Endpoint pour marquer une alerte comme résolue
+@app.put("/api/alerts/{alerte_id}/resolve")
+async def marquer_alerte_resolue(
+    alerte_id: int,
+    db: Session = Depends(get_db)
+):
+    """Marque une alerte comme résolue"""
+    try:
+        alerte = db.query(models.AlertLog).filter(models.AlertLog.id == alerte_id).first()
+        
+        if not alerte:
+            raise HTTPException(status_code=404, detail="Alerte non trouvée")
+        
+        alerte.status = "0"  # 0 = résolu, 1 = actif
+        db.commit()
+        
+        return {"success": True, "message": "Alerte marquée comme résolue"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la mise à jour: {str(e)}")
+
+# Endpoint pour exporter les alertes
+@app.get("/api/alerts/logs/export")
+async def exporter_alertes(
+    limit: int = Query(100, description="Nombre maximum d'alertes à exporter"),
+    usermail: str = Query(None, description="Email de l'utilisateur pour filtrer"),
+    region: str = Query(None, description="Région pour filtrer les alertes"),
+    severity: str = Query(None, description="Sévérité de l'alerte"),
+    status: str = Query(None, description="Statut de l'alerte"),
+    date_debut: str = Query(None, description="Date de début pour filtrer"),
+    date_fin: str = Query(None, description="Date de fin pour filtrer"),
+    format: str = Query("csv", description="Format d'export (csv, json, excel)"),
+    db: Session = Depends(get_db)
+):
+    """Exporte les alertes selon les filtres spécifiés"""
+    try:
+        # Construire la requête de base
+        query = db.query(models.AlertLog)
+        
+        # Appliquer les filtres
+        if usermail:
+            query = query.filter(models.AlertLog.usermail == usermail)
+        
+        if region:
+            query = query.filter(models.AlertLog.region == region)
+        
+        if severity:
+            query = query.filter(models.AlertLog.severity == severity)
+        
+        if status:
+            query = query.filter(models.AlertLog.status == status)
+        
+        if date_debut:
+            query = query.filter(models.AlertLog.created_at >= date_debut)
+        
+        if date_fin:
+            query = query.filter(models.AlertLog.created_at <= date_fin)
+        
+        # Trier par date de création (plus récent en premier)
+        query = query.order_by(models.AlertLog.created_at.desc())
+        
+        # Limiter le nombre de résultats
+        alertes = query.limit(limit).all()
+        
+        # Convertir en DataFrame
+        alertes_data = []
+        for alerte in alertes:
+            alerte_dict = {
+                "ID": alerte.id,
+                "Email": alerte.usermail,
+                "Région": alerte.region or "Toutes",
+                "District": alerte.district or "Tous",
+                "Type": alerte.notification_type or "N/A",
+                "Destinataire": alerte.recipient or "N/A",
+                "Sévérité": alerte.severity,
+                "Statut": "Actif" if alerte.status == "1" else "Résolu",
+                "Message": alerte.message,
+                "Date de création": alerte.created_at.isoformat() if alerte.created_at else None
+            }
+            alertes_data.append(alerte_dict)
+        
+        df = pd.DataFrame(alertes_data)
+        
+        # Exporter selon le format demandé
+        if format.lower() == "json":
+            return df.to_dict(orient="records")
+        
+        elif format.lower() == "csv":
+            stream = io.StringIO()
+            df.to_csv(stream, index=False)
+            return StreamingResponse(
+                iter([stream.getvalue()]),
+                media_type="text/csv",
+                headers={"Content-Disposition": f"attachment; filename=alertes_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"}
+            )
+        
+        elif format.lower() == "excel":
+            stream = io.BytesIO()
+            df.to_excel(stream, index=False, engine="openpyxl")
+            stream.seek(0)
+            return StreamingResponse(
+                stream,
+                media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                headers={"Content-Disposition": f"attachment; filename=alertes_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"}
+            )
+        
+        else:
+            raise HTTPException(status_code=400, detail="Format non supporté : choisissez 'json', 'csv' ou 'excel'")
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de l'export: {str(e)}")
 
 # Endpoint pour obtenir les logs d'alertes
 @app.get("/api/alerts/logs")
@@ -572,7 +733,7 @@ async def obtenir_logs_alertes(
     db: Session = Depends(get_db)
 ):
     """Obtenir les logs d'alertes avec filtres optionnels"""
-    """
+
     try:
         # Construire la requête de base
         query = db.query(models.AlertLog)
@@ -609,22 +770,22 @@ async def obtenir_logs_alertes(
                 "id": alerte.id,
                 "usermail": alerte.usermail,
                 "region": alerte.region,
-                "indicator_type": alerte.indicator_type,
-                "threshold_value": alerte.threshold_value,
-                "current_value": alerte.current_value,
+                "district": alerte.district,
+                "notification_type": alerte.notification_type,
+                "recipient": alerte.recipient,
+                #"current_value": alerte.current_value,
                 "severity": alerte.severity,
                 "status": alerte.status,
                 "message": alerte.message,
-                "description": alerte.description,
+                #"description": alerte.description,
                 "created_at": alerte.created_at.isoformat() if alerte.created_at else None,
-                "updated_at": alerte.updated_at.isoformat() if alerte.updated_at else None
+                #"updated_at": alerte.updated_at.isoformat() if alerte.updated_at else None
             }
             alertes_data.append(alerte_dict)
         
         return {
             "success": True,
-            #"data": alertes_data,
-            "data":[{"id":1,"usermail":"admin@gmail.com","region":"Toutes","indicator_type":"positivite","threshold_value":20,"current_value":30,"severity":"warning","status":"1","message":"","description":"","created_at":"2025-06-30T10:00:00","updated_at":None}], # test
+            "data": alertes_data,
             "total": 1, #len(alertes_data),
             "limit": limit
         }
@@ -635,52 +796,40 @@ async def obtenir_logs_alertes(
             "message": f"Erreur lors de la récupération des logs d'alertes: {str(e)}",
             "data": []
         }
-  """
-  # test
+
+    """# test
     return {
             "success": True,
             "data":[{"id":1,"usermail":"admin@gmail.com","region":"Toutes","indicator_type":"positivite","threshold_value":20,"current_value":30,"severity":"warning","status":"1","message":"","description":"","created_at":"2025-06-30T10:00:00","updated_at":None}], # test
             "total": 1, #len(alertes_data),
             "limit": 10
         }
+    """
 " ******************* Section Indicateurs ********************************* "
 
 
 
 
-@app.get("/indicateurs-mensuels")
-def indicateurs_mensuels(
+@app.get("/api/data/mensuels")
+def data_mensuels(
     annee: int = Query(datetime.now().year, description="Année à filtrer"),
     region: str = Query("Toutes", description="Région à filtrer"),
+    district: str = Query("Toutes", description="District à filtrer"),
     db: Session = Depends(get_db)
 ):
-    query = db.query(
-        func.extract("month", models.ModelCasDengue.date_consultation).label("mois"),
-        func.count(models.ModelCasDengue.idCas).label("cas"),
-        func.sum(case((models.ModelCasDengue.issue == "Décédé", 1), else_=0)).label("deces"),
-        func.sum(case((models.ModelCasDengue.hospitalise == "Oui", 1), else_=0)).label("hospitalises"),
-    ).filter(
-        func.extract("year", models.ModelCasDengue.date_consultation) == annee
-    )
-
-    if region != "Toutes":
-        query = query.filter(models.ModelCasDengue.region == region)
-
-    resultats = query.group_by("mois").order_by("mois").all()
-
-    return [
-        {
-            "mois": month_name[int(r.mois)],  # Ex: "Janvier", "Février"
-            "cas": r.cas,
-            "deces": r.deces,
-            "hospitalises": r.hospitalises,
-        }
-        for r in resultats
-    ]
+    # Validation des paramètres
+    if annee is None or str(annee) == "undefined":
+        annee = date.today().year
+    if region is None or str(region) == "undefined":
+        region = "Toutes"
+    if district is None or str(district) == "undefined":
+        district = "Toutes"
+    
+    return utils.mensuel_data(annee, region, district, db)
 
 
 @app.get("/api/dashboard", response_class=HTMLResponse)
-def show_evolution(request: Request,db: Session = Depends(get_db)):
+def show_dashboard(request: Request,db: Session = Depends(get_db)):
     regions = db.query(models.ModelCasDengue.region).distinct().all()
     regions = [r[0] for r in regions]
     regions.insert(0, "Toutes")
@@ -689,36 +838,19 @@ def show_evolution(request: Request,db: Session = Depends(get_db)):
                       "regions": regions})
 
 
-@app.get("/indicateurs-hebdomadaires")
-def indicateurs_hebdomadaires(region = None, db: Session = Depends(get_db)):
-    query = db.query(
-        func.date_trunc("week", models.ModelCasDengue.date_consultation).label("semaine"),
-        func.count(models.ModelCasDengue.idCas).label("cas"),
-        func.sum(case((models.ModelCasDengue.issue == "Décédé", 1), else_=0)).label("deces"),
-        func.sum(case((models.ModelCasDengue.hospitalise == "Oui", 1), else_=0)).label("hospitalises"),
-        func.extract("week", models.ModelCasDengue.date_consultation).label("num_semaine"),
-        func.extract("year", models.ModelCasDengue.date_consultation).label("annee")
-    )
-
-    query = query.filter(
-        func.extract("year", models.ModelCasDengue.date_consultation) == datetime.now().year
-    )
-
-    if region:
-        query = query.filter(models.ModelCasDengue.region == region)
-
-    resultats = query.group_by("semaine", "num_semaine", "annee").order_by("semaine").all()
-
-    return [
-        {
-            "annee": int(r.annee),
-            "semaine": f"S{int(r.num_semaine)}",  # ex: S1, S2
-            "cas": r.cas,
-            "deces": r.deces,
-            "hospitalises": r.hospitalises,
-        }
-        for r in resultats
-    ]
+@app.get("/api/data/hebdomadaires")
+def data_hebdomadaires(region = None, annee = None, mois = 6, district = None, db: Session = Depends(get_db)):
+    # Validation des paramètres
+    if annee is None or str(annee) == "undefined":
+        annee = date.today().year
+    if mois is None or str(mois) == "undefined" or mois == 0:
+        mois = None
+    if region is None or str(region) == "undefined":
+        region = "Toutes"
+    if district is None or str(district) == "undefined":
+        district = "Toutes"
+    
+    return utils.hebdo_data(annee, mois, region, district, db)
 
 "========================================================================================"
 
@@ -1344,9 +1476,34 @@ def configuration_alertes(request: Request):
         "request": request,
     })
 
-@app.get("/alertes-detail", response_class=HTMLResponse)
-def alertes_detail(request: Request):
-    """Affiche la page de détails des alertes"""
-    return templates.TemplateResponse("alertes-detail.html", {
+@app.get("/page-indicateurs", response_class=HTMLResponse)
+def page_indicateurs(request: Request):
+    """Affiche la page d'indicateurs avec PowerBI"""
+    return templates.TemplateResponse("page-indicateurs.html", {
         "request": request,
     })
+
+@app.get("/api/regions")
+def get_regions(db: Session = Depends(get_db)):
+    """Récupère la liste des régions distinctes"""
+    try:
+        regions = utils.recuperer_regions_distinctes(db)
+        return regions
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la récupération des régions: {str(e)}")
+
+@app.get("/api/districts")
+def get_districts(region: str = Query(None), db: Session = Depends(get_db)):
+    """Récupère la liste des districts distincts, optionnellement filtrés par région"""
+    try:
+        if region and region != "Toutes":
+            districts = db.query(models.ModelCasDengue.district).filter(
+                models.ModelCasDengue.region == region
+            ).distinct().all()
+        else:
+            districts = db.query(models.ModelCasDengue.district).distinct().all()
+        
+        return [d[0] for d in districts if d[0]]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erreur lors de la récupération des districts: {str(e)}")
+
