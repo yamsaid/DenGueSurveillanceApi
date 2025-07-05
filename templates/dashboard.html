@@ -1,174 +1,30 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Système de Surveillance Dengue</title>
-    
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="/static/assets/css/demo.css" />
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- html2canvas et jsPDF pour l'export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-    <!-- FileSaver pour l'export PNG -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Système de Surveillance Dengue{% endblock %}
+
+{% block extra_css %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- html2canvas et jsPDF pour l'export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- FileSaver pour l'export PNG -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     
     <style>
+        /* Dashboard specific styles */
         :root {
             --primary-color: #3B82F6;
             --secondary-color: #10B981;
             --accent-color: #F59E0B;
             --danger-color: #EF4444;
             --neutral-color: #6B7280;
-            --bg-color: #F8FAFC;
             --card-bg: #FFFFFF;
             --border-color: #E5E7EB;
             --text-primary: #1F2937;
             --text-secondary: #6B7280;
-        }
-
-        body {
-            font-family: 'Public Sans', Arial, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        /* Header moderne */
-      .modern-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-logo {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .header-logo:hover {
-            color: #e2e8f0;
-            text-decoration: none;
-        }
-        
-        .nav-link-modern {
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-weight: 500;
-            padding: 0.5rem 1rem !important;
-            border-radius: 0.375rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .nav-link-modern:hover {
-            color: white !important;
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-1px);
-        }
-        
-        .nav-link-modern.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white !important;
-        }
-        
-        .status-indicator {
-            margin-left: 1.5rem;
-            margin-right: 1.5rem;
-            max-width: 250px;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
-            background-color: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .btn-login {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        
-        .btn-login:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Menu hamburger pour mobile */
-        .navbar-toggler {
-            border: none;
-            padding: 0.25rem 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 0.375rem;
-        }
-        
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-        
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-logo {
-                font-size: 1.25rem;
-            }
-            
-            .nav-link-modern {
-                padding: 0.75rem 1rem !important;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .navbar-collapse {
-                background: rgba(0, 0, 0, 0.1);
-                border-radius: 0.5rem;
-                margin-top: 1rem;
-                padding: 1rem;
-            }
         }
 
 
@@ -571,47 +427,9 @@
             to { transform: translateX(0); }
         }
     </style>
-</head>
-<body>
-    <!-- Header -->
-    <header class="modern-header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container mx-auto px-0 py-2 align-items-center justify-content-center justify-content-lg-between flex-wrap">
-                <!-- <div class="container mx-auto px-4 py-3 d-flex flex-wrap align-items-center justify-content-between"> -->
-                    <!-- Logo -->
-                    <a href="/" class="header-logo">
-                        <i class="fas fa-shield-virus me-2"></i>
-                        Surveillance <br>Dengue
-                    </a>
-                    <!-- Indicateur de statut -->
-                    <div class="status-indicator d-none d-md-flex">
-                        <div class="status-dot"></div>
-                        <span>Système Opérationnel</span>
-                      </div>
-                    <!-- Bouton hamburger pour mobile -->
-                    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!-- Navigation -->
-                    <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
-                        <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-2 gap-lg-4">
-                            <li class="nav-item"><a href="/" class="nav-link-modern"><i class="fas fa-home me-1"></i><br>Accueil</a></li>
-                            <li class="nav-item"><a href="/api/dashboard" class="nav-link-modern"><i class="fas fa-chart-line me-1"></i><br>Dashboard</a></li>
-                            <li class="nav-item"><a href="/exploration" class="nav-link-modern"><i class="fas fa-search me-1"></i><br>Exploration</a></li>
-                            <li class="nav-item"><a href="/mise-a-jour-form" class="nav-link-modern"><i class="fas fa-upload me-1"></i><br>Mise à jour</a></li>
-                            <li class="nav-item"><a href="/dashboard/indicateurs-powerbi" class="nav-link-modern"><i class="fas fa-chart-bar me-1"></i><br>Indicateurs</a></li>
-                            <!-- <li class="nav-item"><a href="/configuration-alertes" class="nav-link-modern"><i class="fas fa-bell me-1"></i><br>Alertes</a></li> -->
-                            <li class="nav-item"><a href="/docs" class="nav-link-modern"><i class="fas fa-book me-1"></i><br>Documentation</a></li>
-                            <li class="nav-item ms-lg-3"><a href="/login" class="btn-login"><i class="fas fa-sign-in-alt me-1"></i>Connexion</a></li>
-                        </ul>
-                    </div>
-              </div>
-        </nav>
-    </header>
+{% endblock %}
 
-    <!-- Page Content -->
-    <div class="page-content">
-        <div class="container">
+{% block content %}
             <!-- Page Header -->
             <div class="page-header fade-in">
                 <h1 class="page-title">
@@ -1315,5 +1133,4 @@
         // Chargement initial des districts
         updateDistricts();
     </script>
-</body>
-</html> 
+{% endblock %} 

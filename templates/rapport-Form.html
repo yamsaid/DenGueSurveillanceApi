@@ -375,6 +375,37 @@
         color: white;
       }
 
+      /* Styles pour les dropdowns d'export */
+      .dropdown-menu {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border: none;
+        padding: 0.5rem 0;
+      }
+
+      .dropdown-item {
+        padding: 0.75rem 1.5rem;
+        color: var(--dark-bg);
+        transition: all 0.3s ease;
+        border: none;
+        background: transparent;
+      }
+
+      .dropdown-item:hover {
+        background: rgba(46, 134, 171, 0.1);
+        color: var(--primary-color);
+        transform: translateX(5px);
+      }
+
+      .dropdown-item i {
+        width: 20px;
+        text-align: center;
+      }
+
+      .dropdown-toggle::after {
+        margin-left: 0.5rem;
+      }
+
       .alert-modern {
         border-radius: 15px;
         border: none;
@@ -640,7 +671,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/docs" class="nav-link-modern">
+                <a href="/api/documentation" class="nav-link-modern">
                   <i class="fas fa-book me-1"></i>Documentation
                 </a>
               </li>
@@ -692,7 +723,7 @@
                     <div class="stat-label">Colonnes Analysées</div>
                   </div>
                   <div class="stat-card">
-                    <div class="stat-number">95%</div>
+                    <div class="stat-number">100%</div>
                     <div class="stat-label">Taux de Correction</div>
                   </div>
                   <div class="stat-card">
@@ -703,72 +734,9 @@
               </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="row">
-              <div class="col-md-6">
-                <div class="chart-container">
-                  <div class="chart-title">
-                    <i class="fas fa-chart-pie"></i>
-                    Répartition des Erreurs par Type
-                  </div>
-                  <canvas id="errorTypeChart" class="chart-canvas"></canvas>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="chart-container">
-                  <div class="chart-title">
-                    <i class="fas fa-chart-bar"></i>
-                    Erreurs par Colonne
-                  </div>
-                  <canvas id="errorColumnChart" class="chart-canvas"></canvas>
-                </div>
-              </div>
-            </div>
+            
 
-            <!-- Progress Section -->
-            <div class="progress-section">
-              <h5 class="mb-3">
-                <i class="fas fa-tasks me-2"></i>
-                Progression de la Correction
-              </h5>
-              <div class="progress-item">
-                <div class="progress-label">
-                  <span>Erreurs critiques corrigées</span>
-                  <span>85%</span>
-                </div>
-                <div class="progress-bar-custom">
-                  <div class="progress-fill critical" style="width: 85%"></div>
-                </div>
-              </div>
-              <div class="progress-item">
-                <div class="progress-label">
-                  <span>Erreurs de format corrigées</span>
-                  <span>92%</span>
-                </div>
-                <div class="progress-bar-custom">
-                  <div class="progress-fill warning" style="width: 92%"></div>
-                </div>
-              </div>
-              <div class="progress-item">
-                <div class="progress-label">
-                  <span>Données manquantes complétées</span>
-                  <span>78%</span>
-                </div>
-                <div class="progress-bar-custom">
-                  <div class="progress-fill info" style="width: 78%"></div>
-                </div>
-              </div>
-              <div class="progress-item">
-                <div class="progress-label">
-                  <span>Validation globale</span>
-                  <span>100%</span>
-                </div>
-                <div class="progress-bar-custom">
-                  <div class="progress-fill success" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
-
+            
             <!-- Error Details -->
             <div class="error-details-card">
               <div class="error-details-header">
@@ -835,10 +803,17 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-              <a href="/le-rapport" class="btn-modern btn-primary-modern">
-                <i class="fas fa-file-pdf"></i>
-                Télécharger le Rapport
-              </a>
+              <div class="dropdown d-inline-block">
+                <button class="btn-modern btn-primary-modern dropdown-toggle" type="button" id="exportRapportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-file-pdf"></i>
+                  Télécharger le Rapport
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="exportRapportDropdown">
+                  <li><a class="dropdown-item" href="/export-rapport?format=json"><i class="fas fa-file-code me-2"></i>JSON</a></li>
+                  <li><a class="dropdown-item" href="/export-rapport?format=csv"><i class="fas fa-file-csv me-2"></i>CSV</a></li>
+                  <li><a class="dropdown-item" href="/export-rapport?format=pdf"><i class="fas fa-file-pdf me-2"></i>PDF</a></li>
+                </ul>
+              </div>
               <a href="/donnees-corrigees" class="btn-modern btn-success-modern">
                 <i class="fas fa-table"></i>
                 Afficher les Données Corrigées
@@ -899,10 +874,17 @@
                 <i class="fas fa-database"></i>
                 Insérer dans la Base de Données
               </a>
-              <a href="/export-corrected" class="btn-modern btn-info-modern">
-                <i class="fas fa-download"></i>
-                Exporter les Données Corrigées
-              </a>
+              <div class="dropdown d-inline-block">
+                <button class="btn-modern btn-info-modern dropdown-toggle" type="button" id="exportDataDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-download"></i>
+                  Exporter les Données Corrigées
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="exportDataDropdown">
+                  <li><a class="dropdown-item" href="/export-corrected?format=csv"><i class="fas fa-file-csv me-2"></i>CSV</a></li>
+                  <li><a class="dropdown-item" href="/export-corrected?format=json"><i class="fas fa-file-code me-2"></i>JSON</a></li>
+                  <li><a class="dropdown-item" href="/export-corrected?format=excel"><i class="fas fa-file-excel me-2"></i>Excel</a></li>
+                </ul>
+              </div>
               <a href="/" class="btn-modern btn-secondary-modern">
                 <i class="fas fa-arrow-left"></i>
                 Retour à l'Accueil
@@ -935,7 +917,7 @@
               <li><a href="/exploration">Exploration</a></li>
               <li><a href="/mise-a-jour-form">Mise à jour</a></li>
               <li><a href="/dashboard/indicateurs-powerbi">Indicateurs</a></li>
-              <li><a href="/docs">Documentation</a></li>
+              <li><a href="/api/documentation">Documentation</a></li>
             </ul>
           </div>
           <div class="footer-section">
@@ -982,68 +964,12 @@
           }
         });
 
-        // Error Type Chart - avec hauteur fixe
-        const errorTypeCtx = document.getElementById('errorTypeChart');
-        if (errorTypeCtx) {
-          new Chart(errorTypeCtx, {
-            type: 'doughnut',
-            data: {
-              labels: ['Erreurs de Format', 'Données Manquantes', 'Incohérences', 'Doublons'],
-              datasets: [{
-                data: [35, 25, 20, 20],
-                backgroundColor: [
-                  '#dc3545',
-                  '#ffc107',
-                  '#17a2b8',
-                  '#6c757d'
-                ],
-                borderWidth: 2,
-                borderColor: '#fff'
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: 'bottom'
-                }
-              }
-            }
-          });
-        }
+       
+        
+        
 
-        // Error Column Chart - avec hauteur fixe
-        const errorColumnCtx = document.getElementById('errorColumnChart');
-        if (errorColumnCtx) {
-          new Chart(errorColumnCtx, {
-            type: 'bar',
-            data: {
-              labels: ['Date', 'Région', 'Âge', 'Sexe', 'Symptômes'],
-              datasets: [{
-                label: 'Nombre d\'erreurs',
-                data: [12, 8, 15, 5, 10],
-                backgroundColor: 'rgba(46, 134, 171, 0.8)',
-                borderColor: 'rgba(46, 134, 171, 1)',
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              },
-              plugins: {
-                legend: {
-                  display: false
-                }
-              }
-            }
-          });
-        }
+        
+        // Les graphiques sont maintenant chargés dynamiquement via loadErrorData()
 
         // Animate progress bars
         $('.progress-fill').each(function() {

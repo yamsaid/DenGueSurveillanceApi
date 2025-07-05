@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <style>
         :root {
@@ -199,6 +200,254 @@
             color: #e2e8f0;
         }
 
+        .copy-btn {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            color: #2563eb;
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .code-language {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .code-content {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            color: #e2e8f0;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-content code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .page-example {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .page-example h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .page-example h4:first-child {
+            margin-top: 0;
+        }
+
+        .page-example ul {
+            margin-bottom: 1rem;
+        }
+
+        .page-example li {
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .alert-modern {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left-color: var(--info-color);
+            color: #1e40af;
+        }
+
+        .alert-info i {
+            color: var(--info-color);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        .navigation-buttons {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .navigation-buttons .btn {
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: #6b46c1;
+            color: white;
+        }
+
+        /* Améliorations pour les onglets */
+        .tab-pane {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .tab-pane.fade {
+            opacity: 0;
+        }
+
+        .tab-pane.fade.show {
+            opacity: 1;
+        }
+
+        .nav-tabs-modern .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tabs-modern .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-tabs-modern .nav-link:hover::before {
+            left: 100%;
+        }
+
+        /* Amélioration de l'accessibilité */
+        .nav-link:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Animation pour les sections */
+        .section-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .code-language {
             font-weight: 600;
             font-size: 0.9rem;
@@ -358,6 +607,51 @@
             font-size: 0.9rem;
         }
 
+        /* Navigation buttons */
+        .navigation-buttons {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .navigation-buttons .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navigation-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Error section styles */
+        .error-section {
+            background: rgba(239, 68, 68, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .error-title {
+            color: var(--danger-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .solution-box {
+            background: rgba(34, 197, 94, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid var(--success-color);
+        }
+
         @media (max-width: 768px) {
             .main-container {
                 margin: 1rem;
@@ -383,6 +677,12 @@
 
             .feature-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                position: static;
+                margin-top: 2rem;
+                justify-content: center;
             }
         }
     </style>
@@ -421,6 +721,11 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="examples-tab" data-bs-toggle="tab" data-bs-target="#examples" type="button" role="tab">
                         <i class="fas fa-lightbulb me-2"></i>Exemples
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="errors-tab" data-bs-toggle="tab" data-bs-target="#errors" type="button" role="tab">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Erreurs & Solutions
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -525,141 +830,105 @@
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-chart-line"></i>
-                            2. Dashboard (`/api/dashboard`)
+                            <i class="fas fa-exclamation-triangle"></i>
+                            2. Page Détail des Alertes (`/api/alerts/detail`)
                         </h3>
                         <div class="page-example">
                             <h4>Description</h4>
-                            <p>Interface de visualisation avancée des données épidémiologiques avec graphiques interactifs.</p>
+                            <p>Interface de consultation détaillée des alertes épidémiologiques avec filtres avancés et actions en temps réel.</p>
                             
                             <h4>Fonctionnalités</h4>
                             <ul>
-                                <li><strong>Graphiques interactifs</strong> : Visualisations dynamiques et personnalisables</li>
-                                <li><strong>Filtres temporels</strong> : Sélection de périodes d'analyse</li>
-                                <li><strong>Export de rapports</strong> : Génération de rapports automatisés</li>
+                                <li><strong>Filtres avancés</strong> : Région, district, sévérité, statut, période</li>
+                                <li><strong>Affichage en temps réel</strong> : Alertes actives avec mise à jour automatique</li>
+                                <li><strong>Export des alertes</strong> : JSON, CSV avec filtres appliqués</li>
+                                <li><strong>Pagination dynamique</strong> : Navigation fluide dans les résultats</li>
+                                <li><strong>Actions sur les alertes</strong> : Marquer comme résolue, voir détails</li>
+                            </ul>
+                            
+                            <h4>Composants Visuels</h4>
+                            <ul>
+                                <li>Cartes d'alertes avec codes couleur (warning, critical, info)</li>
+                                <li>Métriques en temps réel</li>
+                                <li>Graphiques de tendances des alertes</li>
+                                <li>Tableau interactif avec tri et recherche</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-history"></i>
+                            3. Page Historique des Alertes (`/api/historique-alertes`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Consultation de l'historique complet des alertes générées avec analyse temporelle et statistiques détaillées.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Filtrage avancé</strong> : Période, région, district, sévérité</li>
+                                <li><strong>Recherche textuelle</strong> : Dans les messages d'alertes</li>
+                                <li><strong>Export de l'historique</strong> : Complet avec filtres appliqués</li>
+                                <li><strong>Statistiques des alertes</strong> : Par période et type</li>
                             </ul>
                             
                             <h4>Composants</h4>
                             <ul>
-                                <li>Graphiques de tendances temporelles</li>
-                                <li>Cartes géographiques interactives</li>
-                                <li>Tableaux de données avec tri et filtrage</li>
-                                <li>Indicateurs de performance en temps réel</li>
+                                <li>Timeline des alertes</li>
+                                <li>Graphiques d'évolution des alertes</li>
+                                <li>Tableau avec pagination</li>
+                                <li>Métriques de performance</li>
                             </ul>
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-search"></i>
-                            3. Exploration des Données (`/exploration`)
+                            <i class="fas fa-cog"></i>
+                            4. Page Configuration des Alertes (`/configuration-alertes`)
                         </h3>
                         <div class="page-example">
                             <h4>Description</h4>
-                            <p>Interface d'exploration et d'analyse approfondie des données épidémiologiques.</p>
+                            <p>Interface de configuration des seuils d'alerte personnalisés avec validation en temps réel et tests automatisés.</p>
                             
                             <h4>Fonctionnalités</h4>
                             <ul>
-                                <li><strong>Filtres avancés</strong> : Sélection par date, région, district</li>
-                                <li><strong>Tableau interactif</strong> : DataTables avec pagination et recherche</li>
-                                <li><strong>Export multi-format</strong> : JSON, CSV, Excel</li>
+                                <li><strong>Configuration des seuils</strong> : Par niveau (global, région, district)</li>
+                                <li><strong>Paramètres spécialisés</strong> : Taux de positivité, hospitalisation, décès</li>
+                                <li><strong>Intervalle de vérification</strong> : Quotidien, hebdomadaire, mensuel</li>
+                                <li><strong>Test des seuils</strong> : En temps réel</li>
+                                <li><strong>Import/Export</strong> : Des configurations</li>
                             </ul>
                             
-                            <h4>Paramètres de Filtrage</h4>
-                            <div class="param-table">
-                                <table class="table-modern">
-                                    <thead>
-                                        <tr>
-                                            <th>Paramètre</th>
-                                            <th>Type</th>
-                                            <th>Description</th>
-                                            <th>Exemple</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><code>dateDebut</code></td>
-                                            <td>Date</td>
-                                            <td>Date de début (format YYYY-MM-DD)</td>
-                                            <td>2024-01-01</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>dateFin</code></td>
-                                            <td>Date</td>
-                                            <td>Date de fin (format YYYY-MM-DD)</td>
-                                            <td>2024-12-31</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>region</code></td>
-                                            <td>String</td>
-                                            <td>Nom de la région</td>
-                                            <td>Dakar</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>district</code></td>
-                                            <td>String</td>
-                                            <td>Nom du district</td>
-                                            <td>District A</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>limit</code></td>
-                                            <td>Number</td>
-                                            <td>Limite de données (1-10000)</td>
-                                            <td>1000</td>
-                                        </tr>
-                                        <tr>
-                                            <td><code>pageSize</code></td>
-                                            <td>Number</td>
-                                            <td>Éléments par page</td>
-                                            <td>25</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <h3 class="subsection-title">
-                            <i class="fas fa-upload"></i>
-                            4. Mise à Jour des Données (`/mise-a-jour-form`)
-                        </h3>
-                        <div class="page-example">
-                            <h4>Description</h4>
-                            <p>Interface d'ajout et de modification des données épidémiologiques avec validation automatique.</p>
-                            
-                            <h4>Fonctionnalités</h4>
+                            <h4>Composants</h4>
                             <ul>
-                                <li><strong>Formulaire d'ajout de cas</strong> : Interface intuitive pour la saisie</li>
-                                <li><strong>Import en lot</strong> : Chargement de fichiers CSV/Excel</li>
-                                <li><strong>Validation des données</strong> : Contrôles automatiques de qualité</li>
-                            </ul>
-                            
-                            <h4>Champs du Formulaire</h4>
-                            <ul>
-                                <li><strong>Informations patient</strong> : Âge, sexe, région, district</li>
-                                <li><strong>Données médicales</strong> : Résultat test, sérotype, hospitalisation</li>
-                                <li><strong>Date de consultation</strong> : Horodatage automatique</li>
+                                <li>Formulaires de configuration</li>
+                                <li>Prévisualisation des seuils</li>
+                                <li>Actions rapides (exporter, importer, réinitialiser)</li>
+                                <li>Validation en temps réel</li>
                             </ul>
                         </div>
 
                         <h3 class="subsection-title">
                             <i class="fas fa-chart-bar"></i>
-                            5. Indicateurs PowerBI (`/dashboard/indicateurs-powerbi`)
+                            5. Page Rapport d'Analyse (`/rapport-Form.html`)
                         </h3>
                         <div class="page-example">
                             <h4>Description</h4>
-                            <p>Intégration PowerBI pour visualisations avancées et rapports automatisés.</p>
+                            <p>Interface de génération et consultation des rapports d'analyse avec correction automatique des données.</p>
                             
                             <h4>Fonctionnalités</h4>
                             <ul>
-                                <li><strong>Tableaux de bord interactifs</strong> : Visualisations PowerBI intégrées</li>
-                                <li><strong>Rapports automatisés</strong> : Génération périodique de rapports</li>
-                                <li><strong>Alertes configurables</strong> : Notifications personnalisées</li>
+                                <li><strong>Analyse automatique</strong> : Des erreurs dans les données</li>
+                                <li><strong>Correction automatique</strong> : Des données détectées</li>
+                                <li><strong>Génération de rapports</strong> : Détaillés avec métriques</li>
+                                <li><strong>Export multi-format</strong> : JSON, CSV, PDF</li>
+                                <li><strong>Visualisation des erreurs</strong> : Par colonnes et types</li>
                             </ul>
                             
                             <h4>Composants</h4>
                             <ul>
-                                <li>Graphiques PowerBI interactifs</li>
-                                <li>Filtres dynamiques</li>
-                                <li>Export de rapports</li>
-                                <li>Partage de tableaux de bord</li>
+                                <li>Résumé de l'analyse avec métriques</li>
+                                <li>Graphiques des erreurs détectées</li>
+                                <li>Tableau des corrections appliquées</li>
+                                <li>Boutons d'action (télécharger, afficher données corrigées)</li>
                             </ul>
                         </div>
                     </div>
@@ -674,84 +943,25 @@
                         </h2>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-chart-bar"></i>
-                            1. Statistiques (`/api/stats`)
-                        </h3>
-                        <div class="endpoint-card">
-                            <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/stats</div>
-                            <div class="endpoint-description">Récupération des statistiques en temps réel</div>
-                            
-                            <h4>Réponse</h4>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">JSON</span>
-                                    <button class="copy-btn" onclick="copyCode('stats-response')">
-                                        <i class="fas fa-copy me-1"></i>Copier
-                                    </button>
-                                </div>
-                                <pre class="code-content" id="stats-response"><code class="language-json">{
-  "semaine_en_cours": {
-    "total_cases": 1250,
-    "top_region": "Dakar",
-    "top_district": "District A",
-    "total_positives": 450,
-    "growth_cases": 12.5,
-    "growth_positives": -5.2,
-    "nb_cases_top_region": 320,
-    "nb_cases_top_district": 150,
-    "current_year": 2024
-  },
-  "annee_en_cours": {
-    "total_cases": 15420,
-    "total_deaths": 45,
-    "nb_top_region": 14,
-    "nb_top_district": 78
-  }
-}</code></pre>
-                            </div>
-                        </div>
-
-                        <h3 class="subsection-title">
-                            <i class="fas fa-database"></i>
-                            2. Données Épidémiologiques (`/affichage-donnees`)
+                            <i class="fas fa-plus-circle"></i>
+                            1. Ajout de Données (`/add-listCasDengue-json/`)
                         </h3>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-post">POST</span>
-                            <div class="endpoint-url">/affichage-donnees</div>
-                            <div class="endpoint-description">Récupération des données filtrées</div>
+                            <div class="endpoint-url">/add-listCasDengue-json/</div>
+                            <div class="endpoint-description">Ajout de plusieurs cas de dengue en format JSON</div>
                             
                             <h4>Paramètres</h4>
                             <div class="code-block">
                                 <div class="code-header">
                                     <span class="code-language">JSON</span>
-                                    <button class="copy-btn" onclick="copyCode('data-params')">
+                                    <button class="copy-btn" onclick="copyCode('add-data-params')">
                                         <i class="fas fa-copy me-1"></i>Copier
                                     </button>
                                 </div>
-                                <pre class="code-content" id="data-params"><code class="language-json">{
-  "dateDebut": "2024-01-01",
-  "dateFin": "2024-12-31",
-  "region": "Dakar",
-  "district": "Toutes",
-  "limit": 1000,
-  "pageSize": 25
-}</code></pre>
-                            </div>
-                            
-                            <h4>Réponse</h4>
-                            <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">JSON</span>
-                                    <button class="copy-btn" onclick="copyCode('data-response')">
-                                        <i class="fas fa-copy me-1"></i>Copier
-                                    </button>
-                                </div>
-                                <pre class="code-content" id="data-response"><code class="language-json">{
-  "success": true,
-  "data": [
+                                <pre class="code-content" id="add-data-params"><code class="language-json">{
+  "cas_list": [
     {
-      "id": 1,
       "date_consultation": "2024-01-15",
       "region": "Dakar",
       "district": "District A",
@@ -762,32 +972,195 @@
       "hospitalise": "Oui",
       "issue": "Guéri"
     }
-  ],
-  "total": 1250,
-  "statistics": {
-    "total_cases": 1250,
-    "positive_cases": 450,
-    "hospitalized_cases": 89,
-    "death_cases": 2
+  ]
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('add-data-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="add-data-response"><code class="language-json">[
+  {
+    "idCas": 1,
+    "date_consultation": "2024-01-15",
+    "region": "Dakar",
+    "district": "District A",
+    "sexe": "M",
+    "age": 25,
+    "resultat_test": "Positif",
+    "serotype": "DENV-1",
+    "hospitalise": "Oui",
+    "issue": "Guéri"
   }
+]</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-search"></i>
+                            2. Analyse de Données (`/analyse`)
+                        </h3>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-post">POST</span>
+                            <div class="endpoint-url">/analyse</div>
+                            <div class="endpoint-description">Analyse et correction automatique des données CSV</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">FormData</span>
+                                    <button class="copy-btn" onclick="copyCode('analyse-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="analyse-params"><code class="language-json">{
+  "file": "fichier.csv",
+  "corriger": true
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('analyse-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="analyse-response"><code class="language-json">{
+  "success": true,
+  "nb_erreurs": 15,
+  "erreurs_par_colonnes": {
+    "date_consultation": 5,
+    "age": 3,
+    "region": 2
+  },
+  "corrections_appliquees": 12,
+  "donnees_corrigees": [...]
 }</code></pre>
                             </div>
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            3. Alertes (`/api/alerts/logs`)
+                            <i class="fas fa-upload"></i>
+                            3. Soumission de Données (`/submit-data-form`)
+                        </h3>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-post">POST</span>
+                            <div class="endpoint-url">/submit-data-form</div>
+                            <div class="endpoint-description">Soumission de données via formulaire</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">FormData</span>
+                                    <button class="copy-btn" onclick="copyCode('submit-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="submit-params"><code class="language-json">{
+  "username": "utilisateur@example.com",
+  "centre": "Centre de Santé A",
+  "poste": "Médecin",
+  "apikey": "clé_api_secrète",
+  "periode_debut": "2024-01-01",
+  "periode_fin": "2024-12-31",
+  "description": "Données épidémiologiques",
+  "source": "Système de surveillance"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-download"></i>
+                            4. Export de Données (`/export-data-form`)
+                        </h3>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-post">POST</span>
+                            <div class="endpoint-url">/export-data-form</div>
+                            <div class="endpoint-description">Export des données filtrées</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('export-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="export-params"><code class="language-json">{
+  "format": "csv",
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "region": "Dakar",
+  "districts": ["District A", "District B"],
+  "limit": 1000
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-line"></i>
+                            5. Séries Temporelles (`/api/series-hebdomadaires`)
                         </h3>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/alerts/logs</div>
-                            <div class="endpoint-description">Récupération des alertes épidémiologiques</div>
+                            <div class="endpoint-url">/api/series-hebdomadaires</div>
+                            <div class="endpoint-description">Séries hebdomadaires des indicateurs</div>
                             
                             <h4>Paramètres</h4>
-                            <ul>
-                                <li><code>limit</code> : Nombre d'alertes à récupérer (défaut: 10)</li>
-                                <li><code>severity</code> : Niveau de gravité (critical, warning, info)</li>
-                            </ul>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('series-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="series-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "frequence": "W",
+  "region": "Dakar",
+  "district": "Toutes",
+  "variable": "issue"
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('series-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="series-response"><code class="language-json">{
+  "series": [
+    {
+      "date": "2024-01-01",
+      "gueri": 45,
+      "en_traitement": 12,
+      "decede": 2,
+      "inconnue": 5
+    }
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-bell"></i>
+                            6. Vérification d'Alertes (`/api/alerts/verification-automatique`)
+                        </h3>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-post">POST</span>
+                            <div class="endpoint-url">/api/alerts/verification-automatique</div>
+                            <div class="endpoint-description">Vérification automatique des alertes sur toutes les régions</div>
                             
                             <h4>Réponse</h4>
                             <div class="code-block">
@@ -798,46 +1171,242 @@
                                     </button>
                                 </div>
                                 <pre class="code-content" id="alerts-response"><code class="language-json">{
-  "data": [
-    {
-      "id": 1,
-      "message": "Augmentation significative des cas dans la région Dakar",
-      "description": "Le taux de positivité a augmenté de 25% cette semaine",
-      "severity": "warning",
+  "success": true,
+  "message": "Vérification terminée",
+  "data": {
+    "total_regions_verifiees": 5,
+    "total_alertes_generes": 12,
+    "resultats": [
+      {
       "region": "Dakar",
-      "indicator_type": "Taux de positivité",
-      "threshold_value": 15.0,
-      "status": "active",
-      "created_at": "2024-01-15T10:30:00Z"
-    }
-  ]
+        "alertes_generes": 3,
+        "seuils_depasses": ["positivite", "hospitalisation"]
+      }
+    ]
+  }
 }</code></pre>
                             </div>
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-map-marker-alt"></i>
-                            4. Régions et Districts (`/api/regions`, `/api/districts`)
+                            <i class="fas fa-calendar-alt"></i>
+                            7. Données Temporelles
                         </h3>
+                        
+                        <h4>Données Mensuelles (`/api/data/mensuels`)</h4>
                         <div class="endpoint-card">
                             <span class="endpoint-method method-get">GET</span>
-                            <div class="endpoint-url">/api/regions</div>
-                            <div class="endpoint-description">Récupération des listes de régions et districts</div>
+                            <div class="endpoint-url">/api/data/mensuels</div>
+                            <div class="endpoint-description">Données mensuelles agrégées</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('mensuels-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="mensuels-params"><code class="language-json">{
+  "annee": 2024,
+  "region": "Dakar",
+  "district": "Toutes"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Données Hebdomadaires (`/api/data/hebdomadaires`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/api/data/hebdomadaires</div>
+                            <div class="endpoint-description">Données hebdomadaires agrégées</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('hebdo-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="hebdo-params"><code class="language-json">{
+  "annee": 2024,
+  "mois": 6,
+  "region": "Dakar",
+  "district": "Toutes"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-pie"></i>
+                            8. Indicateurs Spécialisés
+                        </h3>
+
+                        <h4>Nombre par Issue (`/indicateurs/nombre-par-issue`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/indicateurs/nombre-par-issue</div>
+                            <div class="endpoint-description">Nombre de cas par issue (Guéri, En traitement, Décédé, Inconnue)</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('issue-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="issue-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "region": "Dakar",
+  "district": "Toutes"
+}</code></pre>
+                            </div>
                             
                             <h4>Réponse</h4>
                             <div class="code-block">
                                 <div class="code-header">
                                     <span class="code-language">JSON</span>
-                                    <button class="copy-btn" onclick="copyCode('regions-response')">
+                                    <button class="copy-btn" onclick="copyCode('issue-response')">
                                         <i class="fas fa-copy me-1"></i>Copier
                                     </button>
                                 </div>
-                                <pre class="code-content" id="regions-response"><code class="language-json">{
-  "regions": ["Dakar", "Thiès", "Saint-Louis", "Ziguinchor"],
-  "districts": {
-    "Dakar": ["District A", "District B", "District C"],
-    "Thiès": ["District D", "District E"]
-  }
+                                <pre class="code-content" id="issue-response"><code class="language-json">{
+  "nbgueri": 150,
+  "nbtraitement": 25,
+  "nbdeces": 5,
+  "nbinconnue": 10,
+  "nbtotal": 190
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Détection de Pics (`/indicateurs/pics-par-district`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/indicateurs/pics-par-district</div>
+                            <div class="endpoint-description">Détection de pics épidémiques par district</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('pics-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="pics-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "type": "confirmé",
+  "seuil": 50
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Taux d'Hospitalisation (`/indicateurs/taux-hospitalisation`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/indicateurs/taux-hospitalisation</div>
+                            <div class="endpoint-description">Calcul du taux d'hospitalisation</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('hospitalisation-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="hospitalisation-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "region": "Dakar",
+  "district": "District A"
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('hospitalisation-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="hospitalisation-response"><code class="language-json">{
+  "region": "Dakar",
+  "district": "District A",
+  "periode": "2024-01-01 au 2024-12-31",
+  "total_cas": 1250,
+  "hospitalisations": 89,
+  "taux_hospitalisation": 7.12
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Taux de Létalité (`/indicateurs/taux-deletalite`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/indicateurs/taux-deletalite</div>
+                            <div class="endpoint-description">Calcul du taux de létalité par région/district</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('deletalite-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="deletalite-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "niveau": "region",
+  "serotype": "Tous"
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h4>Taux de Positivité (`/indicateurs/taux-positivite`)</h4>
+                        <div class="endpoint-card">
+                            <span class="endpoint-method method-get">GET</span>
+                            <div class="endpoint-url">/indicateurs/taux-positivite</div>
+                            <div class="endpoint-description">Calcul du taux de positivité des tests</div>
+                            
+                            <h4>Paramètres</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Query Parameters</span>
+                                    <button class="copy-btn" onclick="copyCode('positivite-params')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="positivite-params"><code class="language-json">{
+  "date_debut": "2024-01-01",
+  "date_fin": "2024-12-31",
+  "region": "Dakar",
+  "district": "District A"
+}</code></pre>
+                            </div>
+                            
+                            <h4>Réponse</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JSON</span>
+                                    <button class="copy-btn" onclick="copyCode('positivite-response')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="positivite-response"><code class="language-json">{
+  "region": "Dakar",
+  "district": "District A",
+  "periode": "2024-01-01 au 2024-12-31",
+  "total_cas": 1250,
+  "cas_positifs": 450,
+  "taux_positivite": 36.0
 }</code></pre>
                             </div>
                         </div>
@@ -853,57 +1422,61 @@
                         </h2>
 
                         <h3 class="subsection-title">
-                            <i class="fab fa-js-square"></i>
-                            Intégration JavaScript
+                            <i class="fas fa-database"></i>
+                            A. Procédure d'Intégration des Données
                         </h3>
                         
+                        <h4>JavaScript</h4>
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-language">JavaScript</span>
-                                <button class="copy-btn" onclick="copyCode('js-stats')">
+                                <button class="copy-btn" onclick="copyCode('js-integration')">
                                     <i class="fas fa-copy me-1"></i>Copier
                                 </button>
                             </div>
-                            <pre class="code-content" id="js-stats"><code class="language-javascript">// Récupération des statistiques
-async function fetchStats() {
+                            <pre class="code-content" id="js-integration"><code class="language-javascript">// Intégration des données via API
+async function integrerDonnees(casList) {
     try {
-        const response = await fetch('/api/stats');
-        const stats = await response.json();
-        
-        // Mise à jour de l'interface
-        document.getElementById('total-cases').innerText = 
-            stats.semaine_en_cours.total_cases.toLocaleString();
-    } catch (error) {
-        console.error('Erreur:', error);
-    }
-}
-
-// Exploration des données
-async function exploreData(filters) {
-    try {
-        const response = await fetch('/affichage-donnees', {
+        const response = await fetch('/add-listCasDengue-json/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(filters)
+            body: JSON.stringify(casList)
         });
-        const data = await response.json();
         
-        // Mise à jour du tableau
-        updateDataTable(data.data);
-        updateStatistics(data.statistics);
+        if (response.ok) {
+            const resultat = await response.json();
+            console.log(`${resultat.length} cas intégrés avec succès`);
+            return resultat;
+        } else {
+            throw new Error('Erreur lors de l\'intégration');
+        }
     } catch (error) {
         console.error('Erreur:', error);
+        throw error;
     }
-}</code></pre>
+}
+
+// Exemple d'utilisation
+const nouveauxCas = [
+    {
+        date_consultation: "2024-01-15",
+        region: "Dakar",
+        district: "District A",
+        sexe: "M",
+        age: 25,
+        resultat_test: "Positif",
+        serotype: "DENV-1",
+        hospitalise: "Oui",
+        issue: "Guéri"
+    }
+];
+
+integrerDonnees(nouveauxCas);</code></pre>
                         </div>
 
-                        <h3 class="subsection-title">
-                            <i class="fab fa-python"></i>
-                            Intégration Python
-                        </h3>
-                        
+                        <h4>Python</h4>
                         <div class="code-block">
                             <div class="code-header">
                                 <span class="code-language">Python</span>
@@ -914,33 +1487,476 @@ async function exploreData(filters) {
                             <pre class="code-content" id="python-integration"><code class="language-python">import requests
 import json
 
-# Configuration
-BASE_URL = "http://localhost:5000"
-
-# Récupération des statistiques
-def get_stats():
-    response = requests.get(f"{BASE_URL}/api/stats")
-    return response.json()
-
-# Exploration des données
-def explore_data(filters):
-    response = requests.post(
-        f"{BASE_URL}/affichage-donnees",
-        json=filters
-    )
-    return response.json()
+def integrer_donnees(cas_list):
+    """Intégration des données via API Python"""
+    url = "http://localhost:8000/add-listCasDengue-json/"
+    
+    try:
+        response = requests.post(url, json=cas_list)
+        response.raise_for_status()
+        
+        resultat = response.json()
+        print(f"{len(resultat)} cas intégrés avec succès")
+        return resultat
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de l'intégration: {e}")
+        raise
 
 # Exemple d'utilisation
-stats = get_stats()
-print(f"Total cas cette semaine: {stats['semaine_en_cours']['total_cases']}")
+nouveaux_cas = [
+    {
+        "date_consultation": "2024-01-15",
+        "region": "Dakar",
+        "district": "District A",
+        "sexe": "M",
+        "age": 25,
+        "resultat_test": "Positif",
+        "serotype": "DENV-1",
+        "hospitalise": "Oui",
+        "issue": "Guéri"
+    }
+]
 
-data = explore_data({
+resultat = integrer_donnees(nouveaux_cas)</code></pre>
+                        </div>
+
+                        <h4>R</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language">R</span>
+                                <button class="copy-btn" onclick="copyCode('r-integration')">
+                                    <i class="fas fa-copy me-1"></i>Copier
+                                </button>
+                            </div>
+                            <pre class="code-content" id="r-integration"><code class="language-r"># Intégration des données via API R
+library(httr)
+library(jsonlite)
+
+integrer_donnees <- function(cas_list) {
+  url <- "http://localhost:8000/add-listCasDengue-json/"
+  
+  tryCatch({
+    response <- POST(url, 
+                    body = toJSON(cas_list, auto_unbox = TRUE),
+                    content_type("application/json"))
+    
+    if (status_code(response) == 200) {
+      resultat <- fromJSON(rawToChar(response$content))
+      cat(sprintf("%d cas intégrés avec succès\n", length(resultat)))
+      return(resultat)
+    } else {
+      stop("Erreur lors de l'intégration")
+    }
+  }, error = function(e) {
+    cat("Erreur lors de l'intégration:", e$message, "\n")
+    stop(e)
+  })
+}
+
+# Exemple d'utilisation
+nouveaux_cas <- list(
+  list(
+    date_consultation = "2024-01-15",
+    region = "Dakar",
+    district = "District A",
+    sexe = "M",
+    age = 25,
+    resultat_test = "Positif",
+    serotype = "DENV-1",
+    hospitalise = "Oui",
+    issue = "Guéri"
+  )
+)
+
+resultat <- integrer_donnees(nouveaux_cas)</code></pre>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-download"></i>
+                            B. Procédure de Récupération des Données
+                        </h3>
+                        
+                        <h4>JavaScript</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language">JavaScript</span>
+                                <button class="copy-btn" onclick="copyCode('js-recuperation')">
+                                    <i class="fas fa-copy me-1"></i>Copier
+                                </button>
+                            </div>
+                            <pre class="code-content" id="js-recuperation"><code class="language-javascript">// Récupération des données filtrées
+async function recupererDonnees(filtres) {
+    try {
+        const response = await fetch('/affichage-donnees', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(filtres)
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return {
+                donnees: data.data,
+                statistiques: data.statistics,
+                total: data.total
+            };
+        } else {
+            throw new Error('Erreur lors de la récupération');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        throw error;
+    }
+}
+
+// Exemple d'utilisation
+const filtres = {
+    dateDebut: "2024-01-01",
+    dateFin: "2024-12-31",
+    region: "Dakar",
+    district: "Toutes",
+    limit: 1000,
+    pageSize: 25
+};
+
+recupererDonnees(filtres).then(resultat => {
+    console.log(`Récupéré ${resultat.donnees.length} enregistrements`);
+    console.log('Statistiques:', resultat.statistiques);
+});</code></pre>
+                        </div>
+
+                        <h4>Python</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+                                <button class="copy-btn" onclick="copyCode('python-recuperation')">
+                                    <i class="fas fa-copy me-1"></i>Copier
+                                </button>
+                            </div>
+                            <pre class="code-content" id="python-recuperation"><code class="language-python">def recuperer_donnees(filtres):
+    """Récupération des données filtrées"""
+    url = "http://localhost:8000/affichage-donnees"
+    
+    try:
+        response = requests.post(url, json=filtres)
+        response.raise_for_status()
+        
+        data = response.json()
+        return {
+            'donnees': data['data'],
+            'statistiques': data['statistics'],
+            'total': data['total']
+        }
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération: {e}")
+        raise
+
+# Exemple d'utilisation
+filtres = {
     "dateDebut": "2024-01-01",
     "dateFin": "2024-12-31",
     "region": "Dakar",
-    "limit": 100
+    "district": "Toutes",
+    "limit": 1000,
+    "pageSize": 25
+}
+
+resultat = recuperer_donnees(filtres)
+print(f"Récupéré {len(resultat['donnees'])} enregistrements")</code></pre>
+                </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-bar"></i>
+                            C. Récupération des Indicateurs
+                        </h3>
+                        
+                        <h4>JavaScript</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language">JavaScript</span>
+                                <button class="copy-btn" onclick="copyCode('js-indicateurs')">
+                                    <i class="fas fa-copy me-1"></i>Copier
+                                </button>
+                        </div>
+                            <pre class="code-content" id="js-indicateurs"><code class="language-javascript">// Récupération des indicateurs épidémiologiques
+async function recupererIndicateurs(type, parametres) {
+    const endpoints = {
+        'taux-positivite': '/indicateurs/taux-positivite',
+        'taux-hospitalisation': '/indicateurs/taux-hospitalisation',
+        'taux-deletalite': '/indicateurs/taux-deletalite',
+        'nombre-par-issue': '/indicateurs/nombre-par-issue',
+        'pics-par-district': '/indicateurs/pics-par-district'
+    };
+    
+    try {
+        const url = new URL(endpoints[type], window.location.origin);
+        Object.keys(parametres).forEach(key => {
+            url.searchParams.append(key, parametres[key]);
+        });
+        
+        const response = await fetch(url);
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Erreur lors de la récupération');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        throw error;
+    }
+}
+
+// Exemples d'utilisation
+// Taux de positivité
+recupererIndicateurs('taux-positivite', {
+    date_debut: "2024-01-01",
+    date_fin: "2024-12-31",
+    region: "Dakar"
+}).then(resultat => {
+    console.log(`Taux de positivité: ${resultat.taux_positivite}%`);
+});
+
+// Nombre par issue
+recupererIndicateurs('nombre-par-issue', {
+    date_debut: "2024-01-01",
+    date_fin: "2024-12-31"
+}).then(resultat => {
+    console.log(`Cas guéris: ${resultat.nbgueri}`);
+    console.log(`Cas en traitement: ${resultat.nbtraitement}`);
+});</code></pre>
+                        </div>
+
+                        <h4>Python</h4>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span class="code-language">Python</span>
+                                <button class="copy-btn" onclick="copyCode('python-indicateurs')">
+                                    <i class="fas fa-copy me-1"></i>Copier
+                                </button>
+                            </div>
+                            <pre class="code-content" id="python-indicateurs"><code class="language-python">def recuperer_indicateurs(type_indicateur, parametres):
+    """Récupération des indicateurs épidémiologiques"""
+    endpoints = {
+        'taux-positivite': '/indicateurs/taux-positivite',
+        'taux-hospitalisation': '/indicateurs/taux-hospitalisation',
+        'taux-deletalite': '/indicateurs/taux-deletalite',
+        'nombre-par-issue': '/indicateurs/nombre-par-issue',
+        'pics-par-district': '/indicateurs/pics-par-district'
+    }
+    
+    url = f"http://localhost:8000{endpoints[type_indicateur]}"
+    
+    try:
+        response = requests.get(url, params=parametres)
+        response.raise_for_status()
+        return response.json()
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération: {e}")
+        raise
+
+# Exemples d'utilisation
+# Taux de positivité
+resultat_positivite = recuperer_indicateurs('taux-positivite', {
+    'date_debut': '2024-01-01',
+    'date_fin': '2024-12-31',
+    'region': 'Dakar'
 })
-print(f"Données récupérées: {len(data['data'])} enregistrements")</code></pre>
+print(f"Taux de positivité: {resultat_positivite['taux_positivite']}%")
+
+# Nombre par issue
+resultat_issue = recuperer_indicateurs('nombre-par-issue', {
+    'date_debut': '2024-01-01',
+    'date_fin': '2024-12-31'
+})
+print(f"Cas guéris: {resultat_issue['nbgueri']}")</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Errors Tab -->
+                <div class="tab-pane fade" id="errors" role="tabpanel">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Erreurs Courantes et Solutions
+                        </h2>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-unlock"></i>
+                            A. Erreurs d'Authentification
+                        </h3>
+                        <div class="page-example">
+                            <h4>Problème</h4>
+                            <p>"401 Unauthorized" lors de l'accès aux endpoints protégés</p>
+                            
+                            <h4>Solution</h4>
+                            <p>Vérifier les credentials et les permissions utilisateur</p>
+                            
+                            <h4>Code de vérification</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JavaScript</span>
+                                    <button class="copy-btn" onclick="copyCode('auth-check')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="auth-check"><code class="language-javascript">// Vérification de l'authentification
+async function verifierAuth() {
+    try {
+        const response = await fetch('/api/auth/status');
+        if (!response.ok) {
+            window.location.href = '/login';
+        }
+    } catch (error) {
+        console.error('Erreur d\'authentification:', error);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-check-circle"></i>
+                            B. Erreurs de Validation des Données
+                        </h3>
+                        <div class="page-example">
+                            <h4>Problème</h4>
+                            <p>"422 Unprocessable Entity" lors de l'ajout de données</p>
+                            
+                            <h4>Solution</h4>
+                            <p>Vérifier le format des données selon le schéma</p>
+                            
+                            <h4>Code de validation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JavaScript</span>
+                                    <button class="copy-btn" onclick="copyCode('validation-check')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                        </div>
+                                <pre class="code-content" id="validation-check"><code class="language-javascript">// Validation des données avant envoi
+function validerDonnees(cas) {
+    const erreurs = [];
+    
+    if (!cas.date_consultation) {
+        erreurs.push("Date de consultation requise");
+    }
+    
+    if (!cas.region || !cas.district) {
+        erreurs.push("Région et district requis");
+    }
+    
+    if (cas.age < 0 || cas.age > 120) {
+        erreurs.push("Âge invalide");
+    }
+    
+    return erreurs;
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-database"></i>
+                            C. Erreurs de Connexion à la Base de Données
+                        </h3>
+                        <div class="page-example">
+                            <h4>Problème</h4>
+                            <p>"500 Internal Server Error" avec message de base de données</p>
+                            
+                            <h4>Solution</h4>
+                            <p>Vérifier la connexion et les permissions</p>
+                            
+                            <h4>Code de gestion</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('db-error-handling')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="db-error-handling"><code class="language-python"># Gestion des erreurs de base de données
+def gerer_erreur_db(error):
+    if "connection" in str(error).lower():
+        return {"erreur": "Problème de connexion à la base de données"}
+    elif "permission" in str(error).lower():
+        return {"erreur": "Permissions insuffisantes"}
+    else:
+        return {"erreur": "Erreur de base de données"}</code></pre>
+                    </div>
+                </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-file-upload"></i>
+                            D. Erreurs de Format de Fichier
+                        </h3>
+                        <div class="page-example">
+                            <h4>Problème</h4>
+                            <p>"400 Bad Request" lors de l'upload de fichiers</p>
+                            
+                            <h4>Solution</h4>
+                            <p>Vérifier le format et l'encodage</p>
+                            
+                            <h4>Code de vérification</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JavaScript</span>
+                                    <button class="copy-btn" onclick="copyCode('file-validation')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="file-validation"><code class="language-javascript">// Vérification du format de fichier
+function verifierFichier(file) {
+    const typesAutorises = ['text/csv', 'application/vnd.ms-excel'];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    
+    if (!typesAutorises.includes(file.type)) {
+        throw new Error('Format de fichier non supporté');
+    }
+    
+    if (file.size > maxSize) {
+        throw new Error('Fichier trop volumineux');
+    }
+    
+    return true;
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-tachometer-alt"></i>
+                            E. Erreurs de Performance
+                        </h3>
+                        <div class="page-example">
+                            <h4>Problème</h4>
+                            <p>Timeout lors de requêtes volumineuses</p>
+                            
+                            <h4>Solution</h4>
+                            <p>Implémenter la pagination et les filtres</p>
+                            
+                            <h4>Code d'optimisation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">JavaScript</span>
+                                    <button class="copy-btn" onclick="copyCode('optimization')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                        </div>
+                                <pre class="code-content" id="optimization"><code class="language-javascript">// Optimisation des requêtes
+async function requeteOptimisee(filtres) {
+    const params = new URLSearchParams({
+        limit: filtres.limit || 100,
+        page: filtres.page || 1,
+        ...filtres
+    });
+    
+    const response = await fetch(`/api/data?${params}`);
+    return response.json();
+}</code></pre>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -950,68 +1966,223 @@ print(f"Données récupérées: {len(data['data'])} enregistrements")</code></pr
                     <div class="section-card">
                         <h2 class="section-title">
                             <i class="fas fa-plug"></i>
-                            Guide d'Intégration
+                            Intégration et Déploiement
                         </h2>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-user-md"></i>
-                            Pour les Épidémiologistes
+                            <i class="fas fa-server"></i>
+                            A. Configuration du Serveur
                         </h3>
                         <div class="page-example">
-                            <h4>Interprétation des Statistiques</h4>
+                            <h4>Prérequis Système</h4>
                             <ul>
-                                <li><strong>Total des cas</strong> : Nombre total de consultations pour suspicion de dengue</li>
-                                <li><strong>Cas positifs</strong> : Nombre de cas confirmés par test de laboratoire</li>
-                                <li><strong>Taux de positivité</strong> : Pourcentage de cas positifs par rapport au total</li>
-                                <li><strong>Hospitalisations</strong> : Nombre de cas nécessitant une hospitalisation</li>
+                                <li><strong>Python 3.8+</strong> : Version recommandée</li>
+                                <li><strong>PostgreSQL 12+</strong> : Base de données</li>
+                                <li><strong>Redis</strong> : Cache et sessions</li>
+                                <li><strong>Nginx</strong> : Serveur web (optionnel)</li>
                             </ul>
-                            
-                            <h4>Utilisation des Filtres Avancés</h4>
-                            <ul>
-                                <li>Sélectionnez des périodes spécifiques pour analyser les tendances</li>
-                                <li>Filtrez par région/district pour des analyses géographiques</li>
-                                <li>Utilisez les exports pour des analyses externes</li>
-                            </ul>
+
+                            <h4>Installation des Dépendances</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Bash</span>
+                                    <button class="copy-btn" onclick="copyCode('install-deps')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="install-deps"><code class="language-bash"># Créer l'environnement virtuel
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# ou
+venv\Scripts\activate     # Windows
+
+# Installer les dépendances
+pip install -r requirements.txt
+
+# Configuration de la base de données
+python -c "from schemas.database import engine; engine.execute('CREATE DATABASE dengue_surveillance')"</code></pre>
+                            </div>
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-code"></i>
-                            Pour les Développeurs
+                            <i class="fas fa-database"></i>
+                            B. Configuration de la Base de Données
                         </h3>
                         <div class="page-example">
-                            <h4>Intégration des APIs</h4>
-                            <ul>
-                                <li>Utilisez les endpoints REST pour récupérer les données</li>
-                                <li>Implémentez l'authentification pour les endpoints protégés</li>
-                                <li>Gérez les erreurs et les cas limites</li>
-                            </ul>
-                            
-                            <h4>Personnalisation des Interfaces</h4>
-                            <ul>
-                                <li>Adaptez les visualisations selon vos besoins</li>
-                                <li>Intégrez les données dans vos applications existantes</li>
-                                <li>Créez des alertes personnalisées</li>
-                            </ul>
+                            <h4>Variables d'Environnement</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Bash</span>
+                                    <button class="copy-btn" onclick="copyCode('env-config')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="env-config"><code class="language-bash"># .env
+DATABASE_URL=postgresql://user:password@localhost:5432/dengue_surveillance
+SECRET_KEY=your-secret-key-here
+DEBUG=False
+HOST=0.0.0.0
+PORT=8000
+REDIS_URL=redis://localhost:6379</code></pre>
+                            </div>
+
+                            <h4>Migration de la Base</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('db-migration')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="db-migration"><code class="language-python"># Créer les tables
+from schemas.database import engine
+from schemas.models import Base
+
+# Créer toutes les tables
+Base.metadata.create_all(bind=engine)
+
+# Vérifier la connexion
+from schemas.database import SessionLocal
+db = SessionLocal()
+try:
+    db.execute("SELECT 1")
+    print("✅ Connexion à la base de données réussie")
+finally:
+    db.close()</code></pre>
+                            </div>
                         </div>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-user-cog"></i>
-                            Pour les Administrateurs
+                            <i class="fas fa-cloud"></i>
+                            C. Déploiement en Production
                         </h3>
                         <div class="page-example">
-                            <h4>Configuration du Système</h4>
-                            <ul>
-                                <li>Gestion des utilisateurs et des permissions</li>
-                                <li>Configuration des alertes et seuils</li>
-                                <li>Paramétrage des exports et rapports</li>
-                            </ul>
-                            
-                            <h4>Maintenance et Monitoring</h4>
-                            <ul>
-                                <li>Surveillance des performances du système</li>
-                                <li>Gestion des sauvegardes et récupération</li>
-                                <li>Mise à jour et maintenance des composants</li>
-                            </ul>
+                            <h4>Configuration Gunicorn</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Bash</span>
+                                    <button class="copy-btn" onclick="copyCode('gunicorn-config')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="gunicorn-config"><code class="language-bash"># gunicorn.conf.py
+bind = "0.0.0.0:8000"
+workers = 4
+worker_class = "uvicorn.workers.UvicornWorker"
+timeout = 120
+keepalive = 2
+max_requests = 1000
+max_requests_jitter = 100
+preload_app = True</code></pre>
+                            </div>
+
+                            <h4>Service Systemd</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">INI</span>
+                                    <button class="copy-btn" onclick="copyCode('systemd-service')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="systemd-service"><code class="language-ini"># /etc/systemd/system/dengue-surveillance.service
+[Unit]
+Description=Dengue Surveillance System
+After=network.target postgresql.service redis.service
+
+[Service]
+Type=exec
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/dengue-surveillance
+Environment=PATH=/opt/dengue-surveillance/venv/bin
+ExecStart=/opt/dengue-surveillance/venv/bin/gunicorn main:app -c gunicorn.conf.py
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-docker"></i>
+                            D. Déploiement avec Docker
+                        </h3>
+                        <div class="page-example">
+                            <h4>Dockerfile</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Dockerfile</span>
+                                    <button class="copy-btn" onclick="copyCode('dockerfile')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="dockerfile"><code class="language-dockerfile">FROM python:3.9-slim
+
+WORKDIR /app
+
+# Installer les dépendances système
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copier les fichiers de dépendances
+COPY requirements.txt .
+
+# Installer les dépendances Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier le code source
+COPY . .
+
+# Exposer le port
+EXPOSE 8000
+
+# Commande de démarrage
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]</code></pre>
+                            </div>
+
+                            <h4>Docker Compose</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">YAML</span>
+                                    <button class="copy-btn" onclick="copyCode('docker-compose')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="docker-compose"><code class="language-yaml">version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/dengue_surveillance
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=dengue_surveillance
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:</code></pre>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1025,35 +2196,278 @@ print(f"Données récupérées: {len(data['data'])} enregistrements")</code></pr
                         </h2>
 
                         <h3 class="subsection-title">
-                            <i class="fas fa-unlock"></i>
-                            Endpoints Publics
+                            <i class="fas fa-key"></i>
+                            A. Authentification et Autorisation
                         </h3>
                         <div class="page-example">
-                            <ul>
-                                <li><code>/</code> : Page d'accueil</li>
-                                <li><code>/api/stats</code> : Statistiques publiques</li>
-                                <li><code>/exploration</code> : Exploration des données</li>
-                                <li><code>/docs</code> : Documentation</li>
-                            </ul>
+                            <h4>Gestion des Sessions</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('session-management')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="session-management"><code class="language-python">from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+import jwt
+from datetime import datetime, timedelta
+
+# Configuration JWT
+SECRET_KEY = "your-secret-key"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+security = HTTPBearer()
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expiré")
+    except jwt.JWTError:
+        raise HTTPException(status_code=401, detail="Token invalide")</code></pre>
+                            </div>
+
+                            <h4>Middleware de Sécurité</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('security-middleware')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="security-middleware"><code class="language-python">from fastapi import Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+import time
+
+# Configuration CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://yourdomain.com"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
+
+# Middleware de sécurité personnalisé
+@app.middleware("http")
+async def security_middleware(request: Request, call_next):
+    # Rate limiting basique
+    client_ip = request.client.host
+    current_time = time.time()
+    
+    # Vérification des tentatives de connexion
+    if client_ip in failed_attempts:
+        if current_time - failed_attempts[client_ip] < 300:  # 5 minutes
+            raise HTTPException(status_code=429, detail="Trop de tentatives")
+    
+    response = await call_next(request)
+    
+    # Headers de sécurité
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    
+    return response</code></pre>
+                            </div>
                         </div>
 
                         <h3 class="subsection-title">
                             <i class="fas fa-lock"></i>
-                            Endpoints Protégés
+                            B. Chiffrement et Protection des Données
                         </h3>
                         <div class="page-example">
-                            <ul>
-                                <li><code>/mise-a-jour-form</code> : Nécessite authentification</li>
-                                <li><code>/api/alerts/configure</code> : Configuration des alertes</li>
-                                <li><code>/api/data/import</code> : Import de données</li>
-                                <li><code>/api/users/*</code> : Gestion des utilisateurs</li>
-                            </ul>
+                            <h4>Chiffrement des Données Sensibles</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('encryption')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="encryption"><code class="language-python">from cryptography.fernet import Fernet
+import base64
+import os
+
+class DataEncryption:
+    def __init__(self):
+        self.key = os.getenv("ENCRYPTION_KEY", Fernet.generate_key())
+        self.cipher_suite = Fernet(self.key)
+    
+    def encrypt_data(self, data: str) -> str:
+        """Chiffrer les données sensibles"""
+        encrypted_data = self.cipher_suite.encrypt(data.encode())
+        return base64.b64encode(encrypted_data).decode()
+    
+    def decrypt_data(self, encrypted_data: str) -> str:
+        """Déchiffrer les données sensibles"""
+        decoded_data = base64.b64decode(encrypted_data.encode())
+        decrypted_data = self.cipher_suite.decrypt(decoded_data)
+        return decrypted_data.decode()
+
+# Utilisation
+encryption = DataEncryption()
+sensitive_data = "informations_confidentielles"
+encrypted = encryption.encrypt_data(sensitive_data)
+decrypted = encryption.decrypt_data(encrypted)</code></pre>
+                            </div>
+
+                            <h4>Validation des Données</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('data-validation')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="data-validation"><code class="language-python">from pydantic import BaseModel, validator
+import re
+from typing import Optional
+
+class CasDengueSecure(BaseModel):
+    date_consultation: str
+    region: str
+    district: str
+    sexe: str
+    age: int
+    resultat_test: str
+    serotype: Optional[str] = None
+    hospitalise: str
+    issue: str
+    
+    @validator('date_consultation')
+    def validate_date(cls, v):
+        # Validation du format de date
+        if not re.match(r'^\d{4}-\d{2}-\d{2}$', v):
+            raise ValueError('Format de date invalide')
+        return v
+    
+    @validator('age')
+    def validate_age(cls, v):
+        if v < 0 or v > 120:
+            raise ValueError('Âge invalide')
+        return v
+    
+    @validator('sexe')
+    def validate_sexe(cls, v):
+        if v not in ['M', 'F']:
+            raise ValueError('Sexe invalide')
+        return v
+    
+    @validator('resultat_test')
+    def validate_test(cls, v):
+        if v not in ['Positif', 'Négatif', 'En cours']:
+            raise ValueError('Résultat de test invalide')
+        return v</code></pre>
+                            </div>
                         </div>
 
-                        <div class="alert-modern alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <div>
-                                <strong>Important :</strong> Les endpoints protégés nécessitent une authentification appropriée. Contactez l'administrateur système pour obtenir les accès nécessaires.
+                        <h3 class="subsection-title">
+                            <i class="fas fa-shield-virus"></i>
+                            C. Protection contre les Attaques
+                        </h3>
+                        <div class="page-example">
+                            <h4>Protection CSRF</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('csrf-protection')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="csrf-protection"><code class="language-python">from fastapi import Request, HTTPException
+import secrets
+
+class CSRFProtection:
+    def __init__(self):
+        self.secret_key = secrets.token_urlsafe(32)
+    
+    def generate_token(self) -> str:
+        """Générer un token CSRF"""
+        return secrets.token_urlsafe(32)
+    
+    def validate_token(self, request: Request, token: str):
+        """Valider le token CSRF"""
+        if not token:
+            raise HTTPException(status_code=400, detail="Token CSRF manquant")
+        
+        # Vérification du token (simplifiée)
+        if len(token) < 32:
+            raise HTTPException(status_code=400, detail="Token CSRF invalide")
+        
+        return True
+
+# Utilisation dans les endpoints
+csrf = CSRFProtection()
+
+@app.post("/api/data")
+async def add_data(request: Request, csrf_token: str):
+    csrf.validate_token(request, csrf_token)
+    # Traitement des données...</code></pre>
+                            </div>
+
+                            <h4>Rate Limiting</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('rate-limiting')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="rate-limiting"><code class="language-python">from fastapi import Request, HTTPException
+import time
+from collections import defaultdict
+
+class RateLimiter:
+    def __init__(self, max_requests: int = 100, window_seconds: int = 60):
+        self.max_requests = max_requests
+        self.window_seconds = window_seconds
+        self.requests = defaultdict(list)
+    
+    def is_allowed(self, client_ip: str) -> bool:
+        """Vérifier si la requête est autorisée"""
+        current_time = time.time()
+        
+        # Nettoyer les anciennes requêtes
+        self.requests[client_ip] = [
+            req_time for req_time in self.requests[client_ip]
+            if current_time - req_time < self.window_seconds
+        ]
+        
+        # Vérifier la limite
+        if len(self.requests[client_ip]) >= self.max_requests:
+            return False
+        
+        # Ajouter la requête actuelle
+        self.requests[client_ip].append(current_time)
+        return True
+
+# Utilisation
+rate_limiter = RateLimiter(max_requests=100, window_seconds=60)
+
+@app.middleware("http")
+async def rate_limit_middleware(request: Request, call_next):
+    client_ip = request.client.host
+    
+    if not rate_limiter.is_allowed(client_ip):
+        raise HTTPException(
+            status_code=429,
+            detail="Trop de requêtes. Réessayez plus tard."
+        )
+    
+    response = await call_next(request)
+    return response</code></pre>
                             </div>
                         </div>
                     </div>
@@ -1064,160 +2478,659 @@ print(f"Données récupérées: {len(data['data'])} enregistrements")</code></pr
                     <div class="section-card">
                         <h2 class="section-title">
                             <i class="fas fa-tools"></i>
-                            Maintenance et Support
+                            Maintenance et Monitoring
                         </h2>
 
                         <h3 class="subsection-title">
                             <i class="fas fa-chart-line"></i>
-                            Logs et Monitoring
+                            A. Monitoring de Performance
                         </h3>
                         <div class="page-example">
-                            <ul>
-                                <li><strong>Logs d'accès</strong> : Suivi des accès aux endpoints</li>
-                                <li><strong>Monitoring des performances</strong> : Surveillance des temps de réponse</li>
-                                <li><strong>Alertes en cas d'erreur</strong> : Notifications automatiques</li>
-                                <li><strong>Métriques système</strong> : Indicateurs de santé du système</li>
-                            </ul>
+                            <h4>Monitoring de Performance</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('performance-monitoring')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="performance-monitoring"><code class="language-python">import time
+import psutil
+import logging
+from fastapi import Request
+from datetime import datetime
+
+class PerformanceMonitor:
+    def __init__(self):
+        self.request_times = []
+        self.error_count = 0
+        self.start_time = time.time()
+    
+    def log_request(self, request: Request, response_time: float):
+        """Enregistrer les métriques de requête"""
+        self.request_times.append({
+            'timestamp': datetime.now(),
+            'path': request.url.path,
+            'method': request.method,
+            'response_time': response_time,
+            'status_code': 200  # À adapter selon la réponse
+        })
+        
+        # Garder seulement les 1000 dernières requêtes
+        if len(self.request_times) > 1000:
+            self.request_times = self.request_times[-1000:]
+    
+    def get_system_stats(self):
+        """Obtenir les statistiques système"""
+        return {
+            'cpu_percent': psutil.cpu_percent(),
+            'memory_percent': psutil.virtual_memory().percent,
+            'disk_usage': psutil.disk_usage('/').percent,
+            'uptime': time.time() - self.start_time
+        }
+    
+    def get_performance_metrics(self):
+        """Obtenir les métriques de performance"""
+        if not self.request_times:
+            return {}
+        
+        response_times = [req['response_time'] for req in self.request_times]
+        return {
+            'avg_response_time': sum(response_times) / len(response_times),
+            'max_response_time': max(response_times),
+            'min_response_time': min(response_times),
+            'total_requests': len(self.request_times),
+            'error_rate': self.error_count / len(self.request_times) if self.request_times else 0
+        }
+
+# Utilisation
+monitor = PerformanceMonitor()
+
+@app.middleware("http")
+async def monitoring_middleware(request: Request, call_next):
+    start_time = time.time()
+    
+    try:
+        response = await call_next(request)
+        response_time = time.time() - start_time
+        monitor.log_request(request, response_time)
+        return response
+    except Exception as e:
+        monitor.error_count += 1
+        raise</code></pre>
+                            </div>
+
+                            <h4>Endpoint de Monitoring</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('monitoring-endpoint')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="monitoring-endpoint"><code class="language-python">@app.get("/api/health")
+async def health_check():
+    """Endpoint de vérification de santé"""
+    try:
+        # Vérifier la base de données
+        db = SessionLocal()
+        db.execute("SELECT 1")
+        db.close()
+        
+        # Vérifier Redis
+        redis_client.ping()
+        
+        return {
+            "status": "healthy",
+            "timestamp": datetime.now().isoformat(),
+            "system_stats": monitor.get_system_stats(),
+            "performance_metrics": monitor.get_performance_metrics()
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
+
+@app.get("/api/metrics")
+async def get_metrics():
+    """Endpoint pour les métriques détaillées"""
+    return {
+        "system": monitor.get_system_stats(),
+        "performance": monitor.get_performance_metrics(),
+        "database": {
+            "connection_pool_size": engine.pool.size(),
+            "checked_in": engine.pool.checkedin(),
+            "checked_out": engine.pool.checkedout()
+        }
+    }</code></pre>
+                            </div>
                         </div>
 
                         <h3 class="subsection-title">
                             <i class="fas fa-database"></i>
-                            Sauvegarde et Récupération
+                            B. Maintenance de la Base de Données
                         </h3>
                         <div class="page-example">
-                            <ul>
-                                <li><strong>Sauvegarde automatique</strong> : Sauvegarde quotidienne des données</li>
-                                <li><strong>Procédures de récupération</strong> : Plans de restauration documentés</li>
-                                <li><strong>Tests de restauration</strong> : Validation périodique des sauvegardes</li>
-                                <li><strong>Rétention des données</strong> : Politique de conservation des données</li>
-                            </ul>
+                            <h4>Scripts de Maintenance</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('db-maintenance')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="db-maintenance"><code class="language-python">import psycopg2
+from datetime import datetime, timedelta
+import logging
+
+class DatabaseMaintenance:
+    def __init__(self, db_url: str):
+        self.db_url = db_url
+    
+    def cleanup_old_data(self, days_to_keep: int = 365):
+        """Nettoyer les anciennes données"""
+        cutoff_date = datetime.now() - timedelta(days=days_to_keep)
+        
+        with psycopg2.connect(self.db_url) as conn:
+            with conn.cursor() as cur:
+                # Supprimer les anciens logs
+                cur.execute("""
+                    DELETE FROM logs 
+                    WHERE created_at < %s
+                """, (cutoff_date,))
+                
+                # Supprimer les anciennes alertes résolues
+                cur.execute("""
+                    DELETE FROM alerts 
+                    WHERE status = 'resolved' 
+                    AND updated_at < %s
+                """, (cutoff_date,))
+                
+                conn.commit()
+                return cur.rowcount
+    
+    def optimize_tables(self):
+        """Optimiser les tables"""
+        with psycopg2.connect(self.db_url) as conn:
+            with conn.cursor() as cur:
+                # VACUUM et ANALYZE
+                cur.execute("VACUUM ANALYZE;")
+                conn.commit()
+    
+    def backup_database(self, backup_path: str):
+        """Sauvegarder la base de données"""
+        import subprocess
+        
+        cmd = f"pg_dump {self.db_url} > {backup_path}"
+        result = subprocess.run(cmd, shell=True, capture_output=True)
+        
+        if result.returncode == 0:
+            logging.info(f"Backup créé: {backup_path}")
+            return True
+        else:
+            logging.error(f"Erreur de backup: {result.stderr}")
+            return False
+
+# Script de maintenance automatique
+def run_maintenance():
+    maintenance = DatabaseMaintenance("postgresql://user:pass@localhost/db")
+    
+    # Nettoyage quotidien
+    deleted_rows = maintenance.cleanup_old_data(days_to_keep=365)
+    print(f"Supprimé {deleted_rows} anciens enregistrements")
+    
+    # Optimisation hebdomadaire
+    maintenance.optimize_tables()
+    print("Tables optimisées")
+    
+    # Backup quotidien
+    backup_file = f"backup_{datetime.now().strftime('%Y%m%d')}.sql"
+    if maintenance.backup_database(backup_file):
+        print(f"Backup créé: {backup_file}")</code></pre>
+                            </div>
+
+                            <h4>Planification des Tâches</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('scheduled-tasks')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="scheduled-tasks"><code class="language-python">from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+
+class MaintenanceScheduler:
+    def __init__(self):
+        self.scheduler = BackgroundScheduler()
+        self.setup_jobs()
+    
+    def setup_jobs(self):
+        """Configurer les tâches planifiées"""
+        
+        # Nettoyage quotidien à 2h du matin
+        self.scheduler.add_job(
+            func=self.daily_cleanup,
+            trigger=CronTrigger(hour=2, minute=0),
+            id='daily_cleanup',
+            name='Nettoyage quotidien'
+        )
+        
+        # Backup quotidien à 3h du matin
+        self.scheduler.add_job(
+            func=self.daily_backup,
+            trigger=CronTrigger(hour=3, minute=0),
+            id='daily_backup',
+            name='Backup quotidien'
+        )
+        
+        # Optimisation hebdomadaire le dimanche à 4h
+        self.scheduler.add_job(
+            func=self.weekly_optimization,
+            trigger=CronTrigger(day_of_week='sun', hour=4, minute=0),
+            id='weekly_optimization',
+            name='Optimisation hebdomadaire'
+        )
+        
+        # Vérification des alertes toutes les heures
+        self.scheduler.add_job(
+            func=self.check_alerts,
+            trigger=CronTrigger(minute=0),
+            id='check_alerts',
+            name='Vérification des alertes'
+        )
+    
+    def daily_cleanup(self):
+        """Nettoyage quotidien"""
+        try:
+            maintenance = DatabaseMaintenance("postgresql://user:pass@localhost/db")
+            deleted_rows = maintenance.cleanup_old_data()
+            logging.info(f"Nettoyage quotidien: {deleted_rows} enregistrements supprimés")
+        except Exception as e:
+            logging.error(f"Erreur lors du nettoyage: {e}")
+    
+    def daily_backup(self):
+        """Backup quotidien"""
+        try:
+            maintenance = DatabaseMaintenance("postgresql://user:pass@localhost/db")
+            backup_file = f"backup_{datetime.now().strftime('%Y%m%d')}.sql"
+            if maintenance.backup_database(backup_file):
+                logging.info(f"Backup quotidien créé: {backup_file}")
+        except Exception as e:
+            logging.error(f"Erreur lors du backup: {e}")
+    
+    def weekly_optimization(self):
+        """Optimisation hebdomadaire"""
+        try:
+            maintenance = DatabaseMaintenance("postgresql://user:pass@localhost/db")
+            maintenance.optimize_tables()
+            logging.info("Optimisation hebdomadaire terminée")
+        except Exception as e:
+            logging.error(f"Erreur lors de l'optimisation: {e}")
+    
+    def check_alerts(self):
+        """Vérification des alertes"""
+        try:
+            # Logique de vérification des alertes
+            logging.info("Vérification des alertes effectuée")
+        except Exception as e:
+            logging.error(f"Erreur lors de la vérification des alertes: {e}")
+    
+    def start(self):
+        """Démarrer le planificateur"""
+        self.scheduler.start()
+        logging.info("Planificateur de maintenance démarré")
+    
+    def stop(self):
+        """Arrêter le planificateur"""
+        self.scheduler.shutdown()
+        logging.info("Planificateur de maintenance arrêté")
+
+# Utilisation
+scheduler = MaintenanceScheduler()
+scheduler.start()</code></pre>
+                            </div>
                         </div>
 
-                        <div class="alert-modern alert-info">
-                            <i class="fas fa-info-circle"></i>
-                            <div>
-                                <strong>Support :</strong> Pour toute question technique ou problème, contactez l'équipe de support via l'interface d'administration.
+                        <h3 class="subsection-title">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            C. Gestion des Erreurs et Logs
+                        </h3>
+                        <div class="page-example">
+                            <h4>Configuration des Logs</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('logging-config')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="logging-config"><code class="language-python">import logging
+import logging.handlers
+from datetime import datetime
+import os
+
+class LogManager:
+    def __init__(self, log_dir: str = "logs"):
+        self.log_dir = log_dir
+        os.makedirs(log_dir, exist_ok=True)
+        self.setup_logging()
+    
+    def setup_logging(self):
+        """Configurer le système de logging"""
+        
+        # Configuration du logger principal
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
+        
+        # Formatter pour les logs
+        formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        
+        # Handler pour fichier (rotation quotidienne)
+        file_handler = logging.handlers.TimedRotatingFileHandler(
+            filename=os.path.join(self.log_dir, 'app.log'),
+            when='midnight',
+            interval=1,
+            backupCount=30
+        )
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(formatter)
+        
+        # Handler pour les erreurs
+        error_handler = logging.handlers.TimedRotatingFileHandler(
+            filename=os.path.join(self.log_dir, 'errors.log'),
+            when='midnight',
+            interval=1,
+            backupCount=30
+        )
+        error_handler.setLevel(logging.ERROR)
+        error_handler.setFormatter(formatter)
+        
+        # Handler pour console
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(formatter)
+        
+        # Ajouter les handlers
+        logger.addHandler(file_handler)
+        logger.addHandler(error_handler)
+        logger.addHandler(console_handler)
+    
+    def log_request(self, request: Request, response_time: float, status_code: int):
+        """Logger les requêtes"""
+        logging.info(
+            f"Request: {request.method} {request.url.path} - "
+            f"Status: {status_code} - Time: {response_time:.3f}s"
+        )
+    
+    def log_error(self, error: Exception, context: str = ""):
+        """Logger les erreurs"""
+        logging.error(
+            f"Error in {context}: {str(error)}",
+            exc_info=True
+        )
+    
+    def log_security_event(self, event_type: str, details: dict):
+        """Logger les événements de sécurité"""
+        logging.warning(
+            f"Security Event - Type: {event_type} - Details: {details}"
+        )
+
+# Utilisation
+log_manager = LogManager()
+
+@app.middleware("http")
+async def logging_middleware(request: Request, call_next):
+    start_time = time.time()
+    
+    try:
+        response = await call_next(request)
+        response_time = time.time() - start_time
+        log_manager.log_request(request, response_time, response.status_code)
+        return response
+    except Exception as e:
+        log_manager.log_error(e, f"{request.method} {request.url.path}")
+        raise</code></pre>
+                            </div>
+
+                            <h4>Gestion des Erreurs</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('error-handling')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="error-handling"><code class="language-python">from fastapi import HTTPException, Request
+from fastapi.responses import JSONResponse
+import traceback
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    """Gestionnaire global des exceptions"""
+    
+    # Logger l'erreur
+    log_manager.log_error(exc, f"{request.method} {request.url.path}")
+    
+    # Retourner une réponse d'erreur appropriée
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Erreur interne du serveur",
+            "message": "Une erreur inattendue s'est produite",
+            "timestamp": datetime.now().isoformat(),
+            "request_id": request.headers.get("X-Request-ID", "unknown")
+        }
+    )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    """Gestionnaire des exceptions HTTP"""
+    
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": exc.detail,
+            "status_code": exc.status_code,
+            "timestamp": datetime.now().isoformat()
+        }
+    )
+
+# Fonction utilitaire pour la gestion d'erreurs
+def safe_database_operation(func):
+    """Décorateur pour les opérations de base de données sécurisées"""
+    async def wrapper(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except Exception as e:
+            log_manager.log_error(e, f"Database operation: {func.__name__}")
+            raise HTTPException(
+                status_code=500,
+                detail="Erreur de base de données"
+            )
+    return wrapper
+
+# Exemple d'utilisation
+@safe_database_operation
+async def get_cas_data(limit: int = 100):
+    """Récupérer les données des cas avec gestion d'erreur"""
+    db = SessionLocal()
+    try:
+        cas = db.query(CasDengue).limit(limit).all()
+        return cas
+    finally:
+        db.close()</code></pre>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Navigation Buttons -->
+                <div class="navigation-buttons">
+                    <a href="/docs" class="btn btn-primary">
+                        <i class="fas fa-book me-2"></i>
+                        Documentation Interactive
+                    </a>
+                    <a href="/" class="btn btn-secondary">
+                        <i class="fas fa-home me-2"></i>
+                        Retour à l'Accueil
+                    </a>
             </div>
         </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p>&copy; 2024 Système de Surveillance Épidémiologique de la Dengue. Tous droits réservés.</p>
         </div>
     </div>
-
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     
     <script>
-        // Fonction de copie de code
-        function copyCode(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                // Feedback visuel
-                const button = element.parentElement.querySelector('.copy-btn');
+        // Fonction améliorée pour copier le code
+        function copyCode(id) {
+            try {
+                const codeElement = document.getElementById(id);
+                if (!codeElement) {
+                    console.error('Élément non trouvé:', id);
+                    return;
+                }
+
+                const code = codeElement.textContent;
+                
+                // Utiliser l'API Clipboard moderne si disponible
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(code).then(() => {
+                        showCopySuccess(id);
+            }).catch(err => {
+                console.error('Erreur lors de la copie:', err);
+                        fallbackCopyTextToClipboard(code, id);
+                    });
+                } else {
+                    // Fallback pour les navigateurs plus anciens
+                    fallbackCopyTextToClipboard(code, id);
+                }
+            } catch (error) {
+                console.error('Erreur lors de la copie:', error);
+                showCopyError(id);
+            }
+        }
+
+        // Méthode de fallback pour la copie
+        function fallbackCopyTextToClipboard(text, id) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    showCopySuccess(id);
+                } else {
+                    showCopyError(id);
+                }
+            } catch (err) {
+                console.error('Erreur fallback:', err);
+                showCopyError(id);
+            }
+        }
+
+        // Afficher le succès de la copie
+        function showCopySuccess(id) {
+            const button = document.querySelector(`[onclick="copyCode('${id}')"]`);
+            if (button) {
                 const originalText = button.innerHTML;
                 button.innerHTML = '<i class="fas fa-check me-1"></i>Copié!';
                 button.style.background = 'rgba(34, 197, 94, 0.2)';
                 button.style.color = '#22c55e';
+                button.style.borderColor = 'rgba(34, 197, 94, 0.3)';
                 
                 setTimeout(() => {
                     button.innerHTML = originalText;
-                    button.style.background = 'rgba(255, 255, 255, 0.1)';
-                    button.style.color = '#e2e8f0';
+                    button.style.background = 'rgba(59, 130, 246, 0.2)';
+                    button.style.color = '#3b82f6';
+                    button.style.borderColor = 'rgba(59, 130, 246, 0.3)';
                 }, 2000);
-            }).catch(err => {
-                console.error('Erreur lors de la copie:', err);
-            });
+            }
         }
 
-        // Initialisation des onglets Bootstrap
-        document.addEventListener('DOMContentLoaded', function() {
-            // Activation du premier onglet par défaut
-            const firstTab = document.querySelector('#guideTabs .nav-link');
-            if (firstTab) {
-                firstTab.classList.add('active');
+        // Afficher l'erreur de copie
+        function showCopyError(id) {
+            const button = document.querySelector(`[onclick="copyCode('${id}')"]`);
+            if (button) {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-times me-1"></i>Erreur';
+                button.style.background = 'rgba(239, 68, 68, 0.2)';
+                button.style.color = '#ef4444';
+                button.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'rgba(59, 130, 246, 0.2)';
+                    button.style.color = '#3b82f6';
+                    button.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }, 2000);
             }
+        }
 
-            // Gestion des onglets
-            const tabLinks = document.querySelectorAll('#guideTabs .nav-link');
-            tabLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Retirer la classe active de tous les onglets
-                    tabLinks.forEach(l => l.classList.remove('active'));
-                    // Ajouter la classe active à l'onglet cliqué
-                    this.classList.add('active');
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les onglets Bootstrap
+            const triggerTabList = document.querySelectorAll('#guideTabs button[data-bs-toggle="tab"]');
+            triggerTabList.forEach(triggerEl => {
+                const tabTrigger = new bootstrap.Tab(triggerEl);
+                
+                triggerEl.addEventListener('click', event => {
+                    event.preventDefault();
+                    tabTrigger.show();
                 });
             });
 
-            // Animation d'apparition des sections
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+            // Ajouter des tooltips aux boutons de copie
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            copyButtons.forEach(button => {
+                button.title = 'Cliquer pour copier le code';
+            });
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+            // Améliorer l'accessibilité
+            copyButtons.forEach(button => {
+                button.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const id = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                        copyCode(id);
                     }
                 });
-            }, observerOptions);
+            });
 
-            // Observer les sections
-            document.querySelectorAll('.section-card, .endpoint-card, .feature-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
+            // Améliorer la navigation par clavier
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Ajouter une animation de transition pour les onglets
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => {
+                pane.addEventListener('shown.bs.tab', function() {
+                    this.style.opacity = '0';
+                    setTimeout(() => {
+                        this.style.opacity = '1';
+                    }, 50);
+                });
             });
         });
-
-        // Fonction de recherche dans la documentation
-        function searchInDocs(query) {
-            const searchTerm = query.toLowerCase();
-            const sections = document.querySelectorAll('.section-card, .endpoint-card');
-            
-            sections.forEach(section => {
-                const text = section.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    section.style.display = 'block';
-                    section.style.backgroundColor = searchTerm ? 'rgba(102, 126, 234, 0.05)' : 'white';
-                } else if (searchTerm) {
-                    section.style.display = 'none';
-                } else {
-                    section.style.display = 'block';
-                    section.style.backgroundColor = 'white';
-                }
-            });
-        }
-
-        // Fonction d'export de la documentation
-        function exportDocs(format) {
-            const content = document.querySelector('.content-section').innerText;
-            
-            if (format === 'pdf') {
-                // Logique d'export PDF (nécessiterait une bibliothèque comme jsPDF)
-                alert('Export PDF - Fonctionnalité à implémenter');
-            } else if (format === 'txt') {
-                const blob = new Blob([content], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'documentation-systeme-dengue.txt';
-                a.click();
-                URL.revokeObjectURL(url);
-            }
-        }
     </script>
 </body>
 </html>
+             

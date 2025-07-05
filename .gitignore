@@ -1,3 +1,6 @@
 venv/ 
 action_git.txt
 Appi.code-workspace
+venv_new/
+update_git.bat
+update_git.py

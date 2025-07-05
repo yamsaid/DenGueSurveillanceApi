@@ -13,6 +13,12 @@ from sqlalchemy import and_, func, or_, not_
 from typing import List, Optional
 from sqlalchemy.sql import case, extract
 from calendar import month_name
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER, TA_LEFT
 
 
 "======== Fonction pour vérifier et corriger le CSV ========"
@@ -104,6 +110,7 @@ def analyser_et_corriger_csv(file_contents: bytes, consentement_correction = "tr
         Valeurs valides : 'Guéri', 'En traitement'.
         """
         rapport = {}
+        erreurs_vars = {}
         col_data = df[colonne].astype(str)
         valeurs_corrigees = []
         invalides = []
@@ -120,6 +127,7 @@ def analyser_et_corriger_csv(file_contents: bytes, consentement_correction = "tr
                 invalides.append({"index": i, "valeur": val})
 
         totat_erreur += len(invalides)
+        erreurs_vars["nombres"] = len(invalides)
         rapport["valeurs_invalides"] = len(invalides)
         rapport["valeurs_invalides_detail"] = invalides
         rapport["valeur_par_defaut"] = defaut
@@ -149,6 +157,8 @@ def analyser_et_corriger_csv(file_contents: bytes, consentement_correction = "tr
     rapport_global["hospitalise"] = rapport_hospitalise
     rapport_global["age"] = rapport_age
     rapport_global["sexe"] = rapport_sexe
+
+    
     
     # Ajouter les informations de la première ligne du DataFrame
 
@@ -1113,6 +1123,257 @@ def verification_automatique_alertes(db: Session) -> dict:
         "resultats": resultats,
         "total_alertes_generes": sum(r.get("alertes_generes", 0) for r in resultats)
     }
+
+def analyser_erreurs_par_colonnes_et_types(rapport_global: dict) -> dict:
+    """
+    Analyse les erreurs par colonnes et par types à partir du rapport global.
+    
+    Args:
+        rapport_global (dict): Le rapport global des erreurs
+        
+    Returns:
+        dict: Dictionnaire contenant les erreurs par colonnes et par types
+    """
+    erreurs_par_colonnes = {}
+    erreurs_par_types = {
+        "valeurs_invalides": 0,
+        "valeurs_manquantes": 0,
+        "valeurs_hors_plage": 0,
+        "valeurs_non_numeriques": 0,
+        "total_erreurs": 0
+    }
+    
+    for colonne, rapport in rapport_global.items():
+        erreurs_colonne = {
+            "total_erreurs": 0,
+            "types_erreurs": {},
+            "details": {}
+        }
+        
+        # Analyser chaque type d'erreur pour cette colonne
+        for type_erreur, valeur in rapport.items():
+            if isinstance(valeur, (int, float)) and valeur > 0:
+                erreurs_colonne["total_erreurs"] += valeur
+                erreurs_colonne["types_erreurs"][type_erreur] = valeur
+                erreurs_colonne["details"][type_erreur] = valeur
+                
+                # Compter globalement par type
+                if type_erreur in erreurs_par_types:
+                    erreurs_par_types[type_erreur] += valeur
+                else:
+                    erreurs_par_types[type_erreur] = valeur
+                    
+            elif isinstance(valeur, list) and len(valeur) > 0:
+                erreurs_colonne["total_erreurs"] += len(valeur)
+                erreurs_colonne["types_erreurs"][type_erreur] = len(valeur)
+                erreurs_colonne["details"][type_erreur] = valeur
+                
+                # Compter globalement par type
+                if type_erreur in erreurs_par_types:
+                    erreurs_par_types[type_erreur] += len(valeur)
+                else:
+                    erreurs_par_types[type_erreur] = len(valeur)
+        
+        # Ajouter la colonne seulement si elle a des erreurs
+        if erreurs_colonne["total_erreurs"] > 0:
+            erreurs_par_colonnes[colonne] = erreurs_colonne
+    
+    # Calculer le total global
+    erreurs_par_types["total_erreurs"] = sum(
+        count for key, count in erreurs_par_types.items() 
+        if key != "total_erreurs" and isinstance(count, (int, float))
+    )
+    
+    return {
+        "erreurs_par_colonnes": erreurs_par_colonnes,
+        "erreurs_par_types": erreurs_par_types,
+        "resume": {
+            "nombre_colonnes_avec_erreurs": len(erreurs_par_colonnes),
+            "total_erreurs": erreurs_par_types["total_erreurs"],
+            "colonne_plus_erreurs": max(erreurs_par_colonnes.items(), key=lambda x: x[1]["total_erreurs"])[0] if erreurs_par_colonnes else None,
+            "type_erreur_plus_frequent": max(
+                [(k, v) for k, v in erreurs_par_types.items() if k != "total_erreurs" and isinstance(v, (int, float))],
+                key=lambda x: x[1]
+            )[0] if any(isinstance(v, (int, float)) and v > 0 for k, v in erreurs_par_types.items() if k != "total_erreurs") else None
+        }
+    }
+
+def exporter_rapport_erreurs(rapport_global: dict, format_export: str = "json") -> dict:
+    """
+    Exporte le rapport d'erreurs dans différents formats.
+    
+    Args:
+        rapport_global (dict): Le rapport global des erreurs
+        format_export (str): Format d'export ('json', 'csv', 'pdf')
+        
+    Returns:
+        dict: Dictionnaire contenant les données exportées
+    """
+    # Analyser les erreurs
+    analyse_erreurs = analyser_erreurs_par_colonnes_et_types(rapport_global)
+    
+    # Préparer les données d'export
+    export_data = {
+        "metadata": {
+            "date_export": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "format": format_export,
+            "total_erreurs": analyse_erreurs["erreurs_par_types"]["total_erreurs"],
+            "nombre_colonnes_avec_erreurs": analyse_erreurs["resume"]["nombre_colonnes_avec_erreurs"]
+        },
+        "resume": analyse_erreurs["resume"],
+        "erreurs_par_colonnes": analyse_erreurs["erreurs_par_colonnes"],
+        "erreurs_par_types": analyse_erreurs["erreurs_par_types"],
+        "rapport_complet": rapport_global
+    }
+    
+    if format_export == "json":
+        return export_data
+    
+    elif format_export == "csv":
+        # Créer un CSV avec les erreurs par colonnes
+        csv_lines = []
+        csv_lines.append("Colonne,Type_Erreur,Nombre_Erreurs,Details")
+        
+        for colonne, erreurs in analyse_erreurs["erreurs_par_colonnes"].items():
+            for type_erreur, nombre in erreurs["types_erreurs"].items():
+                details = str(erreurs["details"].get(type_erreur, ""))
+                csv_lines.append(f"{colonne},{type_erreur},{nombre},{details}")
+        
+        return {
+            "content": "\n".join(csv_lines),
+            "filename": f"rapport_erreurs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+            "content_type": "text/csv"
+        }
+    
+    elif format_export == "pdf":
+        # Générer le PDF
+        pdf_content = generer_pdf_rapport_erreurs(rapport_global)
+        return {
+            "content": pdf_content,
+            "filename": f"rapport_erreurs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
+            "content_type": "application/pdf"
+        }
+    
+    else:
+        raise ValueError(f"Format d'export non supporté: {format_export}")
+
+def generer_pdf_rapport_erreurs(rapport_global: dict) -> bytes:
+    """
+    Génère un PDF du rapport d'erreurs.
+    
+    Args:
+        rapport_global (dict): Le rapport global des erreurs
+        
+    Returns:
+        bytes: Contenu du PDF en bytes
+    """
+    # Analyser les erreurs
+    analyse_erreurs = analyser_erreurs_par_colonnes_et_types(rapport_global)
+    
+    # Créer un buffer pour le PDF
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4)
+    story = []
+    
+    # Styles
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=16,
+        spaceAfter=30,
+        alignment=TA_CENTER,
+        textColor=colors.darkblue
+    )
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        spaceAfter=12,
+        textColor=colors.darkblue
+    )
+    
+    normal_style = styles['Normal']
+    
+    # Titre principal
+    story.append(Paragraph("Rapport d'Analyse des Erreurs", title_style))
+    story.append(Spacer(1, 20))
+    
+    # Métadonnées
+    story.append(Paragraph(f"<b>Date d'export :</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", normal_style))
+    story.append(Paragraph(f"<b>Total d'erreurs :</b> {analyse_erreurs['erreurs_par_types']['total_erreurs']}", normal_style))
+    story.append(Paragraph(f"<b>Colonnes avec erreurs :</b> {analyse_erreurs['resume']['nombre_colonnes_avec_erreurs']}", normal_style))
+    story.append(Spacer(1, 20))
+    
+    # Résumé
+    story.append(Paragraph("Résumé de l'Analyse", heading_style))
+    resume = analyse_erreurs['resume']
+    story.append(Paragraph(f"• Colonne avec le plus d'erreurs : {resume['colonne_plus_erreurs'] or 'Aucune'}", normal_style))
+    story.append(Paragraph(f"• Type d'erreur le plus fréquent : {resume['type_erreur_plus_frequent'] or 'Aucun'}", normal_style))
+    story.append(Spacer(1, 20))
+    
+    # Erreurs par types
+    story.append(Paragraph("Erreurs par Types", heading_style))
+    types_data = [['Type d\'Erreur', 'Nombre']]
+    for type_erreur, count in analyse_erreurs['erreurs_par_types'].items():
+        if type_erreur != 'total_erreurs' and isinstance(count, (int, float)) and count > 0:
+            types_data.append([type_erreur.replace('_', ' ').title(), str(count)])
+    
+    if len(types_data) > 1:
+        types_table = Table(types_data)
+        types_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 12),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black)
+        ]))
+        story.append(types_table)
+    story.append(Spacer(1, 20))
+    
+    # Erreurs par colonnes
+    story.append(Paragraph("Erreurs par Colonnes", heading_style))
+    colonnes_data = [['Colonne', 'Total Erreurs', 'Types d\'Erreurs']]
+    for colonne, erreurs in analyse_erreurs['erreurs_par_colonnes'].items():
+        types_str = ', '.join([f"{k}: {v}" for k, v in erreurs['types_erreurs'].items()])
+        colonnes_data.append([colonne, str(erreurs['total_erreurs']), types_str])
+    
+    if len(colonnes_data) > 1:
+        colonnes_table = Table(colonnes_data, colWidths=[2*inch, 1*inch, 3*inch])
+        colonnes_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(colonnes_table)
+    story.append(Spacer(1, 20))
+    
+    # Détails du rapport complet
+    story.append(Paragraph("Détails Complets", heading_style))
+    for colonne, rapport in rapport_global.items():
+        story.append(Paragraph(f"<b>{colonne}</b>", normal_style))
+        for key, value in rapport.items():
+            if isinstance(value, (int, float)) and value > 0:
+                story.append(Paragraph(f"• {key}: {value}", normal_style))
+            elif isinstance(value, list) and len(value) > 0:
+                story.append(Paragraph(f"• {key}: {len(value)} éléments", normal_style))
+        story.append(Spacer(1, 10))
+    
+    # Générer le PDF
+    doc.build(story)
+    buffer.seek(0)
+    return buffer.getvalue()
 
 
 

@@ -15,7 +15,7 @@ pip install fastapi[all] sqlalchemy psycopg2-binary
 
 from fastapi import (FastAPI,UploadFile, File,Form, Depends,Request,HTTPException,Query)
 from typing import Union,List, Optional
-from fastapi.responses import (HTMLResponse, StreamingResponse)
+from fastapi.responses import (HTMLResponse, StreamingResponse, RedirectResponse)
 from sqlalchemy.orm import Session
 from schemas.database import get_db,engine
 from fastapi.templating import Jinja2Templates
@@ -28,10 +28,25 @@ from calendar import month_name
 from schemas import models
 from sqlalchemy import and_, or_, func, extract, case
 from datetime import timedelta
+import io
+import jwt
+from passlib.context import CryptContext
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 "********************* Creation de l'Api *************************************"
 
 app = FastAPI()
+
+# Configuration de sécurité
+SECRET_KEY = "votre_clé_secrète_très_longue_et_complexe_ici_2024"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+# Configuration du hachage des mots de passe
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Configuration de la sécurité pour l'authentification
+security = HTTPBearer()
 
 # Monter le dossier "static" pour les fichiers CSS, JS, images...
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -49,6 +64,84 @@ nbErreur = 0
 # Creer toute les
 models.Base.metadata.create_all(bind=engine)
 
+# ==================== SYSTÈME DE RÔLES ET PERMISSIONS ====================
+
+# Fonction alternative pour l'authentification avec gestion des rôles via token en paramètre
+async def get_authenticated_user_from_token(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur authentifié à partir du token dans les paramètres ou headers"""
+    # Essayer d'abord le header Authorization
+    auth_header = request.headers.get("Authorization")
+    token = None
+    
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+    else:
+        # Essayer le token dans les paramètres de requête
+        token = request.query_params.get("token")
+    
+    if not token:
+        # Pour la navigation directe, rediriger vers la page de login
+        raise HTTPException(status_code=401, detail="Token d'authentification requis")
+    
+    payload = verify_token(token)
+    if payload is None:
+        raise HTTPException(status_code=401, detail="Token invalide ou expiré")
+    
+    username = payload.get("sub")
+    if username is None:
+        raise HTTPException(status_code=401, detail="Token invalide")
+    
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if user is None:
+        raise HTTPException(status_code=401, detail="Utilisateur non trouvé")
+    
+    return user
+
+async def get_admin_user_from_token(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur admin à partir du token dans les paramètres ou headers"""
+    user = await get_authenticated_user_from_token(request, db)
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Accès réservé aux administrateurs")
+    return user
+
+async def get_analyst_user_from_token(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur analyst ou admin à partir du token"""
+    user = await get_authenticated_user_from_token(request, db)
+    if user.role not in ["analyst", "admin"]:
+        raise HTTPException(status_code=403, detail="Accès réservé aux analystes et administrateurs")
+    return user
+
+async def get_authority_user_from_token(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur authority, analyst ou admin à partir du token"""
+    user = await get_authenticated_user_from_token(request, db)
+    if user.role not in ["authority", "analyst", "admin"]:
+        raise HTTPException(status_code=403, detail="Accès réservé aux autorités, analystes et administrateurs")
+    return user
+
+# Fonctions simplifiées pour la navigation directe (sans token requis)
+async def get_authenticated_user_optional(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur authentifié de manière optionnelle pour la navigation"""
+    try:
+        return await get_authenticated_user_from_token(request, db)
+    except HTTPException:
+        return None
+
+async def get_authority_user_optional(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur authority de manière optionnelle pour la navigation"""
+    try:
+        return await get_authority_user_from_token(request, db)
+    except HTTPException:
+        return None
+
+async def get_analyst_user_optional(request: Request, db: Session = Depends(get_db)):
+    """Récupère l'utilisateur analyst de manière optionnelle pour la navigation"""
+    try:
+        return await get_analyst_user_from_token(request, db)
+    except HTTPException:
+        return None
+
+
+
 " ******************* La page d'accueille ***********************************"
 
 #Page d'accueille
@@ -57,33 +150,342 @@ models.Base.metadata.create_all(bind=engine)
 def get_accueil(request: Request):
     return templates.TemplateResponse("accueil.html", {"request": request})
 
-#models.Base.metadata.create_all(bind=engine)
 
 " ******************* Routes de gestions des pages HTML ***************"
 
-@app.get("/index.html", response_class=HTMLResponse)
-async def index_page(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
 
-@app.get("/login.html", response_class=HTMLResponse)
+"======================================================================================="
+" ******************* Section Authentification ********************************* "
+
+# Fonctions utilitaires pour l'authentification
+def verify_password(plain_password, hashed_password):
+    """Vérifie si le mot de passe correspond au hash"""
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    """Génère un hash du mot de passe"""
+    return pwd_context.hash(password)
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    """Crée un token d'accès JWT"""
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def verify_token(token: str):
+    """Vérifie et décode un token JWT"""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.JWTError:
+        return None
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)):
+    """Récupère l'utilisateur actuel à partir du token"""
+    token = credentials.credentials
+    payload = verify_token(token)
+    if payload is None:
+        raise HTTPException(status_code=401, detail="Token invalide ou expiré")
+    
+    username = payload.get("sub")
+    if username is None:
+        raise HTTPException(status_code=401, detail="Token invalide")
+    
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if user is None:
+        raise HTTPException(status_code=401, detail="Utilisateur non trouvé")
+    
+    return user
+
+# Role-based access control functions
+def admin_required(current_user: models.User = Depends(get_current_user)):
+    """Vérifie que l'utilisateur a le rôle admin"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Accès réservé aux administrateurs")
+    return current_user
+
+def analyst_required(current_user: models.User = Depends(get_current_user)):
+    """Vérifie que l'utilisateur a le rôle analyst ou admin"""
+    if current_user.role not in ["analyst", "admin"]:
+        raise HTTPException(status_code=403, detail="Accès réservé aux analystes et administrateurs")
+    return current_user
+
+def authority_required(current_user: models.User = Depends(get_current_user)):
+    """Vérifie que l'utilisateur a le rôle authority, analyst ou admin"""
+    if current_user.role not in ["authority", "analyst", "admin"]:
+        raise HTTPException(status_code=403, detail="Accès réservé aux autorités, analystes et administrateurs")
+    return current_user
+
+def user_required(current_user: models.User = Depends(get_current_user)):
+    """Vérifie que l'utilisateur est authentifié (tous les rôles)"""
+    return current_user
+
+# Endpoints d'authentification
+@app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
+    """Page de connexion"""
     return templates.TemplateResponse("login.html", {"request": request})
 
-@app.get("/register.html", response_class=HTMLResponse)
+@app.post("/login")
+async def login(
+    email: str = Form(...),
+    password: str = Form(...),
+    remember: bool = Form(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint de connexion"""
+    # Rechercher l'utilisateur par email
+    user = db.query(models.User).filter(models.User.email == email).first()
+    
+    if not user or not verify_password(password, user.hashed_password):
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    # Créer le token d'accès
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES if not remember else 60*24*7)  # 7 jours si "se souvenir"
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "role": user.role,
+            "first_name": user.first_name,
+            "last_name": user.last_name
+        }
+    }
+
+@app.get("/register", response_class=HTMLResponse)
 async def register_page(request: Request):
+    """Page d'inscription"""
     return templates.TemplateResponse("register.html", {"request": request})
 
-@app.get("/forgot-password.html", response_class=HTMLResponse)
+@app.post("/register")
+async def register(
+    firstName: str = Form(...),
+    lastName: str = Form(...),
+    email: str = Form(...),
+    username: str = Form(...),
+    password: str = Form(...),
+    terms: bool = Form(False),
+    newsletter: bool = Form(False),
+    db: Session = Depends(get_db)
+):
+    """Endpoint d'inscription"""
+    # Vérifier si l'utilisateur existe déjà
+    existing_user = db.query(models.User).filter(
+        (models.User.email == email) | (models.User.username == username)
+    ).first()
+    
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email ou nom d'utilisateur déjà utilisé")
+    
+    # Vérifier les conditions d'utilisation
+    if not terms:
+        raise HTTPException(status_code=400, detail="Vous devez accepter les conditions d'utilisation")
+    
+    # Créer le nouvel utilisateur (toujours role='user')
+    hashed_password = get_password_hash(password)
+    db_user = models.User(
+        first_name=firstName,
+        last_name=lastName,
+        email=email,
+        username=username,
+        hashed_password=hashed_password,
+        role="user",
+        is_active=True,
+        created_at=datetime.utcnow()
+    )
+    
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    return {"message": "Compte créé avec succès"}
+
+@app.post("/logout")
+async def logout():
+    """Endpoint de déconnexion"""
+    # En production, vous pourriez ajouter le token à une liste noire
+    return {"message": "Déconnexion réussie"}
+
+@app.get("/profile")
+async def get_profile(current_user: models.User = Depends(get_current_user)):
+    """Récupérer le profil de l'utilisateur connecté"""
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email,
+        "role": current_user.role,
+        "first_name": current_user.first_name,
+        "last_name": current_user.last_name,
+        "is_active": current_user.is_active,
+        "created_at": current_user.created_at
+    }
+
+@app.get("/api/auth/status")
+async def get_auth_status(request: Request):
+    """Vérifier l'état d'authentification de l'utilisateur"""
+    try:
+        # Vérifier si un token est présent dans les cookies ou headers
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+            payload = verify_token(token)
+            if payload:
+                # Récupérer les informations de l'utilisateur
+                db = next(get_db())
+                user = db.query(models.User).filter(models.User.username == payload.get("sub")).first()
+                if user:
+                    return {
+                        "authenticated": True,
+                        "user": {
+                            "id": user.id,
+                            "username": user.username,
+                            "email": user.email,
+                            "role": user.role,
+                            "first_name": user.first_name,
+                            "last_name": user.last_name,
+                            "avatar": user.first_name[0].upper() if user.first_name else user.username[0].upper()
+                        }
+                    }
+        
+        return {"authenticated": False, "user": None}
+    except Exception as e:
+        return {"authenticated": False, "user": None, "error": str(e)}
+
+@app.put("/profile")
+async def update_profile(
+    first_name: str = Form(None),
+    last_name: str = Form(None),
+    email: str = Form(None),
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Mettre à jour le profil de l'utilisateur"""
+    if first_name:
+        current_user.first_name = first_name
+    if last_name:
+        current_user.last_name = last_name
+    if email:
+        # Vérifier que l'email n'est pas déjà utilisé
+        existing_user = db.query(models.User).filter(
+            models.User.email == email,
+            models.User.id != current_user.id
+        ).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email déjà utilisé")
+        current_user.email = email
+    
+    db.commit()
+    db.refresh(current_user)
+    
+    return {"message": "Profil mis à jour avec succès"}
+
+@app.post("/change-password")
+async def change_password(
+    current_password: str = Form(...),
+    new_password: str = Form(...),
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Changer le mot de passe de l'utilisateur"""
+    # Vérifier l'ancien mot de passe
+    if not verify_password(current_password, current_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Mot de passe actuel incorrect")
+    
+    # Mettre à jour le mot de passe
+    current_user.hashed_password = get_password_hash(new_password)
+    db.commit()
+    
+    return {"message": "Mot de passe modifié avec succès"}
+
+# Endpoints pour mot de passe oublié
+@app.get("/forgot-password", response_class=HTMLResponse)
 async def forgot_password_page(request: Request):
+    """Page de mot de passe oublié"""
     return templates.TemplateResponse("forgot-password.html", {"request": request})
 
-@app.get("/blank.html", response_class=HTMLResponse)
-async def blank_page(request: Request):
-    return templates.TemplateResponse("blank.html", {"request": request})
+@app.post("/forgot-password")
+async def forgot_password(
+    email: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    """Endpoint pour demander la réinitialisation du mot de passe"""
+    # Vérifier si l'utilisateur existe
+    user = db.query(models.User).filter(models.User.email == email).first()
+    
+    if not user:
+        # Pour des raisons de sécurité, on ne révèle pas si l'email existe ou non
+        return {"message": "Si cet email existe dans notre base, vous recevrez un lien de réinitialisation."}
+    
+    # Générer un token de réinitialisation (valide 1 heure)
+    reset_token = create_access_token(
+        data={"sub": user.username, "type": "password_reset"},
+        expires_delta=timedelta(hours=1)
+    )
+    
+    # En production, vous enverriez un email ici
+    # Pour l'instant, on retourne le token dans la réponse
+    return {
+        "message": "Lien de réinitialisation envoyé",
+        "reset_token": reset_token,  # À retirer en production
+        "reset_url": f"/reset-password?token={reset_token}"
+    }
 
-@app.get("/404.html", response_class=HTMLResponse)
-async def E404_page(request: Request):
-    return templates.TemplateResponse("404.html", {"request": request})
+@app.get("/reset-password", response_class=HTMLResponse)
+async def reset_password_page(request: Request, token: str = Query(None)):
+    """Page de réinitialisation du mot de passe"""
+    return templates.TemplateResponse("reset-password.html", {"request": request, "token": token})
+
+@app.post("/reset-password")
+async def reset_password(
+    token: str = Form(...),
+    new_password: str = Form(...),
+    confirm_password: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    """Endpoint pour réinitialiser le mot de passe"""
+    # Vérifier le token
+    payload = verify_token(token)
+    if not payload or payload.get("type") != "password_reset":
+        raise HTTPException(status_code=400, detail="Token de réinitialisation invalide ou expiré")
+    
+    username = payload.get("sub")
+    user = db.query(models.User).filter(models.User.username == username).first()
+    
+    if not user:
+        raise HTTPException(status_code=400, detail="Utilisateur non trouvé")
+    
+    # Vérifier que les mots de passe correspondent
+    if new_password != confirm_password:
+        raise HTTPException(status_code=400, detail="Les mots de passe ne correspondent pas")
+    
+    # Mettre à jour le mot de passe
+    user.hashed_password = get_password_hash(new_password)
+    db.commit()
+    
+    return {"message": "Mot de passe réinitialisé avec succès"}
+
+# Middleware pour protéger les routes
+def require_auth(func):
+    """Décorateur pour protéger les routes"""
+    async def wrapper(*args, **kwargs):
+        # Ici vous pouvez ajouter la logique de vérification d'authentification
+        # Pour l'instant, on laisse passer
+        return await func(*args, **kwargs)
+    return wrapper
 
 
 "======================================================================================="
@@ -114,25 +516,30 @@ def ajouter_cas_dengue(cas_list: List[schemas.CasDengueValidator], db: Session =
     #db.refresh(db_cas_list)
     return db_cas_list
 
+# ==================== ROUTES DE MISE À JOUR (AUTHORITY, ANALYST, ADMIN) ====================
+
 # formulaire d'analyse de données
 @app.get("/mise-a-jour-form", response_class=HTMLResponse)   
-async def afficher_formulaire_analyse(request: Request):
-            
+async def afficher_formulaire_analyse(request: Request, current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
+    """Formulaire d'analyse de données - Analyst, Admin seulement"""
     return templates.TemplateResponse("mise-a-jour-form.html",
-                                       {"request": request})
+                                       {"request": request,
+                                        "current_user": current_user})
 
 # endpoint pour traiter le fichier csv
 @app.post("/analyse") # l'url de la page de traitement
-async def analyser(request: Request, file: UploadFile = File(...), corriger: str = Form("true")):
+async def analyser(request: Request, file: UploadFile = File(...), corriger: str = Form("true"), current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
+    """Analyser un fichier CSV - Analyst, Admin seulement"""
     global donnees_corrigees_df, rapport, nbErreur
     contents = await file.read()
     donnees_corrigees_df, rapport,nbErreur = utils.analyser_et_corriger_csv(contents, corriger)
     return rapport_analyse(request)
 
 
+
 # endpoint pour afficher le rapport d'analyse
 @app.get("/le-rapport", response_class=HTMLResponse)
-def rapport_analyse(request: Request):
+def rapport_analyse(request: Request, current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
     global rapport, nbErreur
     
     return templates.TemplateResponse("rapport-Form.html", {
@@ -140,12 +547,13 @@ def rapport_analyse(request: Request):
         "rapport": rapport,
         "corrige": 'True',
         "isRapport": True,  # si le rapport existe
-        "nbErreur": nbErreur
+        "nbErreur": nbErreur,
+        "current_user": current_user
     })
 
 # endpoint pour afficher les données corrigées
 @app.get("/donnees-corrigees", response_class=HTMLResponse)
-async def voir_donnees_corrigees(request: Request):
+async def voir_donnees_corrigees(request: Request, current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
     global donnees_corrigees_df
     if donnees_corrigees_df is not None:
     
@@ -162,17 +570,252 @@ async def voir_donnees_corrigees(request: Request):
         "colonnes": colonnes,
         "donnees": donnees,
         "isRapport": False,
-        "show_correction": True  # si les données corrigées existent
+        "show_correction": True,  # si les données corrigées existent
+        "current_user": current_user
     })
 
+# endpoint pour afficher les erreurs par colonnes et par types
+@app.get("/rapport/erreurs-analyse")
+async def erreurs_par_colonnes_et_types(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
+    """
+    Endpoint pour afficher les erreurs par colonnes et par types lors de l'analyse d'un fichier.
+    
+    Returns:
+        dict: Dictionnaire contenant les erreurs par colonnes et par types
+    """
+    global rapport
+    
+    if not rapport:
+        return {
+            "message": "Aucun rapport d'analyse disponible. Veuillez d'abord analyser un fichier.",
+            "erreurs_par_colonnes": {},
+            "erreurs_par_types": {},
+            "resume": {}
+        }
+    
+    # Analyser les erreurs par colonnes et par types
+    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
+    
+    return {
+        "message": "Analyse des erreurs par colonnes et par types",
+        "rapport_complet": rapport,
+        **analyse_erreurs
+    }
+
+# endpoint pour obtenir le nombre d'erreurs par colonne (pour les graphiques)
+@app.get("/rapport/nb-erreurs-col")
+async def nombre_erreurs_par_colonne(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
+    """
+    Endpoint pour obtenir le nombre d'erreurs par colonne (utilisé pour les graphiques).
+    
+    Returns:
+        dict: Dictionnaire avec les données pour les graphiques
+    """
+    global rapport
+    
+    if not rapport:
+        return {
+            "labels": [],
+            "data": [],
+            "message": "Aucun rapport disponible"
+        }
+    
+    # Analyser les erreurs
+    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
+    
+    # Préparer les données pour les graphiques
+    colonnes = list(analyse_erreurs["erreurs_par_colonnes"].keys())
+    nb_erreurs = [analyse_erreurs["erreurs_par_colonnes"][col]["total_erreurs"] for col in colonnes]
+    
+    return {
+        "labels": colonnes,
+        "data": nb_erreurs,
+        "total_erreurs": analyse_erreurs["erreurs_par_types"]["total_erreurs"],
+        "resume": analyse_erreurs["resume"]
+    }
+
+# endpoint pour obtenir les erreurs par types (pour les graphiques)
+@app.get("/rapport/erreurs-par-types")
+async def erreurs_par_types(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
+    """
+    Endpoint pour obtenir les erreurs par types (utilisé pour les graphiques).
+    
+    Returns:
+        dict: Dictionnaire avec les données pour les graphiques
+    """
+    global rapport
+    
+    if not rapport:
+        return {
+            "labels": [],
+            "data": [],
+            "message": "Aucun rapport disponible"
+        }
+    
+    # Analyser les erreurs
+    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
+    
+    # Préparer les données pour les graphiques
+    types_erreurs = []
+    nb_erreurs = []
+    
+    for type_erreur, count in analyse_erreurs["erreurs_par_types"].items():
+        if type_erreur != "total_erreurs" and isinstance(count, (int, float)) and count > 0:
+            types_erreurs.append(type_erreur.replace("_", " ").title())
+            nb_erreurs.append(count)
+    
+    return {
+        "labels": types_erreurs,
+        "data": nb_erreurs,
+        "total_erreurs": analyse_erreurs["erreurs_par_types"]["total_erreurs"],
+        "resume": analyse_erreurs["resume"]
+    }
+
+# endpoint pour exporter le rapport d'analyse
+@app.get("/export-rapport")
+async def exporter_rapport(
+    format: str = Query("json", enum=["json", "csv", "pdf"]),
+    request: Request = None,
+    current_user: Optional[models.User] = Depends(get_analyst_user_optional)
+):
+    """
+    Endpoint pour exporter le rapport d'analyse d'erreurs.
+    
+    Args:
+        format (str): Format d'export (json, csv, pdf)
+        request (Request): Requête FastAPI
+        
+    Returns:
+        Response: Fichier à télécharger ou JSON
+    """
+    global rapport
+    
+    if not rapport:
+        return {
+            "message": "Aucun rapport d'analyse disponible. Veuillez d'abord analyser un fichier.",
+            "erreurs_par_colonnes": {},
+            "erreurs_par_types": {},
+            "resume": {}
+        }
+    
+    try:
+        # Exporter le rapport
+        export_data = utils.exporter_rapport_erreurs(rapport, format)
+        
+        if format == "json":
+            return export_data
+        
+        elif format == "csv":
+            # Retourner le fichier CSV
+            return StreamingResponse(
+                io.StringIO(export_data["content"]),
+                media_type="text/csv",
+                headers={
+                    "Content-Disposition": f"attachment; filename={export_data['filename']}"
+                }
+            )
+        
+        elif format == "pdf":
+            # Retourner le fichier PDF
+            return StreamingResponse(
+                io.BytesIO(export_data["content"]),
+                media_type="application/pdf",
+                headers={
+                    "Content-Disposition": f"attachment; filename={export_data['filename']}"
+                }
+            )
+            
+    except Exception as e:
+        return {
+            "message": f"Erreur lors de l'export: {str(e)}",
+            "error": True
+        }
+
+# endpoint pour exporter les données corrigées
+@app.get("/export-corrected")
+async def exporter_donnees_corrigees(
+    format: str = Query("csv", enum=["csv", "json", "excel"]),
+    request: Request = None,
+    current_user: Optional[models.User] = Depends(get_analyst_user_optional)
+):
+    """
+    Endpoint pour exporter les données corrigées.
+    
+    Args:
+        format (str): Format d'export (csv, json, excel)
+        request (Request): Requête FastAPI
+        
+    Returns:
+        Response: Fichier à télécharger ou JSON
+    """
+    global donnees_corrigees_df
+    
+    if donnees_corrigees_df is None or donnees_corrigees_df.empty:
+        return {
+            "message": "Aucune donnée corrigée disponible. Veuillez d'abord analyser un fichier.",
+            "error": True
+        }
+    
+    try:
+        # Préparer le nom du fichier
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        
+        if format == "json":
+            # Convertir en JSON
+            data_json = donnees_corrigees_df.to_dict(orient="records")
+            return {
+                "message": "Données corrigées exportées",
+                "data": data_json,
+                "filename": f"donnees_corrigees_{timestamp}.json",
+                "total_lignes": len(data_json)
+            }
+        
+        elif format == "csv":
+            # Convertir en CSV
+            csv_buffer = io.StringIO()
+            donnees_corrigees_df.to_csv(csv_buffer, index=False)
+            csv_content = csv_buffer.getvalue()
+            
+            return StreamingResponse(
+                io.StringIO(csv_content),
+                media_type="text/csv",
+                headers={
+                    "Content-Disposition": f"attachment; filename=donnees_corrigees_{timestamp}.csv"
+                }
+            )
+        
+        elif format == "excel":
+            # Convertir en Excel
+            excel_buffer = io.BytesIO()
+            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                donnees_corrigees_df.to_excel(writer, sheet_name='Données Corrigées', index=False)
+            
+            excel_buffer.seek(0)
+            
+            return StreamingResponse(
+                io.BytesIO(excel_buffer.read()),
+                media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                headers={
+                    "Content-Disposition": f"attachment; filename=donnees_corrigees_{timestamp}.xlsx"
+                }
+            )
+            
+    except Exception as e:
+        return {
+            "message": f"Erreur lors de l'export: {str(e)}",
+            "error": True
+        }
 
 " ******************** Section Soumission des données ********************************* "
 
 donnees = {}
+# ==================== ROUTES DE SOUMISSION DE DONNÉES (AUTHORITY, ANALYST, ADMIN) ====================
+
 # Endpoint pour afficher le formulaire de soumission
 @app.get("/formulaire-de-soumission", response_class=HTMLResponse)
-def formulaire(request: Request):
-    return templates.TemplateResponse("dataSoumission-Form.html", {"request": request})
+def formulaire(request: Request, current_user: Optional[models.User] = Depends(get_authority_user_optional)):
+    """Formulaire de soumission de données - Authority, Analyst, Admin"""
+    return templates.TemplateResponse("dataSoumission-Form.html", {"request": request, "current_user": current_user})
 
 @app.post("/submit-data-form")
 def submit_data(
@@ -185,7 +828,8 @@ def submit_data(
     periode_fin: str = Form(...),
     description: str = Form(...),
     source : str = Form(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_analyst_user_optional)
 ):
     global donnees_corrigees_df, rapport
 
@@ -241,9 +885,12 @@ def submit_data(
 
 "========================================================================================"
 
+# ==================== ROUTES D'EXPORTATION (TOUS LES UTILISATEURS AUTHENTIFIÉS) ====================
+
 # Endpoint pour afficher le formulaire d'exportation
 @app.get("/exploration", response_class=HTMLResponse)
-async def afficher_formulaire(request: Request, db: Session = Depends(get_db)):
+async def afficher_formulaire(request: Request, db: Session = Depends(get_db), current_user: Optional[models.User] = Depends(get_authenticated_user_optional)):
+    """Formulaire d'exportation - Tous les utilisateurs authentifiés"""
     regions = db.query(models.ModelCasDengue.region).distinct().all()
     regions = [r[0] for r in regions]
     regions.insert(0, "Toutes")
@@ -258,7 +905,8 @@ async def afficher_formulaire(request: Request, db: Session = Depends(get_db)):
         "limit": 100,
         "page_size": 25,
         "page": 1,
-        "iscriteres": False
+        "iscriteres": False,
+        "current_user": current_user
     })
 
 # Endpoint pour afficher les données avant exportation
@@ -272,7 +920,8 @@ async def affichage_donnees(
     page_size: int = Form(25),
     page: int = Form(1),
     scroll_to_table: str = Form(None),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
 ):
     errors = []
     form_data = {
@@ -408,7 +1057,8 @@ async def exportation_form(
     region: Optional[str] = Form(...),
     districts: Optional[List[str]] = Query(None),
     limit: Optional[int] = Form(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
 
 ):
     """_summary_
@@ -444,7 +1094,8 @@ async def exportation(
     region: Optional[str] = Query("Toutes"),
     districts: Optional[List[str]] = Query(None),
     limit: Optional[int] = Query(None),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
 ):
     """
     Cette fonction permet d'exporter des données filtrées en format CSV ou JSON.
@@ -829,13 +1480,15 @@ def data_mensuels(
 
 
 @app.get("/api/dashboard", response_class=HTMLResponse)
-def show_dashboard(request: Request,db: Session = Depends(get_db)):
+def show_dashboard(request: Request, db: Session = Depends(get_db), current_user: Optional[models.User] = Depends(get_authenticated_user_optional)):
+    """Dashboard principal - Tous les utilisateurs authentifiés"""
     regions = db.query(models.ModelCasDengue.region).distinct().all()
     regions = [r[0] for r in regions]
     regions.insert(0, "Toutes")
     return templates.TemplateResponse("dashboard.html",
                      {"request": request,
-                      "regions": regions})
+                      "regions": regions,
+                      "current_user": current_user})
 
 
 @app.get("/api/data/hebdomadaires")
@@ -1393,7 +2046,8 @@ def dashboard_indicateurs(
     frequence: str = 'W',
     region: str = "Toutes",
     district: str = "Toutes",
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
 ):
     result = None
 
@@ -1507,3 +2161,60 @@ def get_districts(region: str = Query(None), db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors de la récupération des districts: {str(e)}")
 
+#    la documentation
+
+@app.get("/api/documentation", response_class=HTMLResponse)
+def documentation(request: Request):
+    """Affiche la page de documentation"""
+    return templates.TemplateResponse("guide.html", {
+        "request": request,
+    })
+
+
+
+# ==================== ROUTES ADMIN (ADMIN SEULEMENT) ====================
+
+@app.get("/admin/dashboard", response_class=HTMLResponse)
+async def admin_dashboard_page(request: Request, current_user: models.User = Depends(get_admin_user_from_token)):
+    """Dashboard administrateur - Admin seulement"""
+    return templates.TemplateResponse("admin-dashboard.html", {"request": request, "admin": current_user})
+
+@app.get("/admin/create-user", response_class=HTMLResponse)
+async def admin_create_user_page(request: Request, current_user: models.User = Depends(get_admin_user_from_token)):
+    """Page de création d'utilisateur - Admin seulement"""
+    return templates.TemplateResponse("admin-create-user.html", {"request": request, "admin": current_user})
+
+@app.post("/admin/create-user")
+async def admin_create_user(
+    firstName: str = Form(...),
+    lastName: str = Form(...),
+    email: str = Form(...),
+    username: str = Form(...),
+    password: str = Form(...),
+    role: str = Form(...),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(admin_required)
+):
+    """Créer un utilisateur - Admin seulement"""
+    # Vérifier si l'utilisateur existe déjà
+    existing_user = db.query(models.User).filter(
+        (models.User.email == email) | (models.User.username == username)
+    ).first()
+    if existing_user:
+        return {"success": False, "message": "Email ou nom d'utilisateur déjà utilisé"}
+    # Créer le nouvel utilisateur
+    hashed_password = get_password_hash(password)
+    db_user = models.User(
+        first_name=firstName,
+        last_name=lastName,
+        email=email,
+        username=username,
+        hashed_password=hashed_password,
+        role=role,
+        is_active=True,
+        created_at=datetime.utcnow()
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return {"success": True, "message": "Utilisateur créé avec succès"}
