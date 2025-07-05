@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Rapport d'Analyse - Surveillance Dengue</title> 
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="/static/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+{% extends "base.html" %}
+
+{% block title %}Rapport d'Analyse - Surveillance Dengue{% endblock %}
+
+{% block extra_css %}
 
     <!-- Fonts and icons -->
     <script src="/static/assets/js/plugin/webfont/webfont.min.js"></script>
@@ -613,80 +611,10 @@
         }
       }
     </style>
-  </head>
+{% endblock %}
 
-  <body>
-    <!-- Header moderne -->
-    <header class="modern-header">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container mx-auto px-4 py-3">
-          <!-- Logo -->
-          <a href="/" class="header-logo">
-            <i class="fas fa-shield-virus me-2"></i>
-            Surveillance Dengue
-          </a>
-          
-          <!-- Indicateur de statut -->
-          <div class="status-indicator d-none d-md-flex">
-            <div class="status-dot"></div>
-            <span>Système Opérationnel</span>
-          </div>
-          
-          <!-- Bouton hamburger pour mobile -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          
-          <!-- Navigation -->
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-              <li class="nav-item">
-                <a href="/" class="nav-link-modern">
-                  <i class="fas fa-home me-1"></i>Accueil
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dashboard" class="nav-link-modern">
-                  <i class="fas fa-chart-line me-1"></i>Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/exploration" class="nav-link-modern">
-                  <i class="fas fa-search me-1"></i>Exploration
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/mise-a-jour-form" class="nav-link-modern">
-                  <i class="fas fa-upload me-1"></i>Mise à jour
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rapport" class="nav-link-modern active">
-                  <i class="fas fa-chart-bar me-1"></i>Rapport d'analyse
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern">
-                  <i class="fas fa-chart-pie me-1"></i>Indicateurs
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/api/documentation" class="nav-link-modern">
-                  <i class="fas fa-book me-1"></i>Documentation
-                </a>
-              </li>
-              <li class="nav-item ms-lg-3">
-                <a href="/login" class="btn-login">
-                  <i class="fas fa-sign-in-alt me-1"></i>Connexion
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <div class="container">
+{% block content %}
+   
       <div class="page-inner">
         <div class="page-header">
           <h3 class="fw-bold mb-3">
@@ -901,57 +829,9 @@
       </div>
     </div>
 
-    <!-- Pied de Page -->
-    <footer class="footer-modern">
-      <div class="container mx-auto">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>À Propos</h3>
-            <p>Surveillance Dengue est une plateforme innovante pour la surveillance et la gestion de la dengue. Nous travaillons pour prévenir et contrôler la propagation de cette maladie.</p>
-          </div>
-          <div class="footer-section">
-            <h3>Liens Rapides</h3>
-            <ul class="footer-links">
-              <li><a href="/">Accueil</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/exploration">Exploration</a></li>
-              <li><a href="/mise-a-jour-form">Mise à jour</a></li>
-              <li><a href="/dashboard/indicateurs-powerbi">Indicateurs</a></li>
-              <li><a href="/api/documentation">Documentation</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Contact</h3>
-            <div class="footer-contact">
-              <i class="fas fa-phone"></i>
-              <span>+1 (555) 123-4567</span>
-            </div>
-            <div class="footer-contact">
-              <i class="fas fa-envelope"></i>
-              <span>contact@dengue-surveillance.org</span>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 Surveillance Dengue. Tous droits réservés.</p>
-          <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-        </div>
-      </div>
-    </footer>
+{% endblock %}
 
-    <!-- Core JS Files -->
-    <script src="/static/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/static/assets/js/core/popper.min.js"></script>
-    <script src="/static/assets/js/core/bootstrap.min.js"></script>
-    <script src="/static/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="/static/assets/js/plugin/datatables/datatables.min.js"></script>
-    <script src="/static/assets/js/kaiadmin.min.js"></script>
-    <script src="/static/assets/js/demo.js"></script>
+{% block extra_js %}
 
     <script>
       $(document).ready(function () {
@@ -964,11 +844,6 @@
           }
         });
 
-       
-        
-        
-
-        
         // Les graphiques sont maintenant chargés dynamiquement via loadErrorData()
 
         // Animate progress bars
@@ -981,5 +856,6 @@
         });
       });
     </script>
-  </body>
-</html>
+{% endblock %}
+
+
