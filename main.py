@@ -17,7 +17,7 @@ from fastapi import (FastAPI,UploadFile, File,Form, Depends,Request,HTTPExceptio
 from typing import Union,List, Optional
 from fastapi.responses import (HTMLResponse, StreamingResponse, RedirectResponse)
 from sqlalchemy.orm import Session
-from schemas.database import get_db,engine
+from schemas.database import get_db,engine, SessionLocal
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from schemas import schemas, utils
@@ -32,13 +32,14 @@ import io
 import jwt
 from passlib.context import CryptContext
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from schemas.models import User
 
 "********************* Creation de l'Api *************************************"
 
 app = FastAPI()
 
 # Configuration de sécurité
-SECRET_KEY = "votre_clé_secrète_très_longue_et_complexe_ici_2024"
+SECRET_KEY = os.getenv("SECRET_KEY","votre_clé_secrète_très_longue_et_complexe_ici_2024")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -54,7 +55,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Dossier pour les fichiers HTML (Jinja2)
 templates = Jinja2Templates(directory="templates")
 
+# Créer les dossiers nécessaires
 os.makedirs("data_nettoyee", exist_ok=True)
+os.makedirs("logs", exist_ok=True)
 
 donnees_corrigees_df = None
 rapport = {}
@@ -140,18 +143,6 @@ async def get_analyst_user_optional(request: Request, db: Session = Depends(get_
     except HTTPException:
         return None
 
-
-
-" ******************* La page d'accueille ***********************************"
-
-#Page d'accueille
-
-@app.get("/", response_class=HTMLResponse)
-def get_accueil(request: Request):
-    return templates.TemplateResponse("accueil.html", {"request": request})
-
-
-" ******************* Routes de gestions des pages HTML ***************"
 
 
 "======================================================================================="
@@ -487,6 +478,23 @@ def require_auth(func):
         return await func(*args, **kwargs)
     return wrapper
 
+"======================================================================================="
+
+" ******************* La page d'accueille ***********************************"
+
+#Page d'accueille
+
+@app.get("/", response_class=HTMLResponse)
+async def get_accueil(request: Request, db: Session = Depends(get_db)):
+    '''if not current_user:
+        return templates.TemplateResponse("login.html", {"request": request})
+
+    
+    mail = current_user.email if current_user else "admin@gmail.com"
+    await utils.gestion_alertes_epidemiologiques(db=db, usermail=mail)
+        '''
+    return templates.TemplateResponse("accueil.html", {"request": request})
+
 
 "======================================================================================="
 " ******************* Section Cas de Dengue ********************************* "
@@ -574,103 +582,7 @@ async def voir_donnees_corrigees(request: Request, current_user: Optional[models
         "current_user": current_user
     })
 
-# endpoint pour afficher les erreurs par colonnes et par types
-@app.get("/rapport/erreurs-analyse")
-async def erreurs_par_colonnes_et_types(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
-    """
-    Endpoint pour afficher les erreurs par colonnes et par types lors de l'analyse d'un fichier.
-    
-    Returns:
-        dict: Dictionnaire contenant les erreurs par colonnes et par types
-    """
-    global rapport
-    
-    if not rapport:
-        return {
-            "message": "Aucun rapport d'analyse disponible. Veuillez d'abord analyser un fichier.",
-            "erreurs_par_colonnes": {},
-            "erreurs_par_types": {},
-            "resume": {}
-        }
-    
-    # Analyser les erreurs par colonnes et par types
-    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
-    
-    return {
-        "message": "Analyse des erreurs par colonnes et par types",
-        "rapport_complet": rapport,
-        **analyse_erreurs
-    }
-
-# endpoint pour obtenir le nombre d'erreurs par colonne (pour les graphiques)
-@app.get("/rapport/nb-erreurs-col")
-async def nombre_erreurs_par_colonne(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
-    """
-    Endpoint pour obtenir le nombre d'erreurs par colonne (utilisé pour les graphiques).
-    
-    Returns:
-        dict: Dictionnaire avec les données pour les graphiques
-    """
-    global rapport
-    
-    if not rapport:
-        return {
-            "labels": [],
-            "data": [],
-            "message": "Aucun rapport disponible"
-        }
-    
-    # Analyser les erreurs
-    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
-    
-    # Préparer les données pour les graphiques
-    colonnes = list(analyse_erreurs["erreurs_par_colonnes"].keys())
-    nb_erreurs = [analyse_erreurs["erreurs_par_colonnes"][col]["total_erreurs"] for col in colonnes]
-    
-    return {
-        "labels": colonnes,
-        "data": nb_erreurs,
-        "total_erreurs": analyse_erreurs["erreurs_par_types"]["total_erreurs"],
-        "resume": analyse_erreurs["resume"]
-    }
-
-# endpoint pour obtenir les erreurs par types (pour les graphiques)
-@app.get("/rapport/erreurs-par-types")
-async def erreurs_par_types(current_user: Optional[models.User] = Depends(get_analyst_user_optional)):
-    """
-    Endpoint pour obtenir les erreurs par types (utilisé pour les graphiques).
-    
-    Returns:
-        dict: Dictionnaire avec les données pour les graphiques
-    """
-    global rapport
-    
-    if not rapport:
-        return {
-            "labels": [],
-            "data": [],
-            "message": "Aucun rapport disponible"
-        }
-    
-    # Analyser les erreurs
-    analyse_erreurs = utils.analyser_erreurs_par_colonnes_et_types(rapport)
-    
-    # Préparer les données pour les graphiques
-    types_erreurs = []
-    nb_erreurs = []
-    
-    for type_erreur, count in analyse_erreurs["erreurs_par_types"].items():
-        if type_erreur != "total_erreurs" and isinstance(count, (int, float)) and count > 0:
-            types_erreurs.append(type_erreur.replace("_", " ").title())
-            nb_erreurs.append(count)
-    
-    return {
-        "labels": types_erreurs,
-        "data": nb_erreurs,
-        "total_erreurs": analyse_erreurs["erreurs_par_types"]["total_erreurs"],
-        "resume": analyse_erreurs["resume"]
-    }
-
+"======================================================================================="
 # endpoint pour exporter le rapport d'analyse
 @app.get("/export-rapport")
 async def exporter_rapport(
@@ -808,7 +720,6 @@ async def exporter_donnees_corrigees(
 
 " ******************** Section Soumission des données ********************************* "
 
-donnees = {}
 # ==================== ROUTES DE SOUMISSION DE DONNÉES (AUTHORITY, ANALYST, ADMIN) ====================
 
 # Endpoint pour afficher le formulaire de soumission
@@ -991,7 +902,7 @@ async def affichage_donnees(
     offset = (page - 1) * page_size
     donnees = query.offset(offset).limit(page_size).all()
 
-    # ✅ Conversion des données en DataFrame
+    # Conversion des données en DataFrame
     data_dicts = [d.__dict__ for d in donnees]
     for d in data_dicts:
         d.pop('_sa_instance_state', None)
@@ -1150,15 +1061,17 @@ async def configurer_alerte(request: Request):
 # Endpoint pour déclencher manuellement les alertes
 @app.post("/api/alerts/verifier")
 async def verifier_alertes(
-    usermail: str = Query("admin@gmail.com"),
     date_debut: str = Query(None),
     date_fin: str = Query(None),
     region: str = Query("Toutes"),
     district: str = Query("Toutes"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
     """Déclenche manuellement la vérification des alertes"""
+    usermail = current_user.email if current_user else "admin@gmail.com"
     try:
+        
         resultat = utils.gestion_alertes_epidemiologiques(
             db, usermail, date_debut, date_fin, region, district
         )
@@ -2218,3 +2131,39 @@ async def admin_create_user(
     db.commit()
     db.refresh(db_user)
     return {"success": True, "message": "Utilisateur créé avec succès"}
+
+# Création automatique de l'admin au démarrage
+def create_admin_user(statut = " local"):
+    if statut == "deploying":
+    
+        username = "said"
+        email = "yamsaid74@gmail.com"
+        mot_passe = "1122Aa"
+        first_name = "Said"
+        last_name = "YAMEOGO"
+        role = "admin"
+        is_active = True
+        db: Session = SessionLocal()
+        user = db.query(User).filter(User.username == username).first()
+        if not user:
+            hashed_password = pwd_context.hash(mot_passe)
+            user = User(
+                username=username,
+                email=email,
+                hashed_password=hashed_password,
+                first_name=first_name,
+                last_name=last_name,
+                role=role,
+                is_active=is_active
+            )
+            db.add(user)
+            db.commit()
+            print("Utilisateur admin créé automatiquement.")
+        else:
+            print("L'utilisateur admin existe déjà.")
+        db.close()
+
+# Appeler la fonction au démarrage
+#create_admin_user(statut = "deploying")
+
+create_admin_user(statut = "local")

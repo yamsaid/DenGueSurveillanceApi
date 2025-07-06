@@ -568,6 +568,13 @@
                         </div>
                     </div>
 
+                    <!-- Barre de progression lors de la soumission -->
+                    <div id="progressBarContainer" style="display:none; margin-bottom:1rem;">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%">Envoi en cours...</div>
+                        </div>
+                    </div>
+
                     <div class="navigation-buttons">
                         <button type="button" class="btn-modern btn-secondary-modern" onclick="prevStep()">
                             <i class="fas fa-arrow-left"></i>
@@ -577,6 +584,10 @@
                             <i class="fas fa-paper-plane"></i>
                             Soumettre
                         </button>
+                        <a href="/" class="btn-modern btn-secondary-modern">
+                            <i class="fas fa-home"></i>
+                            Retour à l'Accueil
+                        </a>
                     </div>
                 </div>
             </form>
@@ -824,6 +835,29 @@
         document.getElementById('submissionForm').addEventListener('submit', function(e) {
             if (!validateCurrentStep()) {
                 e.preventDefault(); // Empêche la soumission seulement si le formulaire n'est pas valide
+            } else {
+                document.getElementById('progressBarContainer').style.display = 'block';
+                // Redéfinir la soumission pour AJAX
+                e.preventDefault();
+                const form = this;
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message && data.message.includes('succès')) {
+                        window.location.href = '/';
+                    } else {
+                        document.getElementById('progressBarContainer').style.display = 'none';
+                        showAlert(data.message || 'Erreur lors de la soumission.', 'danger');
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('progressBarContainer').style.display = 'none';
+                    showAlert('Erreur lors de la soumission.', 'danger');
+                });
             }
         });
     </script>

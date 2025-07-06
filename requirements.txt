@@ -11,6 +11,6 @@ reportlab
 schedule
 faker
 pydantic
-python-jose[cryptography]
+PyJWT
 passlib[bcrypt]
-python-multipart 
+gunicorn

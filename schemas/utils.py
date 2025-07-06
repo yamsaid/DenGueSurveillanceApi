@@ -1005,6 +1005,7 @@ def gestion_alertes_epidemiologiques(
     Returns:
         dict: Résumé des alertes générées
     """
+    
     # 1. Définir la période d'analyse si non fournie
     if not date_debut or not date_fin:
         # Utiliser la dernière semaine par défaut

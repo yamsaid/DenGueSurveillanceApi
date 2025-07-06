@@ -739,6 +739,11 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="database-tab" data-bs-toggle="tab" data-bs-target="#database" type="button" role="tab">
+                        <i class="fas fa-database me-2"></i>Base de Données
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
                     <button class="nav-link" id="maintenance-tab" data-bs-toggle="tab" data-bs-target="#maintenance" type="button" role="tab">
                         <i class="fas fa-tools me-2"></i>Maintenance
                     </button>
@@ -929,6 +934,149 @@
                                 <li>Graphiques des erreurs détectées</li>
                                 <li>Tableau des corrections appliquées</li>
                                 <li>Boutons d'action (télécharger, afficher données corrigées)</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-upload"></i>
+                            6. Formulaire de Soumission (`/dataSoumission-Form.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Permet la soumission de données épidémiologiques via un formulaire multi-étapes, avec validation et barre de progression.</p>
+                            
+                            <h4>Champs principaux</h4>
+                            <ul>
+                                <li><strong>Informations utilisateur</strong> : nom, email, centre, poste</li>
+                                <li><strong>Période de soumission</strong> : date de début, date de fin</li>
+                                <li><strong>Description et source</strong> : description libre, source des données</li>
+                                <li><strong>Fichier de données</strong> : import CSV</li>
+                                <li><strong>Clé API</strong> (si nécessaire)</li>
+                                <li><strong>Validation</strong> : messages d'erreur et de succès, vérification automatique</li>
+                            </ul>
+                            
+                            <h4>Options</h4>
+                            <ul>
+                                <li>Barre de progression dynamique</li>
+                                <li>Validation champ par champ</li>
+                                <li>Bouton de retour à l'accueil</li>
+                                <li>Redirection automatique après soumission réussie</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-search"></i>
+                            7. Exploration des Données (`/exploration.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Page d'exploration avancée des données, avec filtres, statistiques et visualisations.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Filtres dynamiques</strong> : date, région, district, etc.</li>
+                                <li><strong>Statistiques clés</strong> : nombre de cas, taux de positivité, hospitalisations, décès…</li>
+                                <li><strong>Tableaux interactifs</strong> : tri, recherche, pagination</li>
+                                <li><strong>Graphiques et visualisations</strong> : tendances, répartitions…</li>
+                                <li><strong>Export des résultats</strong> : CSV, JSON</li>
+                                <li><strong>Affichage responsive</strong></li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-tachometer-alt"></i>
+                            8. Dashboard (`/dashboard.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Tableau de bord centralisé affichant les indicateurs épidémiologiques en temps réel.</p>
+                            
+                            <h4>Fonctionnalités</h4>
+                            <ul>
+                                <li><strong>Cartes de métriques</strong> : cas, positifs, hospitalisés, décès, variants…</li>
+                                <li><strong>Graphiques interactifs</strong> : tendances, comparaisons…</li>
+                                <li><strong>Filtres globaux</strong> : période, région…</li>
+                                <li><strong>Export des graphiques</strong> : PNG, PDF</li>
+                                <li><strong>Visualisation des évolutions et alertes</strong></li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-user-plus"></i>
+                            9. Inscription (`/register.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Formulaire d'inscription pour créer un compte utilisateur.</p>
+                            
+                            <h4>Champs</h4>
+                            <ul>
+                                <li><strong>Prénom, nom, email, nom d'utilisateur</strong></li>
+                                <li><strong>Mot de passe</strong> (avec affichage/masquage)</li>
+                                <li><strong>Validation en temps réel</strong> : force du mot de passe, unicité email</li>
+                                <li><strong>Bouton d'inscription, lien vers la connexion</strong></li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-sign-in-alt"></i>
+                            10. Connexion (`/login.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Formulaire de connexion sécurisé.</p>
+                            
+                            <h4>Champs</h4>
+                            <ul>
+                                <li><strong>Email ou nom d'utilisateur</strong></li>
+                                <li><strong>Mot de passe</strong> (affichage/masquage)</li>
+                                <li><strong>Bouton de connexion</strong></li>
+                                <li><strong>Lien vers l'inscription et la réinitialisation du mot de passe</strong></li>
+                                <li><strong>Messages d'erreur</strong> en cas d'échec</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-key"></i>
+                            11. Réinitialisation du mot de passe (`/reset-password.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Permet de réinitialiser son mot de passe via un formulaire sécurisé.</p>
+                            
+                            <h4>Champs</h4>
+                            <ul>
+                                <li><strong>Email</strong></li>
+                                <li><strong>Nouveau mot de passe</strong> (avec confirmation)</li>
+                                <li><strong>Validation de la force du mot de passe</strong></li>
+                                <li><strong>Bouton de réinitialisation</strong></li>
+                                <li><strong>Messages de succès/erreur</strong></li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-user-shield"></i>
+                            12. Création d'utilisateur par l'admin (`/admin-create-user.html`)
+                        </h3>
+                        <div class="page-example">
+                            <h4>Description</h4>
+                            <p>Formulaire réservé à l'administrateur pour créer un nouvel utilisateur.</p>
+                            
+                            <h4>Champs</h4>
+                            <ul>
+                                <li><strong>Prénom, nom, email, nom d'utilisateur</strong></li>
+                                <li><strong>Mot de passe</strong></li>
+                                <li><strong>Rôle</strong> (Utilisateur ou Administrateur)</li>
+                                <li><strong>Validation des champs</strong></li>
+                                <li><strong>Bouton de création</strong></li>
+                                <li><strong>Messages de succès/erreur</strong></li>
+                            </ul>
+                            
+                            <h4>Options</h4>
+                            <ul>
+                                <li>Sélection du rôle</li>
+                                <li>Retour à l'accueil</li>
+                                <li>Affichage dynamique des messages</li>
                             </ul>
                         </div>
                     </div>
@@ -1788,7 +1936,7 @@ print(f"Cas guéris: {resultat_issue['nbgueri']}")</code></pre>
 
                         <h3 class="subsection-title">
                             <i class="fas fa-unlock"></i>
-                            A. Erreurs d'Authentification
+                            A. Erreurs d'Authentification et Messages d'Autorisation
                         </h3>
                         <div class="page-example">
                             <h4>Problème</h4>
@@ -1796,6 +1944,15 @@ print(f"Cas guéris: {resultat_issue['nbgueri']}")</code></pre>
                             
                             <h4>Solution</h4>
                             <p>Vérifier les credentials et les permissions utilisateur</p>
+                            
+                            <h4>Messages d'Autorisation</h4>
+                            <ul>
+                                <li><strong>"Accès refusé - Authentification requise"</strong> : L'utilisateur n'est pas connecté</li>
+                                <li><strong>"Token expiré - Veuillez vous reconnecter"</strong> : La session a expiré</li>
+                                <li><strong>"Permissions insuffisantes"</strong> : L'utilisateur n'a pas les droits requis</li>
+                                <li><strong>"Compte désactivé"</strong> : Le compte utilisateur a été suspendu</li>
+                                <li><strong>"Trop de tentatives de connexion"</strong> : Compte temporairement bloqué</li>
+                            </ul>
                             
                             <h4>Code de vérification</h4>
                             <div class="code-block">
@@ -1815,7 +1972,93 @@ async function verifierAuth() {
     } catch (error) {
         console.error('Erreur d\'authentification:', error);
     }
+}
+
+// Gestion des messages d'autorisation
+function gererMessageAutorisation(statusCode, message) {
+    switch(statusCode) {
+        case 401:
+            if (message.includes('Token expiré')) {
+                alert('Votre session a expiré. Veuillez vous reconnecter.');
+                window.location.href = '/login';
+            } else if (message.includes('Compte désactivé')) {
+                alert('Votre compte a été désactivé. Contactez l\'administrateur.');
+            } else {
+                alert('Authentification requise. Veuillez vous connecter.');
+                window.location.href = '/login';
+            }
+            break;
+        case 403:
+            alert('Permissions insuffisantes pour accéder à cette ressource.');
+            break;
+        case 429:
+            alert('Trop de tentatives. Veuillez patienter avant de réessayer.');
+            break;
+        default:
+            alert('Erreur d\'authentification: ' + message);
+    }
 }</code></pre>
+                            </div>
+                            
+                            <h4>Gestion côté serveur</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('auth-server')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="auth-server"><code class="language-python">from fastapi import HTTPException, status
+from fastapi.security import HTTPBearer
+
+security = HTTPBearer()
+
+async def verifier_autorisation(token: str, role_requis: str = None):
+    """Vérification des autorisations utilisateur"""
+    try:
+        # Décoder le token JWT
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        user_id = payload.get("sub")
+        
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token invalide - Authentification requise"
+            )
+        
+        # Vérifier si l'utilisateur existe et est actif
+        user = get_user_by_id(user_id)
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Utilisateur non trouvé"
+            )
+        
+        if not user.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Compte désactivé"
+            )
+        
+        # Vérifier les permissions si un rôle est requis
+        if role_requis and user.role != role_requis:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Permissions insuffisantes"
+            )
+        
+        return user
+        
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token expiré - Veuillez vous reconnecter"
+        )
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token invalide"
+        )</code></pre>
                             </div>
                         </div>
 
@@ -2200,6 +2443,93 @@ volumes:
                             A. Authentification et Autorisation
                         </h3>
                         <div class="page-example">
+                            <h4>Système de Rôles et Permissions</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Rôle</th>
+                                            <th>Description</th>
+                                            <th>Permissions</th>
+                                            <th>Accès aux Pages</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Utilisateur</strong></td>
+                                            <td>Utilisateur standard du système</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Consulter les données publiques</li>
+                                                    <li>Soumettre des données</li>
+                                                    <li>Exporter ses propres données</li>
+                                                    <li>Consulter les alertes</li>
+                                                    <li>Générer des rapports basiques</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Dashboard</li>
+                                                    <li>Exploration des données</li>
+                                                    <li>Formulaire de soumission</li>
+                                                    <li>Rapport d'analyse</li>
+                                                    <li>Alertes (lecture seule)</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Administrateur</strong></td>
+                                            <td>Administrateur système avec privilèges étendus</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Toutes les permissions utilisateur</li>
+                                                    <li>Gérer les utilisateurs</li>
+                                                    <li>Configurer les alertes</li>
+                                                    <li>Accéder aux données sensibles</li>
+                                                    <li>Gérer les paramètres système</li>
+                                                    <li>Consulter les logs</li>
+                                                    <li>Exporter toutes les données</li>
+                                                    <li>Gérer les rôles</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Toutes les pages utilisateur</li>
+                                                    <li>Admin dashboard</li>
+                                                    <li>Création d'utilisateurs</li>
+                                                    <li>Configuration des alertes</li>
+                                                    <li>Gestion des paramètres</li>
+                                                    <li>Logs système</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Super Admin</strong></td>
+                                            <td>Administrateur principal avec tous les droits</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Toutes les permissions administrateur</li>
+                                                    <li>Supprimer des utilisateurs</li>
+                                                    <li>Modifier les rôles</li>
+                                                    <li>Accéder aux logs de sécurité</li>
+                                                    <li>Gérer les sauvegardes</li>
+                                                    <li>Configurer le système</li>
+                                                </ul>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <li>Toutes les pages</li>
+                                                    <li>Gestion avancée des utilisateurs</li>
+                                                    <li>Configuration système</li>
+                                                    <li>Sauvegardes</li>
+                                                    <li>Logs de sécurité</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <h4>Gestion des Sessions</h4>
                             <div class="code-block">
                                 <div class="code-header">
@@ -2235,6 +2565,79 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
         raise HTTPException(status_code=401, detail="Token expiré")
     except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Token invalide")</code></pre>
+                            </div>
+
+                            <h4>Vérification des Permissions</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('permission-check')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="permission-check"><code class="language-python">from enum import Enum
+from fastapi import HTTPException, status
+
+class UserRole(Enum):
+    USER = "user"
+    ADMIN = "admin"
+    SUPER_ADMIN = "super_admin"
+
+class Permission(Enum):
+    READ_DATA = "read_data"
+    WRITE_DATA = "write_data"
+    MANAGE_USERS = "manage_users"
+    MANAGE_ALERTS = "manage_alerts"
+    EXPORT_ALL_DATA = "export_all_data"
+    ACCESS_LOGS = "access_logs"
+    MANAGE_SYSTEM = "manage_system"
+
+# Mapping des rôles aux permissions
+ROLE_PERMISSIONS = {
+    UserRole.USER: [
+        Permission.READ_DATA,
+        Permission.WRITE_DATA
+    ],
+    UserRole.ADMIN: [
+        Permission.READ_DATA,
+        Permission.WRITE_DATA,
+        Permission.MANAGE_USERS,
+        Permission.MANAGE_ALERTS,
+        Permission.EXPORT_ALL_DATA,
+        Permission.ACCESS_LOGS
+    ],
+    UserRole.SUPER_ADMIN: [
+        Permission.READ_DATA,
+        Permission.WRITE_DATA,
+        Permission.MANAGE_USERS,
+        Permission.MANAGE_ALERTS,
+        Permission.EXPORT_ALL_DATA,
+        Permission.ACCESS_LOGS,
+        Permission.MANAGE_SYSTEM
+    ]
+}
+
+def check_permission(user_role: UserRole, required_permission: Permission):
+    """Vérifier si l'utilisateur a la permission requise"""
+    if user_role not in ROLE_PERMISSIONS:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Rôle utilisateur invalide"
+        )
+    
+    if required_permission not in ROLE_PERMISSIONS[user_role]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Permissions insuffisantes"
+        )
+    
+    return True
+
+# Exemple d'utilisation dans un endpoint
+@app.get("/api/admin/users")
+async def get_users(current_user: User = Depends(get_current_user)):
+    check_permission(current_user.role, Permission.MANAGE_USERS)
+    # Logique pour récupérer les utilisateurs...</code></pre>
                             </div>
 
                             <h4>Middleware de Sécurité</h4>
@@ -2468,6 +2871,747 @@ async def rate_limit_middleware(request: Request, call_next):
     
     response = await call_next(request)
     return response</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Documentation Tab -->
+                <div class="tab-pane fade" id="database" role="tabpanel">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-database"></i>
+                            Documentation de la Base de Données
+                        </h2>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-table"></i>
+                            A. Structure des Tables
+                        </h3>
+                        <div class="page-example">
+                            <h4>Table des Cas de Dengue (`tdengue2`)</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Variable</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Valeurs Possibles</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Contraintes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>idCas</strong></td>
+                                            <td>Integer (Primary Key)</td>
+                                            <td>Identifiant unique du cas</td>
+                                            <td>Auto-incrémenté</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>date_consultation</strong></td>
+                                            <td>Date</td>
+                                            <td>Date de consultation du patient</td>
+                                            <td>Format YYYY-MM-DD</td>
+                                            <td>NULL</td>
+                                            <td>Date valide</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>region</strong></td>
+                                            <td>String</td>
+                                            <td>Région administrative</td>
+                                            <td>centre, hauts-Bassins</td>
+                                            <td>Centre</td>
+                                            <td>Min 2, Max 50 caractères</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>district</strong></td>
+                                            <td>String</td>
+                                            <td>District sanitaire</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>sexe</strong></td>
+                                            <td>String</td>
+                                            <td>Sexe du patient</td>
+                                            <td>feminin, masculin, f, m, homme, femme</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>age</strong></td>
+                                            <td>Integer</td>
+                                            <td>Âge du patient en années</td>
+                                            <td>0-120</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, > 0</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>resultat_test</strong></td>
+                                            <td>String</td>
+                                            <td>Résultat du test de dengue</td>
+                                            <td>positif, négatif</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>serotype</strong></td>
+                                            <td>String</td>
+                                            <td>Sérotype du virus dengue</td>
+                                            <td>denv2, denv3</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>hospitalise</strong></td>
+                                            <td>String</td>
+                                            <td>Statut d'hospitalisation</td>
+                                            <td>Oui, Non</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>issue</strong></td>
+                                            <td>String</td>
+                                            <td>Issue du cas</td>
+                                            <td>guéri, en traitement, décédé, inconnue</td>
+                                            <td>Guéri</td>
+                                            <td>Min 2, Max 50 caractères</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>id_source</strong></td>
+                                            <td>Integer (Foreign Key)</td>
+                                            <td>Référence à la soumission</td>
+                                            <td>ID de tsoumissions2</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h4>Table des Soumissions (`tsoumissions2`)</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Variable</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Valeurs Possibles</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Contraintes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>id</strong></td>
+                                            <td>Integer (Primary Key)</td>
+                                            <td>Identifiant unique de la soumission</td>
+                                            <td>Auto-incrémenté</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>date_soumission</strong></td>
+                                            <td>Date</td>
+                                            <td>Date de soumission des données</td>
+                                            <td>Format YYYY-MM-DD</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>username</strong></td>
+                                            <td>String(255)</td>
+                                            <td>Nom d'utilisateur qui a soumis</td>
+                                            <td>Libre</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>centre</strong></td>
+                                            <td>String(255)</td>
+                                            <td>Centre de santé</td>
+                                            <td>Libre</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>poste</strong></td>
+                                            <td>String(255)</td>
+                                            <td>Poste de l'utilisateur</td>
+                                            <td>Libre</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>apikey</strong></td>
+                                            <td>String(64)</td>
+                                            <td>Clé API pour authentification</td>
+                                            <td>Libre</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>periode_debut</strong></td>
+                                            <td>Date</td>
+                                            <td>Début de la période des données</td>
+                                            <td>Format YYYY-MM-DD</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>periode_fin</strong></td>
+                                            <td>Date</td>
+                                            <td>Fin de la période des données</td>
+                                            <td>Format YYYY-MM-DD</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>sources</strong></td>
+                                            <td>String(255)</td>
+                                            <td>Sources des données soumises</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>description</strong></td>
+                                            <td>Text</td>
+                                            <td>Description de la soumission</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h4>Table des Utilisateurs (`users`)</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Variable</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Valeurs Possibles</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Contraintes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>id</strong></td>
+                                            <td>Integer (Primary Key)</td>
+                                            <td>Identifiant unique de l'utilisateur</td>
+                                            <td>Auto-incrémenté</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>username</strong></td>
+                                            <td>String(50)</td>
+                                            <td>Nom d'utilisateur</td>
+                                            <td>Libre</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>email</strong></td>
+                                            <td>String(100)</td>
+                                            <td>Adresse email</td>
+                                            <td>Format email valide</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>hashed_password</strong></td>
+                                            <td>String(555)</td>
+                                            <td>Mot de passe chiffré</td>
+                                            <td>Hash bcrypt</td>
+                                            <td>-</td>
+                                            <td>Obligatoire</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>first_name</strong></td>
+                                            <td>String(50)</td>
+                                            <td>Prénom</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>last_name</strong></td>
+                                            <td>String(50)</td>
+                                            <td>Nom de famille</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>role</strong></td>
+                                            <td>String(20)</td>
+                                            <td>Rôle de l'utilisateur</td>
+                                            <td>user, analyst, admin</td>
+                                            <td>user</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>is_active</strong></td>
+                                            <td>Boolean</td>
+                                            <td>Statut actif de l'utilisateur</td>
+                                            <td>true, false</td>
+                                            <td>true</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>created_at</strong></td>
+                                            <td>DateTime</td>
+                                            <td>Date de création</td>
+                                            <td>Format datetime</td>
+                                            <td>datetime.utcnow()</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>updated_at</strong></td>
+                                            <td>DateTime</td>
+                                            <td>Date de mise à jour</td>
+                                            <td>Format datetime</td>
+                                            <td>datetime.utcnow()</td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h4>Table des Seuils d'Alerte (`seuil_alert`)</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Variable</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Valeurs Possibles</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Contraintes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>id</strong></td>
+                                            <td>Integer (Primary Key)</td>
+                                            <td>Identifiant unique du seuil</td>
+                                            <td>Auto-incrémenté</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>usermail</strong></td>
+                                            <td>String</td>
+                                            <td>Email de l'utilisateur</td>
+                                            <td>Format email valide</td>
+                                            <td>admin@gmail.com</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>intervalle</strong></td>
+                                            <td>String</td>
+                                            <td>Intervalle de vérification</td>
+                                            <td>1 (hebdomadaire), 2 (mensuel), 3 (annuel)</td>
+                                            <td>1</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_positivite</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de positivité (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_hospitalisation</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil d'hospitalisation (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_deces</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de décès (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_positivite_region</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de positivité par région (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_hospitalisation_region</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil d'hospitalisation par région (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_deces_region</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de décès par région (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_positivite_district</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de positivité par district (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_hospitalisation_district</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil d'hospitalisation par district (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>seuil_deces_district</strong></td>
+                                            <td>Integer</td>
+                                            <td>Seuil de décès par district (%)</td>
+                                            <td>0-100</td>
+                                            <td>10</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>created_at</strong></td>
+                                            <td>DateTime</td>
+                                            <td>Date de création</td>
+                                            <td>Format datetime</td>
+                                            <td>datetime.now()</td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h4>Table des Logs d'Alerte (`alert_logs`)</h4>
+                            <div class="table-modern">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Variable</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Valeurs Possibles</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Contraintes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>id</strong></td>
+                                            <td>Integer (Primary Key)</td>
+                                            <td>Identifiant unique du log</td>
+                                            <td>Auto-incrémenté</td>
+                                            <td>-</td>
+                                            <td>Obligatoire, Unique</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>id_seuil</strong></td>
+                                            <td>Integer (Foreign Key)</td>
+                                            <td>Référence au seuil d'alerte</td>
+                                            <td>ID de seuil_alert</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>usermail</strong></td>
+                                            <td>String</td>
+                                            <td>Email de l'utilisateur</td>
+                                            <td>Format email valide</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>severity</strong></td>
+                                            <td>String</td>
+                                            <td>Niveau de sévérité</td>
+                                            <td>1 (faible), 2 (moyen), 3 (élevé)</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>status</strong></td>
+                                            <td>String</td>
+                                            <td>Statut de l'alerte</td>
+                                            <td>1 (en attente), 2 (en cours), 3 (terminé)</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>message</strong></td>
+                                            <td>String</td>
+                                            <td>Message d'alerte</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>region</strong></td>
+                                            <td>String</td>
+                                            <td>Région concernée</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>district</strong></td>
+                                            <td>String</td>
+                                            <td>District concerné</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>notification_type</strong></td>
+                                            <td>String</td>
+                                            <td>Type de notification</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>recipient</strong></td>
+                                            <td>String</td>
+                                            <td>Destinataire de l'alerte</td>
+                                            <td>Libre</td>
+                                            <td>NULL</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>created_at</strong></td>
+                                            <td>DateTime</td>
+                                            <td>Date de création</td>
+                                            <td>Format datetime</td>
+                                            <td>datetime.now()</td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-check-circle"></i>
+                            B. Validation et Correction Automatique
+                        </h3>
+                        <div class="page-example">
+                            <h4>Règles de Validation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Python</span>
+                                    <button class="copy-btn" onclick="copyCode('validation-rules')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="validation-rules"><code class="language-python"># Règles de validation pour les cas de dengue
+VALIDATION_RULES = {
+    "region": {
+        "valid_values": ["centre", "hauts-Bassins"],
+        "default": "Centre",
+        "case_sensitive": False
+    },
+    "sexe": {
+        "valid_values": ["feminin", "masculin", "f", "m", "homme", "femme"],
+        "mapping": {
+            "f": "feminin",
+            "m": "masculin",
+            "homme": "masculin",
+            "femme": "feminin"
+        }
+    },
+    "age": {
+        "min": 0,
+        "max": 120,
+        "default": None  # Pas de valeur par défaut
+    },
+    "resultat_test": {
+        "valid_values": ["positif", "négatif"],
+        "case_sensitive": False
+    },
+    "serotype": {
+        "valid_values": ["denv2", "denv3"],
+        "case_sensitive": False
+    },
+    "issue": {
+        "valid_values": ["guéri", "en traitement", "décédé", "inconnue"],
+        "default": "Guéri",
+        "case_sensitive": False
+    }
+}
+
+def correct_data_inconsistencies(data):
+    """Corriger automatiquement les incohérences dans les données"""
+    corrected_data = data.copy()
+    
+    # Correction de la région
+    if data.get("region"):
+        region_lower = data["region"].lower()
+        if region_lower in VALIDATION_RULES["region"]["valid_values"]:
+            corrected_data["region"] = VALIDATION_RULES["region"]["valid_values"][0]
+        else:
+            corrected_data["region"] = VALIDATION_RULES["region"]["default"]
+    
+    # Correction du sexe
+    if data.get("sexe"):
+        sexe_lower = data["sexe"].lower()
+        if sexe_lower in VALIDATION_RULES["sexe"]["mapping"]:
+            corrected_data["sexe"] = VALIDATION_RULES["sexe"]["mapping"][sexe_lower]
+        elif sexe_lower in VALIDATION_RULES["sexe"]["valid_values"]:
+            corrected_data["sexe"] = sexe_lower
+        else:
+            corrected_data["sexe"] = "inconnue"
+    
+    # Correction de l'âge
+    if data.get("age"):
+        try:
+            age = int(data["age"])
+            if age < VALIDATION_RULES["age"]["min"] or age > VALIDATION_RULES["age"]["max"]:
+                corrected_data["age"] = None
+            else:
+                corrected_data["age"] = age
+        except (ValueError, TypeError):
+            corrected_data["age"] = None
+    
+    # Correction du résultat de test
+    if data.get("resultat_test"):
+        test_lower = data["resultat_test"].lower()
+        if test_lower in VALIDATION_RULES["resultat_test"]["valid_values"]:
+            corrected_data["resultat_test"] = test_lower
+        else:
+            corrected_data["resultat_test"] = None
+    
+    # Correction du sérotype
+    if data.get("serotype"):
+        serotype_lower = data["serotype"].lower()
+        if serotype_lower in VALIDATION_RULES["serotype"]["valid_values"]:
+            corrected_data["serotype"] = serotype_lower
+        else:
+            corrected_data["serotype"] = None
+    
+    # Correction de l'issue
+    if data.get("issue"):
+        issue_lower = data["issue"].lower()
+        if issue_lower in VALIDATION_RULES["issue"]["valid_values"]:
+            corrected_data["issue"] = issue_lower
+        else:
+            corrected_data["issue"] = VALIDATION_RULES["issue"]["default"]
+    
+    return corrected_data</code></pre>
+                            </div>
+
+                            <h4>Types de Données et Formats</h4>
+                            <div class="alert-modern alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Note importante :</strong> Toutes les dates doivent être au format YYYY-MM-DD. Les valeurs textuelles sont insensibles à la casse et seront automatiquement normalisées.
+                                </div>
+                            </div>
+
+                            <h4>Gestion des Valeurs Manquantes</h4>
+                            <ul>
+                                <li><strong>Champs obligatoires</strong> : idCas, sexe, age, id_source</li>
+                                <li><strong>Champs optionnels</strong> : date_consultation, region, district, resultat_test, serotype, hospitalise, issue</li>
+                                <li><strong>Valeurs par défaut</strong> : region="Centre", issue="Guéri"</li>
+                                <li><strong>Correction automatique</strong> : Les valeurs incohérentes sont remplacées par des valeurs par défaut ou NULL</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="subsection-title">
+                            <i class="fas fa-chart-line"></i>
+                            C. Relations entre Tables
+                        </h3>
+                        <div class="page-example">
+                            <h4>Schéma des Relations</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">SQL</span>
+                                    <button class="copy-btn" onclick="copyCode('table-relations')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="table-relations"><code class="language-sql">-- Relation entre cas de dengue et soumissions
+tdengue2.id_source → tsoumissions2.id
+
+-- Relation entre alertes et seuils
+alert_logs.id_seuil → seuil_alert.id
+
+-- Relation entre utilisateurs et seuils (via email)
+seuil_alert.usermail ↔ users.email
+
+-- Relations principales :
+-- 1. Un cas de dengue appartient à une soumission
+-- 2. Une soumission peut contenir plusieurs cas
+-- 3. Un utilisateur peut avoir plusieurs seuils d'alerte
+-- 4. Un seuil d'alerte peut générer plusieurs logs d'alerte</code></pre>
+                            </div>
+
+                            <h4>Requêtes d'Analyse Recommandées</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">SQL</span>
+                                    <button class="copy-btn" onclick="copyCode('analysis-queries')">
+                                        <i class="fas fa-copy me-1"></i>Copier
+                                    </button>
+                                </div>
+                                <pre class="code-content" id="analysis-queries"><code class="language-sql">-- Nombre de cas par région
+SELECT region, COUNT(*) as nb_cas
+FROM tdengue2
+GROUP BY region;
+
+-- Taux de positivité par district
+SELECT district, 
+       COUNT(*) as total_tests,
+       COUNT(CASE WHEN resultat_test = 'positif' THEN 1 END) as cas_positifs,
+       ROUND(COUNT(CASE WHEN resultat_test = 'positif' THEN 1 END) * 100.0 / COUNT(*), 2) as taux_positivite
+FROM tdengue2
+WHERE resultat_test IS NOT NULL
+GROUP BY district;
+
+-- Évolution temporelle des cas
+SELECT DATE_TRUNC('month', date_consultation) as mois,
+       COUNT(*) as nb_cas
+FROM tdengue2
+WHERE date_consultation IS NOT NULL
+GROUP BY DATE_TRUNC('month', date_consultation)
+ORDER BY mois;
+
+-- Analyse par sérotype
+SELECT serotype, 
+       COUNT(*) as nb_cas,
+       COUNT(CASE WHEN hospitalise = 'Oui' THEN 1 END) as hospitalisations
+FROM tdengue2
+WHERE serotype IS NOT NULL
+GROUP BY serotype;</code></pre>
                             </div>
                         </div>
                     </div>
