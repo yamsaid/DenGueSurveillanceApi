@@ -1,0 +1,17 @@
+include README.md
+include LICENSE
+include requirements.txt
+include MANIFEST.in
+
+recursive-include dengsurvab *.json
+recursive-include dengsurvab *.yaml
+recursive-include dengsurvab *.yml
+
+recursive-include examples *.py
+recursive-include tests *.py
+
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.pyd
+global-exclude __pycache__
+global-exclude *.so 

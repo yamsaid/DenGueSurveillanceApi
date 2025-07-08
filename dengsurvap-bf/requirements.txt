@@ -1,0 +1,30 @@
+# Dépendances principales
+requests>=2.25.0
+pandas>=1.3.0
+pydantic>=2.0.0
+python-dateutil>=2.8.0
+openpyxl>=3.0.0
+PyJWT>=2.0.0
+cryptography>=3.0.0
+
+# Dépendances optionnelles pour l'analyse
+numpy>=1.20.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+matplotlib>=3.3.0
+seaborn>=0.11.0
+plotly>=5.0.0
+
+# Dépendances pour le développement
+pytest>=6.0
+pytest-cov>=2.0
+pytest-mock>=3.0
+black>=21.0
+flake8>=3.8
+mypy>=0.900
+pre-commit>=2.0
+
+# Dépendances pour la documentation
+sphinx>=4.0
+sphinx-rtd-theme>=1.0
+myst-parser>=0.15 

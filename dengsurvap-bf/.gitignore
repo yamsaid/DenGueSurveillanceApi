@@ -1,0 +1,10 @@
+# Fichiers
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.env
+exemple_donnees_test.json
+.coverage
+dengsurvap-bf.egg-info
