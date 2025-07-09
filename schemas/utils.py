@@ -19,14 +19,69 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
+import json
+
+
+def safe_serialize(obj: Any) -> Any:
+    """
+    Safely serialize objects that might not be JSON serializable.
+    Handles SQLAlchemy objects, pandas objects, datetime objects, etc.
+    """
+    if obj is None:
+        return None
+    elif isinstance(obj, (str, int, float, bool)):
+        return obj
+    elif isinstance(obj, (datetime, date)):
+        return obj.isoformat() if obj else None
+    elif isinstance(obj, dict):
+        return {key: safe_serialize(value) for key, value in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [safe_serialize(item) for item in obj]
+    elif hasattr(obj, '__dict__'):
+        # Handle SQLAlchemy objects and other objects with __dict__
+        try:
+            # Remove SQLAlchemy internal state
+            obj_dict = obj.__dict__.copy()
+            obj_dict.pop('_sa_instance_state', None)
+            return safe_serialize(obj_dict)
+        except:
+            return str(obj)
+    elif hasattr(obj, 'to_dict'):
+        # Handle pandas objects
+        try:
+            return safe_serialize(obj.to_dict())
+        except:
+            return str(obj)
+    elif hasattr(obj, 'tolist'):
+        # Handle numpy arrays
+        try:
+            return safe_serialize(obj.tolist())
+        except:
+            return str(obj)
+    else:
+        return str(obj)
+
+def safe_json_response(data: Any) -> Dict[str, Any]:
+    """
+    Create a safe JSON response by serializing the data properly.
+    """
+    try:
+        serialized_data = safe_serialize(data)
+        return serialized_data
+    except Exception as e:
+        return {
+            "error": "Serialization error",
+            "message": str(e),
+            "data": None
+        }
 
 
 def get_time_series_data(
     date_debut: Optional[str] = None,
     date_fin: Optional[str] = None,
     frequence: str = "W",  # "W" pour semaine, "M" pour mois
-    region: str = "Toutes",
-    district: str = "Toutes",
+    region: Optional[str] = None,
+    district: Optional[str] = None,
 
     db: Session = Depends(get_db)
 ) -> list:
@@ -40,9 +95,9 @@ def get_time_series_data(
         query = query.filter(models.ModelCasDengue.date_consultation >= date_debut)
     if date_fin:
         query = query.filter(models.ModelCasDengue.date_consultation <= date_fin)
-    if region != "Toutes":
+    if region:
         query = query.filter(models.ModelCasDengue.region == region.capitalize())
-    if district != "Toutes":
+    if district:
         query = query.filter(models.ModelCasDengue.district == district.capitalize())
     cas_data = query.all()
     if not cas_data:
@@ -307,7 +362,7 @@ def exporter_donnees(
 
     # Exporter selon le format demandé
     if format.lower() == "json":
-        return df.to_dict(orient="records")
+        return safe_serialize(df.to_dict(orient="records"))
     
     elif format.lower() == "csv":
         stream = io.StringIO()
@@ -367,8 +422,8 @@ def series_hebd_mensuelles(
     date_debut: str, 
     date_fin: str,
     frequence: str = "W", 
-    region: str = "Toutes", 
-    district: str = "Toutes",
+    region: Optional[str] = None, 
+    district: Optional[str] = None,
     variable : str = "issue",
     db: Session = Depends(get_db)
 ):
@@ -392,11 +447,11 @@ def series_hebd_mensuelles(
         )
     )
     # Filtrer par région et district si spécifié
-    if region != "Toutes":
+    if region  :
         region = region.capitalize()
         cas = cas.filter(models.ModelCasDengue.region == region)
     
-    if district != "Toutes":
+    if district :
         district = district.capitalize()
         cas = cas.filter(models.ModelCasDengue.district == district)
 
@@ -442,7 +497,7 @@ def series_hebd_mensuelles(
         df_merged = df_sexe_homme.merge(df_sexe_femme, on='date_consultation', how='outer')\
                     .fillna(0)
     
-    return df_merged.to_dict(orient='records')
+    return safe_serialize(df_merged.to_dict(orient='records'))
 
 
 """ =========== fonction pour les statistiques de base =========== """
@@ -496,8 +551,10 @@ def statistiques_base(
         "total_deaths": df[df['issue'] == 'Décédé'].shape[0],
         "total_recovered": df[df['issue'] == 'Guéri'].shape[0],
         "total_treated": df[df['issue'] == 'En traitement'].shape[0],
-        "average_age": df['age'].mean()
+        "average_age": float(df['age'].mean()) if not df['age'].isna().all() else 0.0
     }
+    
+    return safe_serialize(stats)
 
 
 def get_stats(db: Session = Depends(get_db)):
@@ -611,7 +668,7 @@ def get_stats(db: Session = Depends(get_db)):
     def growth(current, previous):
         return round((current - previous) / max(1, previous) * 100, 2)
 
-    return {
+    return safe_serialize({
         "annee_en_cours": {
             **stats_year,
             "growth_cases": growth(stats_year["total_cases"], stats_last_year["total_cases"]),
@@ -628,13 +685,13 @@ def get_stats(db: Session = Depends(get_db)):
             "growth_hospitalized": growth(stats_week["total_hospitalized"], stats_last_week["total_hospitalized"]),
             "growth_variants": growth(stats_week["variants"], stats_last_week["variants"]),
         }
-    }
+    })
 
 def hebdo_data(
     annee: int = date.today().year,
     mois: int = None,
-    region: str = "Toutes",
-    district: str = "Toutes",
+    region: Optional[str] = None,
+    district: Optional[str] = None,
     db: Session = Depends(get_db)
 ):
     # Validation des paramètres
@@ -661,26 +718,26 @@ def hebdo_data(
     if mois and mois > 0 and mois <= 12:
         query = query.filter(func.extract("month", models.ModelCasDengue.date_consultation) == mois)
 
-    if region != "Toutes":
+    if region :
         region = region.capitalize()
         query = query.filter(models.ModelCasDengue.region == region)
-    if district != "Toutes":
+    if district:
         district = district.capitalize()
         query = query.filter(models.ModelCasDengue.district == district)
 
     resultats = query.group_by("semaine", "num_semaine", "annee").order_by("semaine").all()
 
-    return [
+    return safe_serialize([
         {
             "annee": int(r.annee),
             "semaine": f"S{int(r.num_semaine)}",  # ex: S1, S2
-            "cas": r.cas,
-            "deces": r.deces,
-            "hospitalises": r.hospitalises,
-            "positifs": r.positifs,
+            "cas": int(r.cas) if r.cas else 0,
+            "deces": int(r.deces) if r.deces else 0,
+            "hospitalises": int(r.hospitalises) if r.hospitalises else 0,
+            "positifs": int(r.positifs) if r.positifs else 0,
         }
         for r in resultats
-    ]
+    ])
 
 def mensuel_data(
     annee: int = None,
@@ -714,16 +771,16 @@ def mensuel_data(
 
     resultats = query.group_by("mois").order_by("mois").all()
 
-    return [
+    return safe_serialize([
         {
             "mois": month_name[int(r.mois)],  # Ex: "Janvier", "Février"
-            "cas": r.cas,
-            "deces": r.deces,
-            "hospitalises": r.hospitalises,
-            "positifs": r.positifs,
+            "cas": int(r.cas) if r.cas else 0,
+            "deces": int(r.deces) if r.deces else 0,
+            "hospitalises": int(r.hospitalises) if r.hospitalises else 0,
+            "positifs": int(r.positifs) if r.positifs else 0,
         }
         for r in resultats
-    ]
+    ])
 
 """======== Fonction pour la gestion des alertes épidémiologiques ========"""
 
@@ -783,7 +840,7 @@ def seuils_alertes_config(data: dict, db: Session = Depends(get_db)):
             db.add(nouveaux_seuils)
         
         db.commit()
-        return {"success": True, "message": "Seuils configurés avec succès"}
+        return safe_serialize({"success": True, "message": "Seuils configurés avec succès"})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erreur lors de la configuration: {str(e)}")
 
@@ -831,7 +888,7 @@ def recuperer_seuils_utilisateur(db: Session, usermail: str) -> dict:
             db.refresh(seuils_perso)
     
     # 3. Retourner les seuils sous forme de dictionnaire
-    return {
+    return safe_serialize({
         "id": seuils_perso.id,
         "usermail": seuils_perso.usermail,
         "intervalle": seuils_perso.intervalle,
@@ -844,7 +901,7 @@ def recuperer_seuils_utilisateur(db: Session, usermail: str) -> dict:
         "seuil_positivite_district": seuils_perso.seuil_positivite_district,
         "seuil_hospitalisation_district": seuils_perso.seuil_hospitalisation_district,
         "seuil_deces_district": seuils_perso.seuil_deces_district
-    }
+    })
 
 # Fonction pour calculer les indicateurs épidémiologiques 
 def calculer_indicateurs_epidemiologiques(
@@ -911,7 +968,7 @@ def calculer_indicateurs_epidemiologiques(
     cas_hospitalises = df[df['hospitalise'] == 'Oui'].shape[0]
     cas_deces = df[df['issue'] == 'Décédé'].shape[0]
     
-    return {
+    return safe_serialize({
         "total_cas": total_cas,
         "cas_positifs": cas_positifs,
         "cas_hospitalises": cas_hospitalises,
@@ -919,7 +976,7 @@ def calculer_indicateurs_epidemiologiques(
         "taux_positivite": round((cas_positifs / total_cas) * 100, 2) if total_cas > 0 else 0,
         "taux_hospitalisation": round((cas_hospitalises / total_cas) * 100, 2) if total_cas > 0 else 0,
         "taux_deces": round((cas_deces / total_cas) * 100, 2) if total_cas > 0 else 0
-    }
+    })
 
 
 def verifier_seuils_alertes(
@@ -1003,7 +1060,7 @@ def verifier_seuils_alertes(
             "seuil": seuil_deces
         })
     
-    return alertes
+    return safe_serialize(alertes)
 
 
 def sauvegarder_alertes(
@@ -1139,7 +1196,7 @@ def gestion_alertes_epidemiologiques(
         ]
     }
     
-    return resume
+    return safe_serialize(resume)
 
 
 def recuperer_regions_distinctes(db: Session) -> List[str]:
@@ -1153,7 +1210,7 @@ def recuperer_regions_distinctes(db: Session) -> List[str]:
         List[str]: Liste des régions distinctes
     """
     regions = db.query(models.ModelCasDengue.region).distinct().all()
-    return [r[0] for r in regions if r[0]]
+    return safe_serialize([r[0] for r in regions if r[0]])
 
 
 def verification_automatique_alertes(db: Session) -> dict:
@@ -1202,12 +1259,12 @@ def verification_automatique_alertes(db: Session) -> dict:
             "alertes_generes": 0
         })
     
-    return {
+    return safe_serialize({
         "date_verification": datetime.now().isoformat(),
         "total_regions_verifiees": len(regions) + 1,  # +1 pour la vérification globale
         "resultats": resultats,
         "total_alertes_generes": sum(r.get("alertes_generes", 0) for r in resultats)
-    }
+    })
 
 def analyser_erreurs_par_colonnes_et_types(rapport_global: dict) -> dict:
     """
@@ -1269,7 +1326,7 @@ def analyser_erreurs_par_colonnes_et_types(rapport_global: dict) -> dict:
         if key != "total_erreurs" and isinstance(count, (int, float))
     )
     
-    return {
+    return safe_serialize({
         "erreurs_par_colonnes": erreurs_par_colonnes,
         "erreurs_par_types": erreurs_par_types,
         "resume": {
@@ -1281,7 +1338,7 @@ def analyser_erreurs_par_colonnes_et_types(rapport_global: dict) -> dict:
                 key=lambda x: x[1]
             )[0] if any(isinstance(v, (int, float)) and v > 0 for k, v in erreurs_par_types.items() if k != "total_erreurs") else None
         }
-    }
+    })
 
 def exporter_rapport_erreurs(rapport_global: dict, format_export: str = "json") -> dict:
     """
@@ -1312,7 +1369,7 @@ def exporter_rapport_erreurs(rapport_global: dict, format_export: str = "json") 
     }
     
     if format_export == "json":
-        return export_data
+        return safe_serialize(export_data)
     
     elif format_export == "csv":
         # Créer un CSV avec les erreurs par colonnes
@@ -1484,7 +1541,16 @@ def data(date_debut, date_fin, region, district, limit, page, db):
         query = query.limit(limit)
     if page :
         query = query.offset((page - 1) * limit)
-    return query.all()
+    
+    results = query.all()
+    # Convert SQLAlchemy objects to dictionaries
+    data_list = []
+    for result in results:
+        result_dict = result.__dict__.copy()
+        result_dict.pop('_sa_instance_state', None)
+        data_list.append(result_dict)
+    
+    return data_list
 
 
 

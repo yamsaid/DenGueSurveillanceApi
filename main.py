@@ -21,6 +21,7 @@ from schemas.database import get_db,engine, SessionLocal
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from schemas import schemas, utils
+from schemas.utils import safe_json_response
 import pandas as pd
 import  os
 from datetime import datetime, date
@@ -986,15 +987,23 @@ async def exportation_form(
     Returns:
         _type_: _description_
     """
-    return utils.exporter_donnees(
-        format=format,
-        date_debut=date_debut,
-        date_fin=date_fin,
-        region=region,
-        districts=districts,
-        limit=limit,
-        db=db
-    )
+    try:
+        result = utils.exporter_donnees(
+            format=format,
+            date_debut=date_debut,
+            date_fin=date_fin,
+            region=region,
+            districts=districts,
+            limit=limit,
+            db=db
+        )
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Export error",
+            "message": str(e),
+            "data": None
+        }
    
 
 @app.get("/export-data")
@@ -1011,15 +1020,23 @@ async def exportation(
     """
     Cette fonction permet d'exporter des données filtrées en format CSV ou JSON.
     """
-    return utils.exporter_donnees(
-        format=format,
-        date_debut=date_debut,
-        date_fin=date_fin,
-        region=region,
-        districts=districts,
-        limit=limit,
-        db=db
-    )
+    try:
+        result = utils.exporter_donnees(
+            format=format,
+            date_debut=date_debut,
+            date_fin=date_fin,
+            region=region,
+            districts=districts,
+            limit=limit,
+            db=db
+        )
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Export error",
+            "message": str(e),
+            "data": None
+        }
 "========================================================================================"
 " ******************* Section Statistiques ********************************* "
 
@@ -1027,7 +1044,15 @@ async def exportation(
 @app.get("/api/stats")
 async def get_stats_api(db: Session = Depends(get_db)):
     """Endpoint pour récupérer les statistiques annuelles et hebdomadaires"""
-    return utils.get_stats(db)
+    try:
+        result = utils.get_stats(db)
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Stats error",
+            "message": str(e),
+            "data": None
+        }
 
 
 
@@ -1042,15 +1067,23 @@ async def get_series_hebdomadaires(
     db: Session = Depends(get_db)
 ):
     """Endpoint pour récupérer les séries hebdomadaires"""
-    return utils.series_hebd_mensuelles(
-        date_debut=date_debut,
-        date_fin=date_fin,
-        frequence=frequence,
-        region=region,
-        district=district,
-        variable=variable,
-        db=db
-    )
+    try:
+        result = utils.series_hebd_mensuelles(
+            date_debut=date_debut,
+            date_fin=date_fin,
+            frequence=frequence,
+            region=region,
+            district=district,
+            variable=variable,
+            db=db
+        )
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Series hebdomadaires error",
+            "message": str(e),
+            "data": None
+        }
 
 " ******************* Section Alertes ********************************* "
 # endpoint pour configurer les seuils d'alerte
@@ -1347,19 +1380,19 @@ async def obtenir_logs_alertes(
             }
             alertes_data.append(alerte_dict)
         
-        return {
+        return safe_json_response({
             "success": True,
             "data": alertes_data,
             "total": len(alertes_data),
             "limit": limit
-        }
+        })
         
     except Exception as e:
-        return {
+        return safe_json_response({
             "success": False,
             "message": f"Erreur lors de la récupération des logs d'alertes: {str(e)}",
             "data": []
-        }
+        })
 
     """# test
     return {
@@ -1405,18 +1438,23 @@ def show_dashboard(request: Request, db: Session = Depends(get_db), current_user
 
 
 @app.get("/api/data/hebdomadaires")
-def data_hebdomadaires(region = None, annee = None, mois = None, district = None, db: Session = Depends(get_db)):
-    # Validation des paramètres
-    if annee is None or str(annee) == "undefined":
-        annee = date.today().year
-    if mois is None or str(mois) == "undefined" or mois == 0:
-        mois = None
-    if region is None or str(region) == "undefined":
-        region = "Toutes"
-    if district is None or str(district) == "undefined":
-        district = "Toutes"
+def data_hebdomadaires(
+    region : Optional[str] = None, 
+    annee : Optional[int] = None, 
+    mois : Optional[int] = None, 
+    district : Optional[str] = None,
+    db: Session = Depends(get_db)
+    ):
     
-    return utils.hebdo_data(annee, mois, region, district, db)
+    try:
+        result = utils.hebdo_data(annee, mois, region, district, db)
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Weekly data error",
+            "message": str(e),
+            "data": None
+        }
 
 "========================================================================================"
 
@@ -1432,7 +1470,15 @@ def data(
     page: int = None,
     db: Session = Depends(get_db)
 ):
-    return utils.data(date_debut, date_fin, region, district, limit, page, db)
+    try:
+        result = utils.data(date_debut, date_fin, region, district, limit, page, db)
+        return safe_json_response(result)
+    except Exception as e:
+        return {
+            "error": "Data retrieval error",
+            "message": str(e),
+            "data": None
+        }
 
 
 #1. 📅 Nombre total de cas (sur une période donnée)
@@ -1771,11 +1817,11 @@ def taux_deletalite(
 
     grouped['taux_deletalite'] = round((grouped['total_deces'] / grouped['total_cas']) * 100, 2)
 
-    return {
+    return safe_json_response({
         "niveau": niveau,
         "periode": f"{date_debut} au {date_fin}",
         "resultats": grouped.to_dict(orient="records")
-    }
+    })
 
 #9. 📈 Taux de positivité
 @app.get("/indicateurs/taux-positivite")
@@ -1972,8 +2018,8 @@ async def get_time_series(
     date_debut: str = Query(None, description="Date de début (format YYYY-MM-DD)"),
     date_fin: str = Query(None, description="Date de fin (format YYYY-MM-DD)"),
     frequence: str = Query("W", description="Fréquence des données (W: semaine, M: mois)"),
-    region: str = Query("Tous", description="Région à filtrer"),
-    district: str = Query("Tous", description="District à filtrer"),
+    region: str = Query(None, description="Région à filtrer"),
+    district: str = Query(None, description="District à filtrer"),
     db: Session = Depends(get_db),
     #current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
 ):
@@ -1994,122 +2040,15 @@ async def get_time_series(
             db=db
         )
         
-        return result
+        return safe_json_response(result)
         
     except Exception as e:
-        return {
+        return safe_json_response({
             "success": False,
             "message": f"Erreur lors de la récupération des données de série temporelle: {str(e)}",
             "data": [],
             "summary": {}
-        }
-
-'''
-@app.get("/api/resume")
-async def get_resume(
-    db: Session = Depends(get_db),
-    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
-):
-    """
-    Endpoint pour récupérer un résumé statistique complet de la base de données.
-    
-    Retourne un aperçu détaillé incluant :
-    - Informations générales (période de couverture, nombre d'enregistrements)
-    - Analyse des variables (types, valeurs manquantes)
-    - Statistiques descriptives (numériques et qualitatives)
-    - Qualité des données (taux de complétude)
-    """
-    try:
-        # Créer une instance temporaire du client pour utiliser la fonction resume
-        from dengsurvab import AppiClient
-        client = AppiClient("https://api-bf-dengue-survey-production.up.railway.app/")
-        
-        # Authentifier si un utilisateur est connecté
-        if current_user:
-            # Utiliser les informations de l'utilisateur connecté si nécessaire
-            pass
-        
-        # Générer le résumé
-        result = client.resume()
-        
-        return result
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "message": f"Erreur lors de la génération du résumé: {str(e)}",
-            "periode_couverture": {},
-            "derniere_mise_a_jour": None,
-            "informations_generales": {},
-            "variables": {},
-            "qualite_donnees": {}
-        }
-
-
-@app.get("/api/resume/display")
-async def get_resume_display(
-    verbose: bool = Query(True, description="Afficher les détails complets"),
-    show_details: bool = Query(True, description="Afficher les statistiques détaillées"),
-    graph: bool = Query(False, description="Afficher des graphiques descriptifs"),
-    db: Session = Depends(get_db),
-    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
-):
-    """
-    Endpoint pour récupérer un résumé statistique formaté pour l'affichage.
-    
-    Retourne un résumé formaté similaire à df.info() et df.describe() de pandas,
-    avec une présentation claire et structurée des informations.
-    
-    Parameters:
-        verbose: Afficher les détails complets pour chaque variable
-        show_details: Afficher les statistiques détaillées (quartiles, distribution, etc.)
-    """
-    try:
-        # Créer une instance temporaire du client
-        from dengsurvab import AppiClient
-        client = AppiClient("https://api-bf-dengue-survey-production.up.railway.app/")
-        
-        # Récupérer le résumé brut
-        resume_data = client.resume()
-        
-        if not resume_data.get('success'):
-            return {
-                "success": False,
-                "message": resume_data.get('message', 'Erreur inconnue'),
-                "display": "❌ Erreur lors de la génération du résumé"
-            }
-        
-        # Générer l'affichage formaté
-        import io
-        import sys
-        
-        # Capturer la sortie de resume_display
-        old_stdout = sys.stdout
-        new_stdout = io.StringIO()
-        sys.stdout = new_stdout
-        
-        try:
-            client.resume_display(verbose=verbose, show_details=show_details, graph=graph)
-            display_output = new_stdout.getvalue()
-        finally:
-            sys.stdout = old_stdout
-        
-        return {
-            "success": True,
-            "message": "Résumé généré avec succès",
-            "display": display_output,
-            "data": resume_data
-        }
-        
-    except Exception as e:
-        return {
-            "success": False,
-            "message": f"Erreur lors de la génération du résumé: {str(e)}",
-            "display": f"❌ Erreur: {str(e)}",
-            "data": {}
-        }
-'''
-
+        })
 
 @app.get("/dashboard/indicateurs", response_class=HTMLResponse)
 def dashboard_indicateurs(
@@ -2215,9 +2154,13 @@ def get_regions(db: Session = Depends(get_db)):
     """Récupère la liste des régions distinctes"""
     try:
         regions = utils.recuperer_regions_distinctes(db)
-        return regions
+        return safe_json_response(regions)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur lors de la récupération des régions: {str(e)}")
+        return safe_json_response({
+            "error": "Regions error",
+            "message": str(e),
+            "data": None
+        })
 
 @app.get("/api/districts")
 def get_districts(region: str = Query(None), db: Session = Depends(get_db)):
@@ -2230,9 +2173,14 @@ def get_districts(region: str = Query(None), db: Session = Depends(get_db)):
         else:
             districts = db.query(models.ModelCasDengue.district).distinct().all()
         
-        return [d[0] for d in districts if d[0]]
+        result = [d[0] for d in districts if d[0]]
+        return safe_json_response(result)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erreur lors de la récupération des districts: {str(e)}")
+        return safe_json_response({
+            "error": "Districts error",
+            "message": str(e),
+            "data": None
+        })
 
 #    la documentation
 
@@ -2327,3 +2275,17 @@ def create_admin_user(statut = " local"):
 #create_admin_user(statut = "deploying")
 
 #create_admin_user(statut = "local")
+
+# derniere mise à jour des données
+
+@app.get("/api/derniere-mise-a-jour")
+def get_derniere_soumission(db: Session = Depends(get_db)):
+    """Retourne la date de la dernière soumission dans la base Soumission"""
+    try:
+        derniere = db.query(models.ModelSoumissionDonnee.date_soumission).order_by(models.ModelSoumissionDonnee.date_soumission.desc()).first()
+        if derniere and derniere[0]:
+            return {"statut": True, "derniere_mise_a_jour": derniere[0].isoformat()}
+        else:
+            return {"statut": True, "derniere_mise_a_jour": None, "message": "Aucune soumission trouvée."}
+    except Exception as e:
+        return {"statut": False,"message":f"Erreur lors de la récupération de la dernière soumission: {str(e)}"}
