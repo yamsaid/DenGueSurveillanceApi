@@ -102,19 +102,21 @@
         }
         
         .status-indicator {
-            margin-left: 1.5rem;
-            margin-right: 1.5rem;
+            margin: 0 2rem;
             max-width: 250px;
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
             background-color: rgba(34, 197, 94, 0.2);
             color: #22c55e;
             border-radius: 1rem;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 500;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 2px 10px rgba(34, 197, 94, 0.1);
         }
         
         .status-dot {
@@ -134,18 +136,30 @@
             background: rgba(255, 255, 255, 0.2);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.75rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(5px);
         }
         
         .btn-login:hover {
             background: rgba(255, 255, 255, 0.3);
             color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-login i {
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-login:hover i {
+            transform: translateX(3px);
         }
         
         /* Menu hamburger pour mobile */
@@ -444,19 +458,29 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 0.5rem;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
+            backdrop-filter: blur(5px);
         }
         
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle i {
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover i {
+            transform: rotate(15deg);
         }
 
         /* Main Content */
@@ -602,54 +626,82 @@
                         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <!-- Navigation -->
+                        <!-- Navigation améliorée -->
                         <div class="collapse navbar-collapse flex-grow-1" id="navbarNav">
-                            <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-2 gap-lg-4">
-                                <li class="nav-item"><a href="/" class="nav-link-modern"><i class="fas fa-home me-1"></i><br>Accueil</a></li>
-                                <li class="nav-item"><a href="/api/dashboard" class="nav-link-modern"><i class="fas fa-chart-line me-1"></i><br>Dashboard</a></li>
-                                <li class="nav-item"><a href="/exploration" class="nav-link-modern"><i class="fas fa-search me-1"></i><br>Exploration</a></li>
-                                <li class="nav-item"><a href="/mise-a-jour-form" class="nav-link-modern"><i class="fas fa-upload me-1"></i><br>Mise à jour</a></li>
-                                <li class="nav-item"><a href="/dashboard/indicateurs-powerbi" class="nav-link-modern"><i class="fas fa-chart-bar me-1"></i><br>Indicateurs</a></li>
-                                <!-- <li class="nav-item"><a href="/configuration-alertes" class="nav-link-modern"><i class="fas fa-bell me-1"></i><br>Alertes</a></li> -->
-                                <li class="nav-item"><a href="/api/documentation" class="nav-link-modern"><i class="fas fa-book me-1"></i><br>Documentation</a></li>
-                                <li class="nav-item ms-lg-3" id="auth-section">
-                                    <a href="/login" class="btn-login" id="login-btn">
-                                        <i class="fas fa-sign-in-alt me-1"></i>Connexion
+                            <ul class="navbar-nav ms-auto align-items-center w-100 justify-content-end gap-1 gap-lg-3">
+                                <li class="nav-item">
+                                    <a href="/" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-home mb-1"></i>
+                                        <span class="small">Accueil</span>
                                     </a>
-                                    <div class="user-avatar" id="user-avatar" style="display: none;">
-                                        <div class="avatar-circle" id="avatar-circle">
-                                            <span id="avatar-text"></span>
-                                        </div>
-                                        <div class="user-dropdown" id="user-dropdown">
-                                            <div class="dropdown-header">
-                                                <span id="user-name"></span>
-                                                <small id="user-email"></small>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="/profile" class="dropdown-item">
-                                                <i class="fas fa-user me-2"></i>Profil
-                                            </a>
-                                            <div id="admin-links" style="display: none;">
-                                                <a href="/admin/dashboard" class="dropdown-item">
-                                                    <i class="fas fa-shield-alt me-2"></i>Dashboard Admin
-                                                </a>
-                                                <a href="/admin/create-user" class="dropdown-item">
-                                                    <i class="fas fa-user-plus me-2"></i>Créer un utilisateur
-                                                </a>
-                                            </div>
-    
-                                            <a href="/logout" class="dropdown-item">
-                                                <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
-                                            </a>
-                                        </div>
-                                    </div>
                                 </li>
-                                <!-- Theme Toggle -->
-                                <!-- Theme Toggle -->
-                                <li class="nav-item me-3">
-                                    <button class="theme-toggle" id="themeToggle" title="Changer le thème">
-                                        <i class="fas fa-moon" id="themeIcon"></i>
-                                    </button>
+                                <li class="nav-item">
+                                    <a href="/api/dashboard" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-chart-line mb-1"></i>
+                                        <span class="small">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/exploration" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-search mb-1"></i>
+                                        <span class="small">Exploration</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/mise-a-jour-form" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-upload mb-1"></i>
+                                        <span class="small">Mise à jour</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/dashboard/indicateurs-powerbi" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-chart-column mb-1"></i>
+                                        <span class="small">Indicateurs</span>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a href="/api/documentation" class="nav-link-modern d-flex flex-column align-items-center">
+                                        <i class="fas fa-book mb-1"></i>
+                                        <span class="small">Documentation</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item ms-lg-3" id="auth-section">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <a href="/login" class="btn-login" id="login-btn">
+                                            <i class="fas fa-sign-in-alt me-1"></i>
+                                            <span class="d-none d-sm-inline">Connexion</span>
+                                        </a>
+                                        <div class="user-avatar" id="user-avatar" style="display: none;">
+                                            <div class="avatar-circle" id="avatar-circle">
+                                                <span id="avatar-text"></span>
+                                            </div>
+                                            <div class="user-dropdown shadow-lg" id="user-dropdown">
+                                                <div class="dropdown-header p-3">
+                                                    <span id="user-name" class="d-block fw-bold"></span>
+                                                    <small id="user-email" class="text-muted"></small>
+                                                </div>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="/profile" class="dropdown-item px-3 py-2">
+                                                    <i class="fas fa-user me-2"></i>Profil
+                                                </a>
+                                                <div id="admin-links" style="display: none;">
+                                                    <a href="/admin/dashboard" class="dropdown-item px-3 py-2">
+                                                        <i class="fas fa-shield-alt me-2"></i>Dashboard Admin
+                                                    </a>
+                                                    <a href="/admin/create-user" class="dropdown-item px-3 py-2">
+                                                        <i class="fas fa-user-plus me-2"></i>Créer un utilisateur
+                                                    </a>
+                                                </div>
+                                                <a href="/logout" class="dropdown-item px-3 py-2 text-danger">
+                                                    <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <button class="theme-toggle" id="themeToggle" title="Changer le thème">
+                                            <i class="fas fa-moon" id="themeIcon"></i>
+                                        </button>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -664,47 +716,67 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    
-    <footer class="footer-modern">
-        <div class="container mx-auto">
-            <div class="footer-content">
+    <!-- Footer amélioré -->
+    <footer class="footer-modern bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="footer-content grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
                 <div class="footer-section">
-                    <h3>À Propos</h3>
-                    <p>Surveillance Dengue est une plateforme innovante pour la surveillance et la gestion de la dengue. Nous travaillons pour prévenir et contrôler la propagation de cette maladie.</p>
+                    <h3 class="text-xl font-bold text-white mb-4">À Propos</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Surveillance Dengue est une plateforme innovante pour la surveillance et la gestion de la dengue. 
+                        Nous travaillons pour prévenir et contrôler la propagation de cette maladie à travers des outils 
+                        modernes d'analyse et de visualisation de données.
+                    </p>
                 </div>
                 <div class="footer-section">
-                    <h3>Liens Rapides</h3>
-                    <ul class="footer-links">
-                        <li><a href="/">Accueil</a></li>
-                        <li><a href="/api/dashboard">Dashboard</a></li>
-                        <li><a href="/exploration">Exploration</a></li>
-                        <li><a href="/mise-a-jour-form">Mise à jour</a></li>
-                        <li><a href="/dashboard/indicateurs-powerbi">Indicateurs</a></li>
-                        <li><a href="/configuration-alertes">Configuration Alertes</a></li>
-                        <li><a href="/api/documentation">Documentation</a></li>
+                    <h3 class="text-xl font-bold text-white mb-4">Liens Rapides</h3>
+                    <ul class="footer-links space-y-2">
+                        <li><a href="/" class="text-gray-300 hover:text-white transition-colors">Accueil</a></li>
+                        <li><a href="/api/dashboard" class="text-gray-300 hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="/exploration" class="text-gray-300 hover:text-white transition-colors">Exploration</a></li>
+                        <li><a href="/mise-a-jour-form" class="text-gray-300 hover:text-white transition-colors">Mise à jour</a></li>
+                        <li><a href="/dashboard/indicateurs-powerbi" class="text-gray-300 hover:text-white transition-colors">Indicateurs</a></li>
+                        <li><a href="/api/documentation" class="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Contact</h3>
-                    <div class="footer-contact">
-                        <i class="fas fa-phone"></i>
-                        <span>+1 (555) 123-4567</span>
+                    <h3 class="text-xl font-bold text-white mb-4">Contact</h3>
+                    <div class="space-y-3">
+                        <div class="footer-contact flex items-center">
+                            <i class="fas fa-phone text-primary mr-3"></i>
+                            <span class="text-gray-300">+226 72 28 99 56</span>
+                        </div>
+                        <div class="footer-contact flex items-center">
+                            <i class="fas fa-envelope text-primary mr-3"></i>
+                            <span class="text-gray-300">contact@dengue-surveillance.org</span>
+                        </div>
+                        <div class="footer-contact flex items-center">
+                            <i class="fas fa-map-marker-alt text-primary mr-3"></i>
+                            <span class="text-gray-300">Ouagadougou, Burkina Faso</span>
+                        </div>
                     </div>
-                    <div class="footer-contact">
-                        <i class="fas fa-envelope"></i>
-                        <span>contact@dengue-surveillance.org</span>
+                    <div class="social-links flex mt-6 space-x-4">
+                        <a href="#" class="social-link hover:bg-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link hover:bg-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link hover:bg-primary transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link hover:bg-primary transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Surveillance Dengue. Tous droits réservés.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+            <div class="footer-bottom border-t border-gray-700 pt-6 pb-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Surveillance Dengue. Tous droits réservés. | 
+                    <a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a> | 
+                    <a href="#" class="hover:text-white transition-colors">Conditions d'utilisation</a>
+                </p>
             </div>
         </div>
     </footer>

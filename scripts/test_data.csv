@@ -1,5 +1,0 @@
-date_consultation,region,district,sexe,age,resultat_test,serotype,hospitalise,issue
-2024-01-01,Centre,Bobo,homme,25,positif,denv2,oui,guéri
-invalid_date,Centre,Bobo,femme,150,invalid_test,invalid_serotype,oui,invalid_issue
-2024-01-03,Centre,Bobo,homme,abc,positif,denv3,non,en traitement
-2024-01-04,Centre,Bobo,femme,30,négatif,denv2,non,guéri

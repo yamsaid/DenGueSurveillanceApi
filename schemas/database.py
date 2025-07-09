@@ -1,3 +1,13 @@
+"""
+
+    Cette partie du code est utilisée pour la connexion à la base de données
+    Elle est utilisée pour récupérer la session de la base de données
+    Elle est utilisée pour fermer la session de la base de données
+    Elle est utilisée pour créer l'engin de la base de données
+    Elle est utilisée pour créer la session de la base de données
+    Elle est utilisée pour créer la base de données
+"""
+"""
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
@@ -40,4 +50,3 @@ def get_db():
         yield db
     finally:
         db.close()
-"""

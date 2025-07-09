@@ -338,11 +338,11 @@ async function updateQuickStats() {
         updateMetric('hospitalizations', data.semaine_en_cours?.total_hospitalized || 0);
         updateMetric('deaths', data.semaine_en_cours?.total_deaths || 0);
         
-        // Mise à jour des tendances
-        updateTrend('cases-trend', data.semaine_en_cours?.growth_cases || 0);
-        updateTrend('positive-trend', data.semaine_en_cours?.growth_positives || 0);
-        updateTrend('hospitalization-trend', data.semaine_en_cours?.growth_hospitalized || 0);
-        updateTrend('deaths-trend', data.semaine_en_cours?.growth_deaths || 0);
+        // Mise à jour des tendances avec les données dynamiques de l'API
+        updateTrendFromAPI('cases-trend', data.semaine_en_cours?.growth_cases || 0);
+        updateTrendFromAPI('positive-trend', data.semaine_en_cours?.growth_positives || 0);
+        updateTrendFromAPI('hospitalization-trend', data.semaine_en_cours?.growth_hospitalized || 0);
+        updateTrendFromAPI('deaths-trend', data.semaine_en_cours?.growth_deaths || 0);
         
     } catch (error) {
         console.error('Erreur lors de la mise à jour des statistiques:', error);
@@ -418,6 +418,41 @@ function updateMetric(elementId, value) {
     }
 }
 
+// Mise à jour de la tendance avec les données de l'API
+function updateTrendFromAPI(elementId, growthPercentage) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    const valueElement = element.querySelector('.trend-value');
+    const iconElement = element.querySelector('i');
+    
+    if (!valueElement || !iconElement) return;
+    
+    let changeText = '';
+    let changeIcon = 'fa-minus';
+    let changeClass = 'text-secondary';
+    
+    // Détermination du type de changement basé sur le pourcentage de croissance
+    if (growthPercentage > 0) {
+        changeClass = 'text-success';
+        changeIcon = 'fa-arrow-up';
+        changeText = `+${growthPercentage.toFixed(1)}%`;
+    } else if (growthPercentage < 0) {
+        changeClass = 'text-danger';
+        changeIcon = 'fa-arrow-down';
+        changeText = `${growthPercentage.toFixed(1)}%`;
+    } else {
+        changeClass = 'text-secondary';
+        changeIcon = 'fa-minus';
+        changeText = '0%';
+    }
+    
+    // Mise à jour du texte et de l'icône
+    valueElement.textContent = changeText;
+    iconElement.className = `fas ${changeIcon} ${changeClass}`;
+}
+
+// Fonction originale pour référence
 function updateTrend(elementId, percentage) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -511,8 +546,26 @@ function downloadFile(url, filename) {
     document.body.removeChild(link);
 }
 
-function refreshData() {
-    location.reload();
+async function refreshData() {
+    try {
+        showLoadingState();
+        
+        // Actualiser les statistiques
+        await updateQuickStats();
+        
+        // Actualiser le rapport PowerBI si disponible
+        if (dashboardState.powerBIReport) {
+            refreshPowerBIReport();
+        }
+        
+        showSuccess('Données actualisées avec succès');
+        
+    } catch (error) {
+        console.error('Erreur lors de l\'actualisation:', error);
+        showError('Erreur lors de l\'actualisation des données');
+    } finally {
+        hideLoadingState();
+    }
 }
 
 function refreshPowerBIReport() {

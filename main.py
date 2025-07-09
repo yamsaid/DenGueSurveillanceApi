@@ -503,7 +503,7 @@ async def get_accueil(request: Request, db: Session = Depends(get_db)):
 # Requete de mise à jour (ajout de cas  de dengue ) : plusieurs à la fois en format json
 # l'endpoint pour ajouter plusieurs cas de dengue
 @app.post("/add-listCasDengue-json/")
-def ajouter_cas_dengue(cas_list: List[schemas.CasDengueValidator], db: Session = Depends(get_db)):
+def ajouter_cas_dengue(cas_list: List[schemas.ValidationCasDengue], db: Session = Depends(get_db)):
     """_summary_
 
     Args:
@@ -1350,7 +1350,7 @@ async def obtenir_logs_alertes(
         return {
             "success": True,
             "data": alertes_data,
-            "total": 1, #len(alertes_data),
+            "total": len(alertes_data),
             "limit": limit
         }
         
@@ -1405,7 +1405,7 @@ def show_dashboard(request: Request, db: Session = Depends(get_db), current_user
 
 
 @app.get("/api/data/hebdomadaires")
-def data_hebdomadaires(region = None, annee = None, mois = 6, district = None, db: Session = Depends(get_db)):
+def data_hebdomadaires(region = None, annee = None, mois = None, district = None, db: Session = Depends(get_db)):
     # Validation des paramètres
     if annee is None or str(annee) == "undefined":
         annee = date.today().year
@@ -1419,6 +1419,20 @@ def data_hebdomadaires(region = None, annee = None, mois = 6, district = None, d
     return utils.hebdo_data(annee, mois, region, district, db)
 
 "========================================================================================"
+
+#Data
+
+@app.get("/api/data")
+def data(
+    date_debut: str = None,
+    date_fin: str = None,
+    region: str = None,
+    district: str = None,
+    limit: int = None,
+    page: int = None,
+    db: Session = Depends(get_db)
+):
+    return utils.data(date_debut, date_fin, region, district, limit, page, db)
 
 
 #1. 📅 Nombre total de cas (sur une période donnée)
@@ -1591,8 +1605,8 @@ def indicateurs_hebdo(
 def taux_hospitalisation(
     date_debut: str,
     date_fin: str,
-    region: str = Query(None),
-    district: str = Query(None),
+    region: str = Query("Toutes"),
+    district: str = Query("Toutes"),
     db: Session = Depends(get_db)
 ):
     # Construction de la requête
@@ -1600,9 +1614,9 @@ def taux_hospitalisation(
         .filter(models.ModelCasDengue.date_consultation >= date_debut)\
         .filter(models.ModelCasDengue.date_consultation <= date_fin)
 
-    if region:
+    if region != "Toutes":
         query = query.filter(models.ModelCasDengue.region == region)
-    if district:
+    if district != "Toutes":
         query = query.filter(models.ModelCasDengue.district == district)
 
     cas = query.all()
@@ -1951,6 +1965,152 @@ def evolution_epidemique(
         "duree_moyenne_consultation_issue": duree_moyenne
     }
 
+
+#12. 📊 Série temporelle complète
+@app.get("/api/time-series")
+async def get_time_series(
+    date_debut: str = Query(None, description="Date de début (format YYYY-MM-DD)"),
+    date_fin: str = Query(None, description="Date de fin (format YYYY-MM-DD)"),
+    frequence: str = Query("W", description="Fréquence des données (W: semaine, M: mois)"),
+    region: str = Query("Tous", description="Région à filtrer"),
+    district: str = Query("Tous", description="District à filtrer"),
+    db: Session = Depends(get_db),
+    #current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
+):
+    """
+    Endpoint pour récupérer les données de série temporelle.
+    
+    Retourne des données épidémiologiques agrégées par période (semaine ou mois)
+    avec des statistiques détaillées incluant cas, décès, guérisons, etc.
+    """
+    try:
+        # Utiliser la fonction utils pour générer les données
+        result = utils.get_time_series_data(
+            date_debut=date_debut,
+            date_fin=date_fin,
+            frequence=frequence,
+            region=region,
+            district=district,
+            db=db
+        )
+        
+        return result
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "message": f"Erreur lors de la récupération des données de série temporelle: {str(e)}",
+            "data": [],
+            "summary": {}
+        }
+
+'''
+@app.get("/api/resume")
+async def get_resume(
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
+):
+    """
+    Endpoint pour récupérer un résumé statistique complet de la base de données.
+    
+    Retourne un aperçu détaillé incluant :
+    - Informations générales (période de couverture, nombre d'enregistrements)
+    - Analyse des variables (types, valeurs manquantes)
+    - Statistiques descriptives (numériques et qualitatives)
+    - Qualité des données (taux de complétude)
+    """
+    try:
+        # Créer une instance temporaire du client pour utiliser la fonction resume
+        from dengsurvab import AppiClient
+        client = AppiClient("https://api-bf-dengue-survey-production.up.railway.app/")
+        
+        # Authentifier si un utilisateur est connecté
+        if current_user:
+            # Utiliser les informations de l'utilisateur connecté si nécessaire
+            pass
+        
+        # Générer le résumé
+        result = client.resume()
+        
+        return result
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "message": f"Erreur lors de la génération du résumé: {str(e)}",
+            "periode_couverture": {},
+            "derniere_mise_a_jour": None,
+            "informations_generales": {},
+            "variables": {},
+            "qualite_donnees": {}
+        }
+
+
+@app.get("/api/resume/display")
+async def get_resume_display(
+    verbose: bool = Query(True, description="Afficher les détails complets"),
+    show_details: bool = Query(True, description="Afficher les statistiques détaillées"),
+    graph: bool = Query(False, description="Afficher des graphiques descriptifs"),
+    db: Session = Depends(get_db),
+    current_user: Optional[models.User] = Depends(get_authenticated_user_optional)
+):
+    """
+    Endpoint pour récupérer un résumé statistique formaté pour l'affichage.
+    
+    Retourne un résumé formaté similaire à df.info() et df.describe() de pandas,
+    avec une présentation claire et structurée des informations.
+    
+    Parameters:
+        verbose: Afficher les détails complets pour chaque variable
+        show_details: Afficher les statistiques détaillées (quartiles, distribution, etc.)
+    """
+    try:
+        # Créer une instance temporaire du client
+        from dengsurvab import AppiClient
+        client = AppiClient("https://api-bf-dengue-survey-production.up.railway.app/")
+        
+        # Récupérer le résumé brut
+        resume_data = client.resume()
+        
+        if not resume_data.get('success'):
+            return {
+                "success": False,
+                "message": resume_data.get('message', 'Erreur inconnue'),
+                "display": "❌ Erreur lors de la génération du résumé"
+            }
+        
+        # Générer l'affichage formaté
+        import io
+        import sys
+        
+        # Capturer la sortie de resume_display
+        old_stdout = sys.stdout
+        new_stdout = io.StringIO()
+        sys.stdout = new_stdout
+        
+        try:
+            client.resume_display(verbose=verbose, show_details=show_details, graph=graph)
+            display_output = new_stdout.getvalue()
+        finally:
+            sys.stdout = old_stdout
+        
+        return {
+            "success": True,
+            "message": "Résumé généré avec succès",
+            "display": display_output,
+            "data": resume_data
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "message": f"Erreur lors de la génération du résumé: {str(e)}",
+            "display": f"❌ Erreur: {str(e)}",
+            "data": {}
+        }
+'''
+
+
 @app.get("/dashboard/indicateurs", response_class=HTMLResponse)
 def dashboard_indicateurs(
     request: Request,
@@ -2166,4 +2326,4 @@ def create_admin_user(statut = " local"):
 # Appeler la fonction au démarrage
 #create_admin_user(statut = "deploying")
 
-create_admin_user(statut = "local")
+#create_admin_user(statut = "local")

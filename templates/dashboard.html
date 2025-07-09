@@ -462,7 +462,7 @@
                         <div class="metric-label">Total des cas enregistrés</div>
                         <div class="metric-change positive">
                             <i class="fas fa-arrow-up"></i>
-                            <span id="cases-change">+12% cette semaine</span>
+                            <span id="cases-change">0% cette semaine</span>
                         </div>
                     </div>
 
@@ -479,7 +479,7 @@
                         <div class="metric-label">Tests positifs</div>
                         <div class="metric-change positive">
                             <i class="fas fa-arrow-up"></i>
-                            <span id="positive-change">+8% cette semaine</span>
+                            <span id="positive-change">0% cette semaine</span>
                         </div>
                     </div>
 
@@ -496,7 +496,7 @@
                         <div class="metric-label">Hospitalisations</div>
                         <div class="metric-change negative">
                             <i class="fas fa-arrow-down"></i>
-                            <span id="hospitalization-change">-3% cette semaine</span>
+                            <span id="hospitalization-change">0% cette semaine</span>
                         </div>
                     </div>
 
@@ -873,6 +873,13 @@
                 updateMetric('deaths', data.semaine_en_cours.total_deaths || 0);
                 updateMetric('variants', data.semaine_en_cours.variants || 0);
                 
+                // Mise à jour des évolutions avec les données pré-calculées de l'API
+                updateEvolutionFromAPI('cases-change', data.semaine_en_cours.growth_cases || 0);
+                updateEvolutionFromAPI('positive-change', data.semaine_en_cours.growth_positives || 0);
+                updateEvolutionFromAPI('hospitalization-change', data.semaine_en_cours.growth_hospitalized || 0);
+                updateEvolutionFromAPI('deaths-change', data.semaine_en_cours.growth_deaths || 0);
+                updateEvolutionFromAPI('variants-change', data.semaine_en_cours.growth_variants || 0);
+                
             } catch (error) {
                 console.error('Erreur lors du chargement des métriques:', error);
                 showError('Erreur lors du chargement des métriques');
@@ -885,6 +892,90 @@
             if (element) {
                 element.innerHTML = value.toLocaleString();
             }
+        }
+
+        // Mise à jour de l'évolution avec les données de l'API
+        function updateEvolutionFromAPI(elementId, growthPercentage) {
+            const element = document.getElementById(elementId);
+            const parentElement = element.closest('.metric-change');
+            
+            if (!element || !parentElement) return;
+            
+            let changeText = '';
+            let changeClass = 'neutral';
+            let changeIcon = 'fa-minus';
+            
+            // Détermination du type de changement basé sur le pourcentage de croissance
+            if (growthPercentage > 0) {
+                changeClass = 'positive';
+                changeIcon = 'fa-arrow-up';
+                changeText = `+${growthPercentage.toFixed(1)}% cette semaine`;
+            } else if (growthPercentage < 0) {
+                changeClass = 'negative';
+                changeIcon = 'fa-arrow-down';
+                changeText = `${growthPercentage.toFixed(1)}% cette semaine`;
+            } else {
+                changeClass = 'neutral';
+                changeIcon = 'fa-minus';
+                changeText = 'Stable cette semaine';
+            }
+            
+            // Mise à jour de l'icône et du texte
+            const iconElement = parentElement.querySelector('i');
+            if (iconElement) {
+                iconElement.className = `fas ${changeIcon}`;
+            }
+            
+            element.textContent = changeText;
+            
+            // Mise à jour de la classe CSS
+            parentElement.className = `metric-change ${changeClass}`;
+        }
+
+        // Mise à jour de l'évolution (fonction originale pour référence)
+        function updateEvolution(elementId, currentValue, previousValue) {
+            const element = document.getElementById(elementId);
+            const parentElement = element.closest('.metric-change');
+            
+            if (!element || !parentElement) return;
+            
+            // Calcul du pourcentage de changement
+            let percentageChange = 0;
+            let changeText = '';
+            let changeClass = 'neutral';
+            let changeIcon = 'fa-minus';
+            
+            if (previousValue > 0) {
+                percentageChange = ((currentValue - previousValue) / previousValue) * 100;
+            } else if (currentValue > 0) {
+                percentageChange = 100; // Nouveau cas
+            }
+            
+            // Détermination du type de changement
+            if (percentageChange > 0) {
+                changeClass = 'positive';
+                changeIcon = 'fa-arrow-up';
+                changeText = `+${percentageChange.toFixed(1)}% cette semaine`;
+            } else if (percentageChange < 0) {
+                changeClass = 'negative';
+                changeIcon = 'fa-arrow-down';
+                changeText = `${percentageChange.toFixed(1)}% cette semaine`;
+            } else {
+                changeClass = 'neutral';
+                changeIcon = 'fa-minus';
+                changeText = 'Stable cette semaine';
+            }
+            
+            // Mise à jour de l'icône et du texte
+            const iconElement = parentElement.querySelector('i');
+            if (iconElement) {
+                iconElement.className = `fas ${changeIcon}`;
+            }
+            
+            element.textContent = changeText;
+            
+            // Mise à jour de la classe CSS
+            parentElement.className = `metric-change ${changeClass}`;
         }
 
         // Chargement des données des graphiques

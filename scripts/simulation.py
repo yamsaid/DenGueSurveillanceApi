@@ -94,10 +94,10 @@ positif_ratio = 0.5172
 femme_ratio = 0.5076
 hospitalise_ratio = 0.2816
 serotypes = ['DENV2', 'DENV3']
-mois_peak = [5, 6]  # Septembre et Octobre
+mois_peak = [7]  # Septembre et Octobre
 
 # Données par district
-districts_data = [
+"""districts_data = [
     ("Centre", "DS Baskuy", 6663, 111),
     ("Centre", "DS Bogodogo", 29436, 59),
     ("Centre", "DS Boulmiougou", 21183, 110),
@@ -111,18 +111,32 @@ districts_data = [
     ("Hauts Bassins", "DS Léna", 65, 0),
     ("Hauts Bassins", "DS N'Dorola", 64, 0),
     ("Hauts Bassins", "DS Orodara", 360, 0),
-]
+]"""
 
+districts_data = [
+    ("Centre", "DS Baskuy", 66, 11),
+    ("Centre", "DS Bogodogo", 24, 5),
+    ("Centre", "DS Boulmiougou", 211, 11),
+    ("Centre", "DS Nongr-Massom", 132, 2),
+    ("Centre", "DS Sig-Noghin", 205, 8),
+    ("Hauts Bassins", "DS Dafra", 165, 1),
+    ("Hauts Bassins", "DS Dande", 29, 2),
+    ("Hauts Bassins", "DS Do", 98, 2),
+    ("Hauts Bassins", "DS Hounde", 39, 6),
+    ("Hauts Bassins", "DS Karangasso Vigue", 14, 0),
+    ("Hauts Bassins", "DS Léna", 6, 0),
+    ("Hauts Bassins", "DS N'Dorola", 64, 0),
+    ("Hauts Bassins", "DS Orodara", 36, 0),
+]
 # Simulation des données
 all_data = []
-id_counter = 1
-base_year = 2024
+base_year = 2025
 
 for region, district, n_cases, n_deaths in districts_data:
     deaths_set = set(random.sample(range(n_cases), n_deaths)) if n_deaths < n_cases else set()
     for i in range(n_cases):
-        mois = random.choices(range(1, 13), weights=[3 if m in mois_peak else 1 for m in range(1, 13)])[0]
-        jour = random.randint(1, 28)  # Pour éviter les erreurs de date
+        mois = random.choices(range(6, 7), weights=[3 if m in mois_peak else 1 for m in range(6, 7)])[0]
+        jour = random.randint(1, 6)  # Pour éviter les erreurs de date
         date_notification = datetime(base_year, mois, jour)
 
         sexe = "Femme" if random.random() < femme_ratio else "Homme"
@@ -145,7 +159,7 @@ for region, district, n_cases, n_deaths in districts_data:
         
 
 df_simule = pd.DataFrame(all_data)
-csv_path = "data_simulate_2024.csv"
+csv_path = "data_nettoyee/data_simulate_2025_test3.csv"
 df_simule.to_csv(csv_path, index=False)
 
 print(f"✅ Données simulées enregistrées dans '{csv_path}'")

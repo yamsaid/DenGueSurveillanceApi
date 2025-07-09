@@ -58,11 +58,11 @@ class ValidationCasDengue(BaseModel):
     model_config = {
         "from_attributes": True
     }
-    idCas: int
+    
     sexe: str = Field(description="Le sexe du patient")
     age: int = Field(gt=0, description="L'âge du patient / an")
     region : Optional[str]= Field(default="Centre",min_length=2, max_length=50) # Centre, Hauts Bassins
-    date_consultation: Optional[date]
+    date_consultation: Optional[str]
     district : Optional[str]
     resultat_test: Optional[str] #Positif / Négatif"
     serotype: Optional[str] #DENV2 / DENV3

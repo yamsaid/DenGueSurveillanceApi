@@ -1,0 +1,1090 @@
+date_consultation,region,district,sexe,age,resultat_test,serotype,hospitalise,issue
+2025-06-04,Centre,DS Baskuy,Femme,28,Négatif,DENV3,Non,En traitement
+2025-06-03,Centre,DS Baskuy,Homme,37,Positif,DENV2,Non,Décédé
+2025-06-08,Centre,DS Baskuy,Femme,26,Positif,DENV3,Oui,Inconnue
+2025-06-04,Centre,DS Baskuy,Homme,12,Positif,DENV2,Oui,Guéri
+2025-06-26,Centre,DS Baskuy,Homme,12,Positif,DENV2,Non,Inconnue
+2025-06-09,Centre,DS Baskuy,Homme,45,Positif,DENV2,Non,Inconnue
+2025-06-25,Centre,DS Baskuy,Homme,34,Positif,DENV2,Non,Inconnue
+2025-06-27,Centre,DS Baskuy,Femme,28,Positif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Baskuy,Homme,29,Négatif,DENV3,Non,Guéri
+2025-06-01,Centre,DS Baskuy,Femme,17,Positif,DENV2,Non,En traitement
+2025-06-25,Centre,DS Baskuy,Femme,28,Positif,DENV2,Oui,Décédé
+2025-06-30,Centre,DS Baskuy,Homme,42,Positif,DENV2,Non,En traitement
+2025-06-04,Centre,DS Baskuy,Femme,26,Positif,DENV3,Oui,Décédé
+2025-06-21,Centre,DS Baskuy,Femme,37,Positif,DENV3,Non,Inconnue
+2025-06-28,Centre,DS Baskuy,Femme,18,Positif,DENV2,Non,Inconnue
+2025-06-02,Centre,DS Baskuy,Homme,46,Négatif,DENV3,Non,En traitement
+2025-06-03,Centre,DS Baskuy,Homme,24,Négatif,DENV3,Oui,Inconnue
+2025-06-06,Centre,DS Baskuy,Femme,19,Négatif,DENV2,Non,Guéri
+2025-06-07,Centre,DS Baskuy,Homme,40,Négatif,DENV3,Non,Inconnue
+2025-06-21,Centre,DS Baskuy,Femme,3,Négatif,DENV3,Non,Décédé
+2025-06-01,Centre,DS Baskuy,Homme,34,Positif,DENV2,Non,Décédé
+2025-06-29,Centre,DS Baskuy,Femme,15,Positif,DENV2,Oui,Guéri
+2025-06-12,Centre,DS Baskuy,Femme,18,Positif,DENV2,Oui,Guéri
+2025-06-12,Centre,DS Baskuy,Homme,48,Positif,DENV2,Oui,En traitement
+2025-06-13,Centre,DS Baskuy,Homme,6,Négatif,DENV3,Non,Inconnue
+2025-06-25,Centre,DS Baskuy,Femme,9,Positif,DENV3,Non,Guéri
+2025-06-28,Centre,DS Baskuy,Femme,10,Négatif,DENV2,Oui,Décédé
+2025-06-23,Centre,DS Baskuy,Homme,53,Négatif,DENV3,Non,Guéri
+2025-06-17,Centre,DS Baskuy,Femme,19,Négatif,DENV2,Non,Inconnue
+2025-06-05,Centre,DS Baskuy,Femme,40,Négatif,DENV2,Non,Guéri
+2025-06-08,Centre,DS Baskuy,Homme,24,Positif,DENV2,Non,En traitement
+2025-06-17,Centre,DS Baskuy,Femme,32,Négatif,DENV2,Non,Inconnue
+2025-06-05,Centre,DS Baskuy,Homme,3,Négatif,DENV3,Non,Guéri
+2025-06-06,Centre,DS Baskuy,Femme,31,Positif,DENV3,Non,Décédé
+2025-06-28,Centre,DS Baskuy,Homme,32,Négatif,DENV2,Non,Guéri
+2025-06-28,Centre,DS Baskuy,Homme,2,Négatif,DENV2,Non,En traitement
+2025-06-08,Centre,DS Baskuy,Homme,16,Négatif,DENV2,Non,Décédé
+2025-06-13,Centre,DS Baskuy,Femme,33,Négatif,DENV2,Non,Inconnue
+2025-06-06,Centre,DS Baskuy,Homme,38,Positif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Baskuy,Homme,11,Positif,DENV2,Non,Inconnue
+2025-06-06,Centre,DS Baskuy,Homme,4,Positif,DENV3,Non,Inconnue
+2025-06-09,Centre,DS Baskuy,Homme,10,Négatif,DENV3,Oui,Inconnue
+2025-06-26,Centre,DS Baskuy,Femme,27,Positif,DENV2,Non,En traitement
+2025-06-25,Centre,DS Baskuy,Femme,26,Négatif,DENV2,Non,En traitement
+2025-06-12,Centre,DS Baskuy,Femme,36,Négatif,DENV3,Non,Guéri
+2025-06-02,Centre,DS Baskuy,Femme,42,Positif,DENV3,Non,Inconnue
+2025-06-25,Centre,DS Baskuy,Homme,28,Négatif,DENV3,Non,Inconnue
+2025-06-07,Centre,DS Baskuy,Femme,6,Négatif,DENV2,Non,En traitement
+2025-06-06,Centre,DS Baskuy,Femme,62,Positif,DENV3,Oui,Guéri
+2025-06-20,Centre,DS Baskuy,Femme,1,Négatif,DENV3,Non,Guéri
+2025-06-28,Centre,DS Baskuy,Femme,2,Positif,DENV2,Non,Inconnue
+2025-06-27,Centre,DS Baskuy,Femme,29,Négatif,DENV2,Oui,En traitement
+2025-06-30,Centre,DS Baskuy,Femme,45,Négatif,DENV2,Non,Guéri
+2025-06-12,Centre,DS Baskuy,Homme,55,Négatif,DENV3,Non,Guéri
+2025-06-15,Centre,DS Baskuy,Femme,25,Négatif,DENV2,Non,En traitement
+2025-06-17,Centre,DS Baskuy,Homme,20,Positif,DENV3,Non,Décédé
+2025-06-27,Centre,DS Baskuy,Homme,53,Négatif,DENV2,Non,Décédé
+2025-06-01,Centre,DS Baskuy,Homme,38,Négatif,DENV2,Non,Décédé
+2025-06-01,Centre,DS Baskuy,Homme,23,Positif,DENV2,Non,Guéri
+2025-06-30,Centre,DS Baskuy,Homme,27,Négatif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Baskuy,Femme,22,Négatif,DENV3,Oui,Guéri
+2025-06-27,Centre,DS Baskuy,Femme,14,Positif,DENV3,Oui,Inconnue
+2025-06-29,Centre,DS Baskuy,Femme,30,Positif,DENV2,Non,Inconnue
+2025-06-10,Centre,DS Baskuy,Femme,5,Négatif,DENV3,Non,Inconnue
+2025-06-11,Centre,DS Baskuy,Femme,18,Positif,DENV3,Oui,Guéri
+2025-06-05,Centre,DS Baskuy,Homme,32,Négatif,DENV2,Non,Inconnue
+2025-06-17,Centre,DS Bogodogo,Femme,7,Positif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Bogodogo,Femme,29,Négatif,DENV3,Oui,Décédé
+2025-06-12,Centre,DS Bogodogo,Femme,27,Négatif,DENV3,Non,Guéri
+2025-06-21,Centre,DS Bogodogo,Femme,35,Négatif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Bogodogo,Femme,13,Négatif,DENV2,Non,Guéri
+2025-06-02,Centre,DS Bogodogo,Femme,26,Négatif,DENV2,Non,Décédé
+2025-06-03,Centre,DS Bogodogo,Homme,31,Positif,DENV3,Non,En traitement
+2025-06-07,Centre,DS Bogodogo,Homme,45,Positif,DENV2,Non,Décédé
+2025-06-23,Centre,DS Bogodogo,Femme,30,Négatif,DENV3,Non,Décédé
+2025-06-09,Centre,DS Bogodogo,Femme,28,Négatif,DENV2,Non,Guéri
+2025-06-04,Centre,DS Bogodogo,Homme,35,Positif,DENV2,Oui,Guéri
+2025-06-27,Centre,DS Bogodogo,Homme,28,Positif,DENV2,Oui,Inconnue
+2025-06-11,Centre,DS Bogodogo,Femme,40,Positif,DENV2,Non,Inconnue
+2025-06-23,Centre,DS Bogodogo,Homme,39,Négatif,DENV3,Non,Guéri
+2025-06-29,Centre,DS Bogodogo,Homme,38,Négatif,DENV2,Non,Guéri
+2025-06-06,Centre,DS Bogodogo,Homme,13,Négatif,DENV2,Non,En traitement
+2025-06-09,Centre,DS Bogodogo,Femme,29,Négatif,DENV3,Non,Décédé
+2025-06-08,Centre,DS Bogodogo,Homme,28,Négatif,DENV2,Oui,En traitement
+2025-06-27,Centre,DS Bogodogo,Femme,18,Négatif,DENV2,Non,Inconnue
+2025-06-22,Centre,DS Bogodogo,Homme,29,Positif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Bogodogo,Femme,26,Négatif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Bogodogo,Femme,17,Positif,DENV3,Oui,En traitement
+2025-06-09,Centre,DS Bogodogo,Femme,51,Négatif,DENV2,Non,Guéri
+2025-06-30,Centre,DS Bogodogo,Homme,7,Positif,DENV2,Non,Inconnue
+2025-06-17,Centre,DS Boulmiougou,Homme,24,Positif,DENV2,Non,Inconnue
+2025-06-22,Centre,DS Boulmiougou,Femme,3,Négatif,DENV2,Oui,Inconnue
+2025-06-10,Centre,DS Boulmiougou,Homme,44,Négatif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Boulmiougou,Homme,5,Négatif,DENV3,Oui,Inconnue
+2025-06-26,Centre,DS Boulmiougou,Femme,34,Négatif,DENV2,Non,Décédé
+2025-06-17,Centre,DS Boulmiougou,Femme,19,Positif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Boulmiougou,Femme,1,Positif,DENV3,Non,Inconnue
+2025-06-24,Centre,DS Boulmiougou,Femme,16,Négatif,DENV3,Non,En traitement
+2025-06-12,Centre,DS Boulmiougou,Homme,30,Positif,DENV2,Non,En traitement
+2025-06-04,Centre,DS Boulmiougou,Femme,14,Positif,DENV2,Non,En traitement
+2025-06-24,Centre,DS Boulmiougou,Homme,18,Positif,DENV3,Non,Inconnue
+2025-06-19,Centre,DS Boulmiougou,Homme,35,Négatif,DENV2,Oui,En traitement
+2025-06-03,Centre,DS Boulmiougou,Homme,10,Négatif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Boulmiougou,Femme,26,Positif,DENV2,Oui,En traitement
+2025-06-09,Centre,DS Boulmiougou,Homme,3,Positif,DENV2,Non,Inconnue
+2025-06-02,Centre,DS Boulmiougou,Homme,25,Positif,DENV2,Non,Inconnue
+2025-06-22,Centre,DS Boulmiougou,Homme,28,Positif,DENV2,Non,Inconnue
+2025-06-09,Centre,DS Boulmiougou,Femme,28,Positif,DENV3,Non,Inconnue
+2025-06-04,Centre,DS Boulmiougou,Femme,20,Positif,DENV2,Non,Inconnue
+2025-06-13,Centre,DS Boulmiougou,Homme,10,Positif,DENV2,Oui,Inconnue
+2025-06-09,Centre,DS Boulmiougou,Homme,2,Positif,DENV3,Non,Inconnue
+2025-06-25,Centre,DS Boulmiougou,Femme,34,Négatif,DENV2,Oui,Guéri
+2025-06-30,Centre,DS Boulmiougou,Femme,21,Négatif,DENV2,Oui,Inconnue
+2025-06-10,Centre,DS Boulmiougou,Femme,37,Négatif,DENV3,Non,En traitement
+2025-06-28,Centre,DS Boulmiougou,Homme,41,Positif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Boulmiougou,Homme,19,Positif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Boulmiougou,Homme,14,Positif,DENV3,Non,Décédé
+2025-06-01,Centre,DS Boulmiougou,Femme,38,Négatif,DENV3,Non,En traitement
+2025-06-26,Centre,DS Boulmiougou,Femme,31,Négatif,DENV2,Non,Guéri
+2025-06-17,Centre,DS Boulmiougou,Homme,6,Positif,DENV3,Non,Guéri
+2025-06-27,Centre,DS Boulmiougou,Homme,8,Positif,DENV3,Non,En traitement
+2025-06-05,Centre,DS Boulmiougou,Femme,10,Négatif,DENV2,Non,En traitement
+2025-06-27,Centre,DS Boulmiougou,Femme,7,Négatif,DENV2,Non,Guéri
+2025-06-13,Centre,DS Boulmiougou,Homme,33,Négatif,DENV2,Non,Guéri
+2025-06-04,Centre,DS Boulmiougou,Femme,26,Positif,DENV2,Non,Inconnue
+2025-06-27,Centre,DS Boulmiougou,Homme,20,Positif,DENV2,Oui,Guéri
+2025-06-08,Centre,DS Boulmiougou,Homme,39,Positif,DENV2,Non,Guéri
+2025-06-17,Centre,DS Boulmiougou,Femme,16,Positif,DENV2,Non,En traitement
+2025-06-22,Centre,DS Boulmiougou,Homme,3,Positif,DENV3,Non,En traitement
+2025-06-29,Centre,DS Boulmiougou,Homme,19,Positif,DENV3,Non,En traitement
+2025-06-17,Centre,DS Boulmiougou,Homme,13,Positif,DENV2,Non,En traitement
+2025-06-30,Centre,DS Boulmiougou,Femme,2,Positif,DENV3,Non,Inconnue
+2025-06-19,Centre,DS Boulmiougou,Homme,47,Positif,DENV2,Non,Inconnue
+2025-06-04,Centre,DS Boulmiougou,Femme,43,Positif,DENV2,Non,Inconnue
+2025-06-02,Centre,DS Boulmiougou,Homme,36,Positif,DENV3,Oui,Inconnue
+2025-06-14,Centre,DS Boulmiougou,Homme,15,Positif,DENV3,Non,En traitement
+2025-06-10,Centre,DS Boulmiougou,Homme,49,Négatif,DENV2,Non,Décédé
+2025-06-26,Centre,DS Boulmiougou,Femme,12,Positif,DENV2,Non,Guéri
+2025-06-12,Centre,DS Boulmiougou,Homme,21,Négatif,DENV2,Non,Inconnue
+2025-06-26,Centre,DS Boulmiougou,Femme,21,Positif,DENV3,Non,Guéri
+2025-06-22,Centre,DS Boulmiougou,Femme,18,Négatif,DENV2,Non,Guéri
+2025-06-29,Centre,DS Boulmiougou,Femme,7,Négatif,DENV3,Non,En traitement
+2025-06-02,Centre,DS Boulmiougou,Femme,30,Négatif,DENV2,Oui,Guéri
+2025-06-19,Centre,DS Boulmiougou,Homme,44,Négatif,DENV2,Non,Inconnue
+2025-06-28,Centre,DS Boulmiougou,Homme,57,Négatif,DENV2,Non,En traitement
+2025-06-16,Centre,DS Boulmiougou,Femme,25,Négatif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Boulmiougou,Femme,15,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Boulmiougou,Femme,14,Positif,DENV2,Non,Guéri
+2025-06-20,Centre,DS Boulmiougou,Homme,35,Positif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Boulmiougou,Homme,28,Positif,DENV3,Non,En traitement
+2025-06-29,Centre,DS Boulmiougou,Femme,33,Négatif,DENV3,Non,Guéri
+2025-06-03,Centre,DS Boulmiougou,Homme,7,Positif,DENV2,Non,En traitement
+2025-06-18,Centre,DS Boulmiougou,Femme,29,Positif,DENV2,Non,Guéri
+2025-06-15,Centre,DS Boulmiougou,Femme,32,Négatif,DENV3,Non,En traitement
+2025-06-04,Centre,DS Boulmiougou,Homme,2,Positif,DENV2,Non,Guéri
+2025-06-27,Centre,DS Boulmiougou,Femme,17,Positif,DENV2,Oui,En traitement
+2025-06-16,Centre,DS Boulmiougou,Femme,38,Négatif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Boulmiougou,Homme,23,Négatif,DENV3,Non,En traitement
+2025-06-19,Centre,DS Boulmiougou,Femme,34,Positif,DENV2,Non,Guéri
+2025-06-06,Centre,DS Boulmiougou,Femme,9,Négatif,DENV2,Oui,Inconnue
+2025-06-25,Centre,DS Boulmiougou,Femme,22,Négatif,DENV2,Oui,Inconnue
+2025-06-15,Centre,DS Boulmiougou,Homme,27,Négatif,DENV3,Oui,Inconnue
+2025-06-24,Centre,DS Boulmiougou,Homme,53,Négatif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Boulmiougou,Homme,46,Positif,DENV3,Non,Guéri
+2025-06-07,Centre,DS Boulmiougou,Homme,28,Positif,DENV2,Oui,Guéri
+2025-06-13,Centre,DS Boulmiougou,Homme,18,Positif,DENV2,Oui,En traitement
+2025-06-26,Centre,DS Boulmiougou,Homme,28,Positif,DENV3,Oui,En traitement
+2025-06-25,Centre,DS Boulmiougou,Homme,49,Négatif,DENV3,Non,En traitement
+2025-06-18,Centre,DS Boulmiougou,Homme,27,Négatif,DENV2,Non,En traitement
+2025-06-01,Centre,DS Boulmiougou,Femme,6,Négatif,DENV3,Oui,Guéri
+2025-06-22,Centre,DS Boulmiougou,Femme,45,Positif,DENV2,Non,Guéri
+2025-06-08,Centre,DS Boulmiougou,Femme,28,Positif,DENV2,Oui,Décédé
+2025-06-05,Centre,DS Boulmiougou,Femme,4,Positif,DENV2,Oui,Guéri
+2025-06-07,Centre,DS Boulmiougou,Homme,28,Négatif,DENV3,Oui,Guéri
+2025-06-09,Centre,DS Boulmiougou,Homme,2,Positif,DENV2,Non,Décédé
+2025-06-22,Centre,DS Boulmiougou,Homme,53,Négatif,DENV3,Non,En traitement
+2025-06-27,Centre,DS Boulmiougou,Homme,4,Négatif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Boulmiougou,Homme,36,Positif,DENV2,Oui,Inconnue
+2025-06-19,Centre,DS Boulmiougou,Homme,17,Positif,DENV3,Non,Inconnue
+2025-06-19,Centre,DS Boulmiougou,Homme,41,Négatif,DENV3,Non,En traitement
+2025-06-27,Centre,DS Boulmiougou,Femme,44,Négatif,DENV2,Oui,En traitement
+2025-06-16,Centre,DS Boulmiougou,Femme,43,Positif,DENV2,Non,Inconnue
+2025-06-21,Centre,DS Boulmiougou,Femme,15,Positif,DENV2,Non,En traitement
+2025-06-16,Centre,DS Boulmiougou,Homme,34,Négatif,DENV3,Oui,Guéri
+2025-06-14,Centre,DS Boulmiougou,Homme,18,Positif,DENV2,Oui,Guéri
+2025-06-25,Centre,DS Boulmiougou,Homme,6,Négatif,DENV2,Non,En traitement
+2025-06-26,Centre,DS Boulmiougou,Femme,28,Positif,DENV3,Non,Inconnue
+2025-06-16,Centre,DS Boulmiougou,Femme,40,Négatif,DENV2,Non,Inconnue
+2025-06-14,Centre,DS Boulmiougou,Homme,4,Positif,DENV2,Oui,Décédé
+2025-06-05,Centre,DS Boulmiougou,Femme,26,Négatif,DENV2,Oui,Inconnue
+2025-06-08,Centre,DS Boulmiougou,Femme,13,Négatif,DENV2,Oui,Inconnue
+2025-06-27,Centre,DS Boulmiougou,Femme,18,Négatif,DENV2,Oui,Guéri
+2025-06-01,Centre,DS Boulmiougou,Femme,23,Négatif,DENV2,Oui,Guéri
+2025-06-25,Centre,DS Boulmiougou,Homme,32,Positif,DENV3,Oui,Guéri
+2025-06-05,Centre,DS Boulmiougou,Femme,17,Négatif,DENV3,Non,Inconnue
+2025-06-20,Centre,DS Boulmiougou,Homme,28,Positif,DENV2,Oui,En traitement
+2025-06-10,Centre,DS Boulmiougou,Femme,41,Positif,DENV3,Oui,Inconnue
+2025-06-05,Centre,DS Boulmiougou,Homme,48,Négatif,DENV2,Non,Guéri
+2025-06-13,Centre,DS Boulmiougou,Homme,34,Positif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Boulmiougou,Femme,3,Négatif,DENV2,Non,Guéri
+2025-06-19,Centre,DS Boulmiougou,Femme,55,Négatif,DENV2,Non,Guéri
+2025-06-05,Centre,DS Boulmiougou,Femme,41,Négatif,DENV3,Non,Guéri
+2025-06-04,Centre,DS Boulmiougou,Homme,13,Positif,DENV2,Non,Décédé
+2025-06-14,Centre,DS Boulmiougou,Femme,36,Négatif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Boulmiougou,Femme,22,Positif,DENV3,Non,Inconnue
+2025-06-22,Centre,DS Boulmiougou,Femme,39,Négatif,DENV3,Non,En traitement
+2025-06-26,Centre,DS Boulmiougou,Homme,15,Négatif,DENV3,Non,En traitement
+2025-06-17,Centre,DS Boulmiougou,Femme,26,Négatif,DENV2,Oui,En traitement
+2025-06-30,Centre,DS Boulmiougou,Homme,40,Positif,DENV3,Oui,En traitement
+2025-06-09,Centre,DS Boulmiougou,Homme,37,Positif,DENV3,Oui,Guéri
+2025-06-12,Centre,DS Boulmiougou,Homme,20,Négatif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Boulmiougou,Homme,4,Négatif,DENV3,Non,Guéri
+2025-06-29,Centre,DS Boulmiougou,Femme,11,Négatif,DENV2,Non,Inconnue
+2025-06-18,Centre,DS Boulmiougou,Femme,24,Négatif,DENV2,Oui,Guéri
+2025-06-24,Centre,DS Boulmiougou,Homme,23,Positif,DENV3,Non,Inconnue
+2025-06-08,Centre,DS Boulmiougou,Femme,28,Négatif,DENV3,Oui,En traitement
+2025-06-03,Centre,DS Boulmiougou,Homme,15,Positif,DENV3,Oui,Guéri
+2025-06-25,Centre,DS Boulmiougou,Homme,44,Positif,DENV3,Non,Inconnue
+2025-06-03,Centre,DS Boulmiougou,Femme,39,Négatif,DENV2,Non,En traitement
+2025-06-03,Centre,DS Boulmiougou,Femme,48,Négatif,DENV3,Non,Guéri
+2025-06-10,Centre,DS Boulmiougou,Femme,28,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Boulmiougou,Femme,21,Positif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Boulmiougou,Femme,29,Négatif,DENV2,Oui,Inconnue
+2025-06-20,Centre,DS Boulmiougou,Femme,3,Positif,DENV3,Non,Guéri
+2025-06-21,Centre,DS Boulmiougou,Homme,36,Négatif,DENV3,Oui,En traitement
+2025-06-30,Centre,DS Boulmiougou,Homme,7,Positif,DENV2,Non,Inconnue
+2025-06-04,Centre,DS Boulmiougou,Femme,36,Positif,DENV3,Non,Guéri
+2025-06-22,Centre,DS Boulmiougou,Homme,35,Positif,DENV2,Oui,Inconnue
+2025-06-01,Centre,DS Boulmiougou,Femme,21,Négatif,DENV2,Oui,Inconnue
+2025-06-26,Centre,DS Boulmiougou,Femme,57,Positif,DENV2,Non,Inconnue
+2025-06-27,Centre,DS Boulmiougou,Femme,9,Négatif,DENV3,Non,En traitement
+2025-06-23,Centre,DS Boulmiougou,Femme,38,Négatif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Boulmiougou,Homme,26,Positif,DENV2,Oui,En traitement
+2025-06-27,Centre,DS Boulmiougou,Homme,48,Négatif,DENV2,Oui,En traitement
+2025-06-29,Centre,DS Boulmiougou,Homme,33,Positif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Boulmiougou,Femme,39,Négatif,DENV2,Oui,Guéri
+2025-06-14,Centre,DS Boulmiougou,Femme,26,Positif,DENV2,Non,Guéri
+2025-06-04,Centre,DS Boulmiougou,Femme,26,Positif,DENV2,Non,Guéri
+2025-06-18,Centre,DS Boulmiougou,Homme,9,Positif,DENV2,Oui,Guéri
+2025-06-14,Centre,DS Boulmiougou,Homme,20,Positif,DENV3,Oui,En traitement
+2025-06-15,Centre,DS Boulmiougou,Femme,29,Positif,DENV2,Non,Inconnue
+2025-06-26,Centre,DS Boulmiougou,Femme,18,Positif,DENV2,Oui,Inconnue
+2025-06-02,Centre,DS Boulmiougou,Femme,14,Négatif,DENV2,Non,En traitement
+2025-06-29,Centre,DS Boulmiougou,Homme,4,Négatif,DENV3,Non,En traitement
+2025-06-09,Centre,DS Boulmiougou,Femme,26,Positif,DENV3,Non,Guéri
+2025-06-05,Centre,DS Boulmiougou,Femme,26,Négatif,DENV2,Non,Inconnue
+2025-06-24,Centre,DS Boulmiougou,Femme,16,Négatif,DENV2,Oui,Guéri
+2025-06-16,Centre,DS Boulmiougou,Femme,20,Positif,DENV3,Non,Guéri
+2025-06-23,Centre,DS Boulmiougou,Homme,13,Positif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Boulmiougou,Femme,19,Positif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Boulmiougou,Femme,14,Positif,DENV2,Oui,Guéri
+2025-06-03,Centre,DS Boulmiougou,Homme,40,Négatif,DENV2,Oui,Inconnue
+2025-06-28,Centre,DS Boulmiougou,Homme,32,Négatif,DENV3,Non,Inconnue
+2025-06-25,Centre,DS Boulmiougou,Femme,29,Négatif,DENV3,Non,En traitement
+2025-06-02,Centre,DS Boulmiougou,Femme,16,Négatif,DENV3,Oui,Inconnue
+2025-06-14,Centre,DS Boulmiougou,Femme,29,Positif,DENV3,Non,En traitement
+2025-06-12,Centre,DS Boulmiougou,Femme,15,Négatif,DENV3,Oui,Guéri
+2025-06-01,Centre,DS Boulmiougou,Homme,44,Négatif,DENV2,Non,Inconnue
+2025-06-16,Centre,DS Boulmiougou,Femme,29,Négatif,DENV3,Non,Guéri
+2025-06-05,Centre,DS Boulmiougou,Femme,15,Positif,DENV3,Non,Guéri
+2025-06-03,Centre,DS Boulmiougou,Femme,19,Négatif,DENV2,Non,En traitement
+2025-06-19,Centre,DS Boulmiougou,Femme,26,Négatif,DENV3,Non,Guéri
+2025-06-08,Centre,DS Boulmiougou,Femme,16,Négatif,DENV3,Oui,Guéri
+2025-06-27,Centre,DS Boulmiougou,Homme,34,Positif,DENV2,Non,Inconnue
+2025-06-18,Centre,DS Boulmiougou,Femme,32,Positif,DENV2,Oui,Guéri
+2025-06-12,Centre,DS Boulmiougou,Femme,32,Positif,DENV2,Non,En traitement
+2025-06-29,Centre,DS Boulmiougou,Homme,28,Négatif,DENV2,Non,Décédé
+2025-06-16,Centre,DS Boulmiougou,Homme,47,Négatif,DENV2,Non,En traitement
+2025-06-25,Centre,DS Boulmiougou,Femme,24,Négatif,DENV2,Oui,En traitement
+2025-06-21,Centre,DS Boulmiougou,Femme,19,Positif,DENV3,Oui,Guéri
+2025-06-23,Centre,DS Boulmiougou,Homme,7,Positif,DENV3,Non,Guéri
+2025-06-21,Centre,DS Boulmiougou,Homme,22,Négatif,DENV3,Non,En traitement
+2025-06-05,Centre,DS Boulmiougou,Homme,14,Positif,DENV3,Non,Inconnue
+2025-06-17,Centre,DS Boulmiougou,Femme,31,Négatif,DENV3,Non,Guéri
+2025-06-12,Centre,DS Boulmiougou,Homme,41,Positif,DENV3,Non,Inconnue
+2025-06-26,Centre,DS Boulmiougou,Femme,17,Positif,DENV3,Non,Guéri
+2025-06-12,Centre,DS Boulmiougou,Femme,30,Négatif,DENV3,Non,En traitement
+2025-06-30,Centre,DS Boulmiougou,Homme,0,Positif,DENV3,Non,Inconnue
+2025-06-07,Centre,DS Boulmiougou,Femme,15,Négatif,DENV2,Non,Inconnue
+2025-06-06,Centre,DS Boulmiougou,Homme,34,Négatif,DENV2,Oui,En traitement
+2025-06-16,Centre,DS Boulmiougou,Femme,44,Négatif,DENV2,Non,Inconnue
+2025-06-17,Centre,DS Boulmiougou,Homme,19,Négatif,DENV3,Non,Guéri
+2025-06-25,Centre,DS Boulmiougou,Femme,18,Négatif,DENV2,Non,Décédé
+2025-06-18,Centre,DS Boulmiougou,Homme,26,Positif,DENV3,Non,Décédé
+2025-06-01,Centre,DS Boulmiougou,Femme,33,Négatif,DENV3,Non,En traitement
+2025-06-12,Centre,DS Boulmiougou,Femme,18,Négatif,DENV2,Non,Guéri
+2025-06-26,Centre,DS Boulmiougou,Homme,22,Négatif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Boulmiougou,Femme,23,Positif,DENV3,Oui,Guéri
+2025-06-20,Centre,DS Boulmiougou,Femme,22,Positif,DENV3,Non,En traitement
+2025-06-13,Centre,DS Boulmiougou,Femme,43,Positif,DENV2,Oui,En traitement
+2025-06-19,Centre,DS Boulmiougou,Femme,36,Positif,DENV3,Non,En traitement
+2025-06-05,Centre,DS Boulmiougou,Femme,21,Négatif,DENV3,Oui,Inconnue
+2025-06-10,Centre,DS Boulmiougou,Femme,20,Négatif,DENV3,Non,Inconnue
+2025-06-12,Centre,DS Boulmiougou,Femme,30,Positif,DENV2,Oui,Inconnue
+2025-06-22,Centre,DS Boulmiougou,Femme,51,Négatif,DENV3,Non,Guéri
+2025-06-01,Centre,DS Boulmiougou,Femme,57,Positif,DENV2,Non,Inconnue
+2025-06-06,Centre,DS Boulmiougou,Homme,26,Négatif,DENV2,Non,Décédé
+2025-06-26,Centre,DS Boulmiougou,Homme,20,Positif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Boulmiougou,Femme,30,Positif,DENV2,Non,Inconnue
+2025-06-01,Centre,DS Boulmiougou,Homme,43,Positif,DENV2,Oui,Guéri
+2025-06-14,Centre,DS Boulmiougou,Femme,28,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Femme,55,Négatif,DENV2,Oui,En traitement
+2025-06-25,Centre,DS Nongr-Massom,Femme,15,Positif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Femme,24,Négatif,DENV3,Oui,En traitement
+2025-06-11,Centre,DS Nongr-Massom,Homme,26,Négatif,DENV2,Oui,Guéri
+2025-06-16,Centre,DS Nongr-Massom,Homme,13,Négatif,DENV3,Non,Inconnue
+2025-06-28,Centre,DS Nongr-Massom,Femme,11,Positif,DENV3,Oui,Guéri
+2025-06-04,Centre,DS Nongr-Massom,Homme,15,Négatif,DENV3,Non,Inconnue
+2025-06-05,Centre,DS Nongr-Massom,Femme,19,Négatif,DENV2,Oui,En traitement
+2025-06-19,Centre,DS Nongr-Massom,Homme,62,Positif,DENV3,Non,Inconnue
+2025-06-26,Centre,DS Nongr-Massom,Homme,26,Négatif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Nongr-Massom,Femme,42,Positif,DENV3,Non,Inconnue
+2025-06-29,Centre,DS Nongr-Massom,Femme,13,Positif,DENV3,Non,Guéri
+2025-06-02,Centre,DS Nongr-Massom,Femme,17,Négatif,DENV2,Non,En traitement
+2025-06-30,Centre,DS Nongr-Massom,Femme,0,Négatif,DENV3,Non,Décédé
+2025-06-15,Centre,DS Nongr-Massom,Femme,32,Positif,DENV3,Non,En traitement
+2025-06-23,Centre,DS Nongr-Massom,Femme,3,Positif,DENV3,Non,En traitement
+2025-06-11,Centre,DS Nongr-Massom,Femme,34,Positif,DENV3,Non,En traitement
+2025-06-29,Centre,DS Nongr-Massom,Femme,41,Positif,DENV2,Oui,Guéri
+2025-06-22,Centre,DS Nongr-Massom,Femme,24,Négatif,DENV3,Non,Inconnue
+2025-06-08,Centre,DS Nongr-Massom,Femme,12,Positif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Nongr-Massom,Homme,19,Positif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Nongr-Massom,Homme,0,Positif,DENV2,Non,Inconnue
+2025-06-15,Centre,DS Nongr-Massom,Femme,16,Négatif,DENV3,Oui,En traitement
+2025-06-25,Centre,DS Nongr-Massom,Homme,9,Positif,DENV3,Oui,Inconnue
+2025-06-05,Centre,DS Nongr-Massom,Femme,27,Négatif,DENV3,Non,Inconnue
+2025-06-24,Centre,DS Nongr-Massom,Homme,10,Positif,DENV2,Non,Guéri
+2025-06-23,Centre,DS Nongr-Massom,Homme,3,Positif,DENV3,Non,En traitement
+2025-06-07,Centre,DS Nongr-Massom,Homme,12,Positif,DENV3,Non,Inconnue
+2025-06-11,Centre,DS Nongr-Massom,Femme,5,Positif,DENV2,Non,Guéri
+2025-06-28,Centre,DS Nongr-Massom,Homme,41,Positif,DENV2,Non,Inconnue
+2025-06-13,Centre,DS Nongr-Massom,Homme,15,Positif,DENV3,Oui,Inconnue
+2025-06-15,Centre,DS Nongr-Massom,Homme,5,Positif,DENV3,Non,Guéri
+2025-06-15,Centre,DS Nongr-Massom,Homme,8,Négatif,DENV3,Non,En traitement
+2025-06-18,Centre,DS Nongr-Massom,Femme,43,Positif,DENV3,Non,En traitement
+2025-06-04,Centre,DS Nongr-Massom,Homme,15,Positif,DENV3,Non,En traitement
+2025-06-28,Centre,DS Nongr-Massom,Homme,39,Positif,DENV2,Oui,En traitement
+2025-06-22,Centre,DS Nongr-Massom,Femme,10,Positif,DENV2,Oui,Inconnue
+2025-06-19,Centre,DS Nongr-Massom,Homme,3,Négatif,DENV2,Non,Guéri
+2025-06-03,Centre,DS Nongr-Massom,Homme,53,Positif,DENV3,Oui,Inconnue
+2025-06-04,Centre,DS Nongr-Massom,Femme,42,Positif,DENV3,Non,En traitement
+2025-06-04,Centre,DS Nongr-Massom,Femme,37,Négatif,DENV3,Non,Guéri
+2025-06-20,Centre,DS Nongr-Massom,Homme,55,Positif,DENV2,Non,Inconnue
+2025-06-10,Centre,DS Nongr-Massom,Femme,22,Positif,DENV2,Non,En traitement
+2025-06-19,Centre,DS Nongr-Massom,Homme,6,Négatif,DENV2,Oui,En traitement
+2025-06-12,Centre,DS Nongr-Massom,Homme,16,Positif,DENV3,Oui,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Homme,16,Positif,DENV2,Non,En traitement
+2025-06-12,Centre,DS Nongr-Massom,Homme,18,Positif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Nongr-Massom,Homme,26,Positif,DENV2,Non,En traitement
+2025-06-27,Centre,DS Nongr-Massom,Homme,15,Positif,DENV3,Non,En traitement
+2025-06-02,Centre,DS Nongr-Massom,Homme,33,Négatif,DENV2,Oui,Guéri
+2025-06-02,Centre,DS Nongr-Massom,Homme,11,Positif,DENV3,Non,Inconnue
+2025-06-11,Centre,DS Nongr-Massom,Homme,26,Négatif,DENV2,Non,Décédé
+2025-06-18,Centre,DS Nongr-Massom,Femme,42,Positif,DENV3,Non,En traitement
+2025-06-02,Centre,DS Nongr-Massom,Homme,7,Positif,DENV2,Non,Guéri
+2025-06-22,Centre,DS Nongr-Massom,Femme,10,Négatif,DENV3,Non,Guéri
+2025-06-13,Centre,DS Nongr-Massom,Homme,47,Négatif,DENV3,Oui,Inconnue
+2025-06-09,Centre,DS Nongr-Massom,Femme,25,Positif,DENV2,Oui,Guéri
+2025-06-20,Centre,DS Nongr-Massom,Homme,32,Négatif,DENV3,Non,Guéri
+2025-06-09,Centre,DS Nongr-Massom,Femme,35,Négatif,DENV3,Non,En traitement
+2025-06-22,Centre,DS Nongr-Massom,Homme,11,Négatif,DENV3,Non,Inconnue
+2025-06-26,Centre,DS Nongr-Massom,Femme,17,Positif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Nongr-Massom,Femme,19,Positif,DENV3,Oui,Inconnue
+2025-06-02,Centre,DS Nongr-Massom,Homme,26,Négatif,DENV3,Oui,En traitement
+2025-06-21,Centre,DS Nongr-Massom,Femme,22,Positif,DENV3,Oui,Guéri
+2025-06-08,Centre,DS Nongr-Massom,Homme,33,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Homme,23,Positif,DENV2,Oui,Guéri
+2025-06-23,Centre,DS Nongr-Massom,Homme,22,Négatif,DENV2,Non,Inconnue
+2025-06-24,Centre,DS Nongr-Massom,Homme,32,Positif,DENV3,Non,Guéri
+2025-06-30,Centre,DS Nongr-Massom,Femme,7,Négatif,DENV2,Non,Inconnue
+2025-06-01,Centre,DS Nongr-Massom,Homme,41,Positif,DENV3,Oui,Inconnue
+2025-06-28,Centre,DS Nongr-Massom,Femme,18,Négatif,DENV2,Oui,Inconnue
+2025-06-20,Centre,DS Nongr-Massom,Femme,34,Négatif,DENV2,Oui,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Homme,0,Positif,DENV2,Non,En traitement
+2025-06-17,Centre,DS Nongr-Massom,Femme,29,Négatif,DENV2,Non,Guéri
+2025-06-06,Centre,DS Nongr-Massom,Femme,26,Négatif,DENV2,Non,Inconnue
+2025-06-29,Centre,DS Nongr-Massom,Femme,39,Négatif,DENV2,Non,En traitement
+2025-06-28,Centre,DS Nongr-Massom,Homme,42,Positif,DENV3,Non,Guéri
+2025-06-04,Centre,DS Nongr-Massom,Femme,28,Négatif,DENV2,Non,Guéri
+2025-06-19,Centre,DS Nongr-Massom,Femme,24,Positif,DENV2,Non,Inconnue
+2025-06-20,Centre,DS Nongr-Massom,Homme,23,Positif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Nongr-Massom,Femme,26,Négatif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Nongr-Massom,Homme,2,Positif,DENV2,Non,Guéri
+2025-06-24,Centre,DS Nongr-Massom,Femme,63,Positif,DENV3,Non,Guéri
+2025-06-15,Centre,DS Nongr-Massom,Homme,8,Positif,DENV3,Non,En traitement
+2025-06-11,Centre,DS Nongr-Massom,Femme,42,Positif,DENV2,Non,En traitement
+2025-06-12,Centre,DS Nongr-Massom,Femme,34,Négatif,DENV3,Non,Guéri
+2025-06-05,Centre,DS Nongr-Massom,Homme,29,Négatif,DENV3,Oui,Guéri
+2025-06-21,Centre,DS Nongr-Massom,Homme,9,Négatif,DENV2,Oui,Inconnue
+2025-06-06,Centre,DS Nongr-Massom,Femme,28,Négatif,DENV3,Non,En traitement
+2025-06-09,Centre,DS Nongr-Massom,Femme,38,Négatif,DENV3,Oui,Guéri
+2025-06-07,Centre,DS Nongr-Massom,Femme,9,Négatif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Nongr-Massom,Homme,49,Positif,DENV3,Non,En traitement
+2025-06-24,Centre,DS Nongr-Massom,Femme,23,Négatif,DENV2,Non,Guéri
+2025-06-16,Centre,DS Nongr-Massom,Femme,15,Négatif,DENV3,Oui,En traitement
+2025-06-16,Centre,DS Nongr-Massom,Femme,6,Négatif,DENV2,Non,En traitement
+2025-06-27,Centre,DS Nongr-Massom,Femme,38,Positif,DENV3,Non,Guéri
+2025-06-16,Centre,DS Nongr-Massom,Femme,18,Positif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Nongr-Massom,Femme,17,Positif,DENV3,Non,En traitement
+2025-06-16,Centre,DS Nongr-Massom,Femme,25,Négatif,DENV3,Non,En traitement
+2025-06-25,Centre,DS Nongr-Massom,Homme,7,Positif,DENV2,Non,Inconnue
+2025-06-20,Centre,DS Nongr-Massom,Femme,56,Positif,DENV2,Non,Inconnue
+2025-06-11,Centre,DS Nongr-Massom,Homme,21,Positif,DENV3,Oui,Inconnue
+2025-06-19,Centre,DS Nongr-Massom,Femme,29,Négatif,DENV2,Non,Guéri
+2025-06-12,Centre,DS Nongr-Massom,Homme,17,Positif,DENV3,Non,Guéri
+2025-06-27,Centre,DS Nongr-Massom,Homme,34,Positif,DENV2,Non,Guéri
+2025-06-24,Centre,DS Nongr-Massom,Femme,44,Positif,DENV3,Oui,Inconnue
+2025-06-08,Centre,DS Nongr-Massom,Homme,16,Positif,DENV3,Oui,Guéri
+2025-06-11,Centre,DS Nongr-Massom,Homme,5,Positif,DENV3,Non,Guéri
+2025-06-28,Centre,DS Nongr-Massom,Femme,0,Positif,DENV2,Non,Inconnue
+2025-06-19,Centre,DS Nongr-Massom,Femme,58,Positif,DENV2,Non,Inconnue
+2025-06-29,Centre,DS Nongr-Massom,Femme,17,Négatif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Nongr-Massom,Homme,23,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Femme,36,Négatif,DENV3,Non,Inconnue
+2025-06-14,Centre,DS Nongr-Massom,Homme,35,Négatif,DENV3,Non,Inconnue
+2025-06-18,Centre,DS Nongr-Massom,Femme,35,Négatif,DENV2,Non,En traitement
+2025-06-21,Centre,DS Nongr-Massom,Femme,38,Négatif,DENV3,Non,Inconnue
+2025-06-20,Centre,DS Nongr-Massom,Homme,56,Négatif,DENV3,Non,Inconnue
+2025-06-26,Centre,DS Nongr-Massom,Homme,30,Négatif,DENV2,Oui,Guéri
+2025-06-29,Centre,DS Nongr-Massom,Homme,18,Positif,DENV2,Non,Inconnue
+2025-06-18,Centre,DS Nongr-Massom,Homme,43,Négatif,DENV3,Non,Inconnue
+2025-06-06,Centre,DS Nongr-Massom,Homme,39,Positif,DENV2,Non,Inconnue
+2025-06-13,Centre,DS Nongr-Massom,Homme,11,Positif,DENV2,Oui,En traitement
+2025-06-22,Centre,DS Nongr-Massom,Homme,26,Positif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Nongr-Massom,Femme,9,Négatif,DENV2,Non,En traitement
+2025-06-11,Centre,DS Nongr-Massom,Femme,74,Positif,DENV3,Non,En traitement
+2025-06-22,Centre,DS Nongr-Massom,Femme,35,Négatif,DENV2,Non,En traitement
+2025-06-03,Centre,DS Nongr-Massom,Femme,6,Négatif,DENV2,Non,Guéri
+2025-06-09,Centre,DS Nongr-Massom,Homme,0,Négatif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Nongr-Massom,Homme,45,Négatif,DENV3,Oui,En traitement
+2025-06-04,Centre,DS Nongr-Massom,Femme,17,Négatif,DENV2,Oui,Inconnue
+2025-06-03,Centre,DS Nongr-Massom,Homme,17,Positif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Nongr-Massom,Homme,14,Positif,DENV2,Non,Guéri
+2025-06-09,Centre,DS Sig-Noghin,Homme,14,Négatif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Sig-Noghin,Homme,21,Positif,DENV2,Non,Inconnue
+2025-06-09,Centre,DS Sig-Noghin,Femme,44,Négatif,DENV3,Non,Guéri
+2025-06-17,Centre,DS Sig-Noghin,Femme,5,Négatif,DENV2,Non,En traitement
+2025-06-18,Centre,DS Sig-Noghin,Femme,26,Positif,DENV2,Oui,Inconnue
+2025-06-01,Centre,DS Sig-Noghin,Homme,29,Positif,DENV2,Non,En traitement
+2025-06-01,Centre,DS Sig-Noghin,Homme,49,Positif,DENV2,Oui,Guéri
+2025-06-04,Centre,DS Sig-Noghin,Femme,23,Négatif,DENV2,Non,Guéri
+2025-06-17,Centre,DS Sig-Noghin,Homme,31,Négatif,DENV3,Non,Guéri
+2025-06-07,Centre,DS Sig-Noghin,Homme,18,Négatif,DENV2,Non,En traitement
+2025-06-01,Centre,DS Sig-Noghin,Femme,7,Positif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Sig-Noghin,Femme,24,Positif,DENV3,Non,Inconnue
+2025-06-02,Centre,DS Sig-Noghin,Homme,40,Négatif,DENV3,Non,Guéri
+2025-06-13,Centre,DS Sig-Noghin,Homme,24,Positif,DENV2,Oui,Guéri
+2025-06-04,Centre,DS Sig-Noghin,Femme,8,Positif,DENV3,Oui,En traitement
+2025-06-01,Centre,DS Sig-Noghin,Homme,14,Négatif,DENV3,Oui,En traitement
+2025-06-10,Centre,DS Sig-Noghin,Homme,28,Positif,DENV2,Non,Inconnue
+2025-06-26,Centre,DS Sig-Noghin,Femme,28,Négatif,DENV2,Non,Inconnue
+2025-06-16,Centre,DS Sig-Noghin,Homme,7,Négatif,DENV3,Oui,Guéri
+2025-06-23,Centre,DS Sig-Noghin,Homme,16,Positif,DENV2,Oui,Inconnue
+2025-06-16,Centre,DS Sig-Noghin,Femme,22,Négatif,DENV2,Non,Guéri
+2025-06-27,Centre,DS Sig-Noghin,Homme,25,Négatif,DENV3,Non,En traitement
+2025-06-29,Centre,DS Sig-Noghin,Femme,15,Négatif,DENV3,Non,Inconnue
+2025-06-05,Centre,DS Sig-Noghin,Homme,16,Positif,DENV2,Non,En traitement
+2025-06-25,Centre,DS Sig-Noghin,Femme,28,Positif,DENV3,Non,En traitement
+2025-06-03,Centre,DS Sig-Noghin,Femme,21,Négatif,DENV3,Non,Inconnue
+2025-06-17,Centre,DS Sig-Noghin,Femme,32,Positif,DENV3,Non,Inconnue
+2025-06-21,Centre,DS Sig-Noghin,Homme,26,Positif,DENV2,Non,Guéri
+2025-06-13,Centre,DS Sig-Noghin,Femme,27,Positif,DENV3,Non,En traitement
+2025-06-24,Centre,DS Sig-Noghin,Femme,55,Positif,DENV2,Non,Guéri
+2025-06-20,Centre,DS Sig-Noghin,Femme,6,Négatif,DENV2,Non,Guéri
+2025-06-02,Centre,DS Sig-Noghin,Femme,38,Positif,DENV2,Non,Inconnue
+2025-06-22,Centre,DS Sig-Noghin,Femme,27,Positif,DENV3,Non,Guéri
+2025-06-27,Centre,DS Sig-Noghin,Homme,3,Positif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Sig-Noghin,Homme,21,Négatif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Sig-Noghin,Homme,28,Positif,DENV3,Non,Inconnue
+2025-06-30,Centre,DS Sig-Noghin,Femme,18,Positif,DENV3,Non,Inconnue
+2025-06-27,Centre,DS Sig-Noghin,Homme,20,Négatif,DENV2,Non,Guéri
+2025-06-10,Centre,DS Sig-Noghin,Homme,25,Positif,DENV3,Non,Guéri
+2025-06-30,Centre,DS Sig-Noghin,Femme,19,Négatif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Sig-Noghin,Homme,18,Négatif,DENV3,Oui,En traitement
+2025-06-25,Centre,DS Sig-Noghin,Femme,10,Positif,DENV2,Non,Inconnue
+2025-06-11,Centre,DS Sig-Noghin,Homme,12,Négatif,DENV2,Non,Inconnue
+2025-06-18,Centre,DS Sig-Noghin,Femme,77,Positif,DENV2,Non,Inconnue
+2025-06-19,Centre,DS Sig-Noghin,Femme,23,Positif,DENV3,Non,En traitement
+2025-06-10,Centre,DS Sig-Noghin,Femme,33,Positif,DENV2,Non,En traitement
+2025-06-24,Centre,DS Sig-Noghin,Femme,29,Négatif,DENV2,Oui,Guéri
+2025-06-17,Centre,DS Sig-Noghin,Homme,37,Positif,DENV2,Non,En traitement
+2025-06-13,Centre,DS Sig-Noghin,Homme,29,Positif,DENV2,Non,Inconnue
+2025-06-09,Centre,DS Sig-Noghin,Femme,45,Positif,DENV2,Oui,Inconnue
+2025-06-27,Centre,DS Sig-Noghin,Femme,31,Positif,DENV2,Non,Guéri
+2025-06-23,Centre,DS Sig-Noghin,Homme,31,Positif,DENV2,Non,En traitement
+2025-06-06,Centre,DS Sig-Noghin,Femme,26,Négatif,DENV2,Non,En traitement
+2025-06-02,Centre,DS Sig-Noghin,Femme,29,Positif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Sig-Noghin,Femme,5,Positif,DENV3,Non,En traitement
+2025-06-30,Centre,DS Sig-Noghin,Homme,20,Positif,DENV2,Non,En traitement
+2025-06-09,Centre,DS Sig-Noghin,Femme,36,Positif,DENV2,Non,Guéri
+2025-06-20,Centre,DS Sig-Noghin,Femme,22,Positif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Sig-Noghin,Femme,26,Négatif,DENV2,Non,Guéri
+2025-06-26,Centre,DS Sig-Noghin,Femme,9,Positif,DENV3,Oui,Inconnue
+2025-06-25,Centre,DS Sig-Noghin,Homme,16,Positif,DENV2,Oui,En traitement
+2025-06-19,Centre,DS Sig-Noghin,Homme,7,Négatif,DENV2,Non,Inconnue
+2025-06-02,Centre,DS Sig-Noghin,Femme,9,Positif,DENV3,Non,Inconnue
+2025-06-11,Centre,DS Sig-Noghin,Homme,21,Négatif,DENV2,Non,En traitement
+2025-06-17,Centre,DS Sig-Noghin,Femme,53,Négatif,DENV2,Oui,En traitement
+2025-06-30,Centre,DS Sig-Noghin,Homme,11,Positif,DENV2,Non,Inconnue
+2025-06-13,Centre,DS Sig-Noghin,Homme,37,Positif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Sig-Noghin,Femme,9,Positif,DENV2,Oui,Inconnue
+2025-06-14,Centre,DS Sig-Noghin,Homme,42,Positif,DENV2,Non,Décédé
+2025-06-03,Centre,DS Sig-Noghin,Homme,19,Positif,DENV2,Oui,En traitement
+2025-06-02,Centre,DS Sig-Noghin,Homme,15,Positif,DENV3,Oui,Inconnue
+2025-06-05,Centre,DS Sig-Noghin,Femme,27,Négatif,DENV2,Oui,Inconnue
+2025-06-20,Centre,DS Sig-Noghin,Femme,48,Négatif,DENV2,Non,Guéri
+2025-06-23,Centre,DS Sig-Noghin,Homme,1,Positif,DENV3,Non,Inconnue
+2025-06-03,Centre,DS Sig-Noghin,Homme,38,Négatif,DENV3,Non,En traitement
+2025-06-02,Centre,DS Sig-Noghin,Homme,28,Positif,DENV2,Non,Guéri
+2025-06-14,Centre,DS Sig-Noghin,Homme,8,Négatif,DENV3,Non,Inconnue
+2025-06-19,Centre,DS Sig-Noghin,Homme,20,Positif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Homme,39,Positif,DENV2,Oui,En traitement
+2025-06-24,Centre,DS Sig-Noghin,Femme,17,Positif,DENV2,Non,En traitement
+2025-06-29,Centre,DS Sig-Noghin,Homme,14,Négatif,DENV2,Non,En traitement
+2025-06-09,Centre,DS Sig-Noghin,Femme,14,Positif,DENV2,Non,Inconnue
+2025-06-22,Centre,DS Sig-Noghin,Homme,28,Négatif,DENV2,Non,Inconnue
+2025-06-18,Centre,DS Sig-Noghin,Homme,10,Négatif,DENV3,Oui,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Femme,19,Négatif,DENV2,Non,En traitement
+2025-06-11,Centre,DS Sig-Noghin,Femme,6,Positif,DENV2,Non,Guéri
+2025-06-19,Centre,DS Sig-Noghin,Femme,36,Positif,DENV3,Non,En traitement
+2025-06-12,Centre,DS Sig-Noghin,Femme,22,Positif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Homme,46,Positif,DENV3,Non,Guéri
+2025-06-06,Centre,DS Sig-Noghin,Femme,16,Positif,DENV2,Non,Décédé
+2025-06-16,Centre,DS Sig-Noghin,Femme,20,Négatif,DENV3,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Femme,29,Négatif,DENV3,Non,En traitement
+2025-06-28,Centre,DS Sig-Noghin,Homme,27,Négatif,DENV3,Non,Inconnue
+2025-06-23,Centre,DS Sig-Noghin,Femme,50,Négatif,DENV2,Non,En traitement
+2025-06-19,Centre,DS Sig-Noghin,Homme,43,Positif,DENV2,Non,Guéri
+2025-06-20,Centre,DS Sig-Noghin,Homme,13,Positif,DENV3,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Femme,19,Positif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Sig-Noghin,Homme,10,Positif,DENV3,Non,En traitement
+2025-06-08,Centre,DS Sig-Noghin,Femme,2,Négatif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Sig-Noghin,Femme,14,Positif,DENV2,Non,En traitement
+2025-06-30,Centre,DS Sig-Noghin,Femme,13,Positif,DENV2,Non,Guéri
+2025-06-15,Centre,DS Sig-Noghin,Homme,38,Positif,DENV3,Oui,En traitement
+2025-06-25,Centre,DS Sig-Noghin,Femme,31,Positif,DENV2,Non,Inconnue
+2025-06-08,Centre,DS Sig-Noghin,Homme,36,Négatif,DENV3,Oui,En traitement
+2025-06-09,Centre,DS Sig-Noghin,Femme,10,Positif,DENV2,Non,Guéri
+2025-06-26,Centre,DS Sig-Noghin,Femme,18,Négatif,DENV3,Non,Guéri
+2025-06-02,Centre,DS Sig-Noghin,Homme,30,Positif,DENV2,Oui,Décédé
+2025-06-02,Centre,DS Sig-Noghin,Femme,8,Positif,DENV3,Non,Guéri
+2025-06-03,Centre,DS Sig-Noghin,Femme,20,Négatif,DENV2,Non,Guéri
+2025-06-08,Centre,DS Sig-Noghin,Femme,40,Négatif,DENV2,Non,En traitement
+2025-06-26,Centre,DS Sig-Noghin,Femme,24,Positif,DENV2,Oui,Inconnue
+2025-06-22,Centre,DS Sig-Noghin,Femme,20,Positif,DENV2,Oui,En traitement
+2025-06-03,Centre,DS Sig-Noghin,Femme,30,Positif,DENV2,Non,Inconnue
+2025-06-24,Centre,DS Sig-Noghin,Homme,19,Positif,DENV3,Non,Inconnue
+2025-06-01,Centre,DS Sig-Noghin,Homme,39,Négatif,DENV2,Oui,En traitement
+2025-06-11,Centre,DS Sig-Noghin,Femme,5,Négatif,DENV3,Oui,Guéri
+2025-06-23,Centre,DS Sig-Noghin,Femme,0,Négatif,DENV3,Non,Guéri
+2025-06-28,Centre,DS Sig-Noghin,Femme,9,Négatif,DENV3,Non,Inconnue
+2025-06-09,Centre,DS Sig-Noghin,Homme,22,Positif,DENV2,Non,En traitement
+2025-06-30,Centre,DS Sig-Noghin,Homme,33,Positif,DENV2,Non,En traitement
+2025-06-20,Centre,DS Sig-Noghin,Femme,20,Positif,DENV2,Oui,Guéri
+2025-06-26,Centre,DS Sig-Noghin,Femme,9,Négatif,DENV3,Non,Inconnue
+2025-06-14,Centre,DS Sig-Noghin,Homme,21,Négatif,DENV2,Non,Inconnue
+2025-06-27,Centre,DS Sig-Noghin,Femme,34,Positif,DENV3,Non,Guéri
+2025-06-28,Centre,DS Sig-Noghin,Femme,20,Négatif,DENV3,Oui,Inconnue
+2025-06-21,Centre,DS Sig-Noghin,Femme,17,Positif,DENV2,Non,Guéri
+2025-06-18,Centre,DS Sig-Noghin,Femme,45,Négatif,DENV2,Non,Guéri
+2025-06-01,Centre,DS Sig-Noghin,Femme,32,Négatif,DENV2,Non,Guéri
+2025-06-10,Centre,DS Sig-Noghin,Femme,35,Négatif,DENV2,Non,Guéri
+2025-06-02,Centre,DS Sig-Noghin,Femme,39,Négatif,DENV2,Oui,Décédé
+2025-06-07,Centre,DS Sig-Noghin,Femme,63,Négatif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Sig-Noghin,Homme,2,Négatif,DENV3,Non,Guéri
+2025-06-16,Centre,DS Sig-Noghin,Femme,15,Négatif,DENV3,Non,Inconnue
+2025-06-28,Centre,DS Sig-Noghin,Homme,5,Positif,DENV3,Non,Guéri
+2025-06-15,Centre,DS Sig-Noghin,Homme,6,Négatif,DENV2,Oui,Guéri
+2025-06-21,Centre,DS Sig-Noghin,Femme,24,Positif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Homme,15,Positif,DENV2,Non,Guéri
+2025-06-14,Centre,DS Sig-Noghin,Femme,17,Négatif,DENV3,Non,En traitement
+2025-06-03,Centre,DS Sig-Noghin,Femme,2,Positif,DENV2,Non,Inconnue
+2025-06-06,Centre,DS Sig-Noghin,Homme,23,Positif,DENV3,Non,En traitement
+2025-06-08,Centre,DS Sig-Noghin,Homme,13,Négatif,DENV3,Non,Guéri
+2025-06-19,Centre,DS Sig-Noghin,Femme,11,Négatif,DENV3,Non,Inconnue
+2025-06-13,Centre,DS Sig-Noghin,Femme,13,Positif,DENV3,Non,Guéri
+2025-06-17,Centre,DS Sig-Noghin,Femme,4,Positif,DENV3,Non,Inconnue
+2025-06-06,Centre,DS Sig-Noghin,Femme,26,Négatif,DENV2,Oui,Guéri
+2025-06-10,Centre,DS Sig-Noghin,Homme,42,Négatif,DENV3,Non,Guéri
+2025-06-21,Centre,DS Sig-Noghin,Homme,6,Positif,DENV3,Oui,Inconnue
+2025-06-27,Centre,DS Sig-Noghin,Homme,31,Négatif,DENV2,Non,En traitement
+2025-06-12,Centre,DS Sig-Noghin,Homme,12,Négatif,DENV2,Non,En traitement
+2025-06-25,Centre,DS Sig-Noghin,Femme,19,Positif,DENV2,Non,Inconnue
+2025-06-29,Centre,DS Sig-Noghin,Homme,33,Négatif,DENV2,Non,Décédé
+2025-06-27,Centre,DS Sig-Noghin,Femme,50,Positif,DENV2,Non,Guéri
+2025-06-14,Centre,DS Sig-Noghin,Femme,18,Positif,DENV2,Oui,Inconnue
+2025-06-23,Centre,DS Sig-Noghin,Homme,21,Positif,DENV2,Non,En traitement
+2025-06-10,Centre,DS Sig-Noghin,Homme,23,Négatif,DENV3,Oui,Guéri
+2025-06-16,Centre,DS Sig-Noghin,Femme,42,Positif,DENV3,Oui,Guéri
+2025-06-04,Centre,DS Sig-Noghin,Homme,18,Positif,DENV3,Non,Guéri
+2025-06-02,Centre,DS Sig-Noghin,Homme,19,Positif,DENV3,Non,Décédé
+2025-06-26,Centre,DS Sig-Noghin,Femme,12,Négatif,DENV2,Oui,Guéri
+2025-06-12,Centre,DS Sig-Noghin,Femme,21,Positif,DENV2,Non,Guéri
+2025-06-15,Centre,DS Sig-Noghin,Homme,7,Positif,DENV3,Non,En traitement
+2025-06-25,Centre,DS Sig-Noghin,Homme,41,Positif,DENV3,Non,En traitement
+2025-06-09,Centre,DS Sig-Noghin,Femme,20,Négatif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Sig-Noghin,Femme,21,Négatif,DENV3,Oui,Décédé
+2025-06-15,Centre,DS Sig-Noghin,Femme,49,Négatif,DENV2,Non,Guéri
+2025-06-11,Centre,DS Sig-Noghin,Homme,4,Positif,DENV2,Oui,En traitement
+2025-06-08,Centre,DS Sig-Noghin,Homme,19,Positif,DENV2,Non,Guéri
+2025-06-28,Centre,DS Sig-Noghin,Femme,43,Positif,DENV3,Non,Guéri
+2025-06-18,Centre,DS Sig-Noghin,Femme,54,Négatif,DENV2,Non,Inconnue
+2025-06-04,Centre,DS Sig-Noghin,Homme,43,Positif,DENV3,Non,Inconnue
+2025-06-22,Centre,DS Sig-Noghin,Homme,43,Négatif,DENV2,Non,Guéri
+2025-06-14,Centre,DS Sig-Noghin,Femme,16,Positif,DENV2,Oui,Inconnue
+2025-06-19,Centre,DS Sig-Noghin,Homme,28,Négatif,DENV3,Oui,En traitement
+2025-06-02,Centre,DS Sig-Noghin,Homme,36,Négatif,DENV3,Oui,En traitement
+2025-06-03,Centre,DS Sig-Noghin,Femme,40,Négatif,DENV3,Non,Inconnue
+2025-06-22,Centre,DS Sig-Noghin,Homme,12,Négatif,DENV3,Non,Guéri
+2025-06-24,Centre,DS Sig-Noghin,Femme,28,Négatif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Sig-Noghin,Homme,25,Positif,DENV3,Oui,Guéri
+2025-06-12,Centre,DS Sig-Noghin,Homme,11,Positif,DENV3,Non,Guéri
+2025-06-30,Centre,DS Sig-Noghin,Homme,28,Positif,DENV3,Non,Inconnue
+2025-06-02,Centre,DS Sig-Noghin,Homme,30,Positif,DENV3,Non,En traitement
+2025-06-14,Centre,DS Sig-Noghin,Homme,6,Positif,DENV3,Non,En traitement
+2025-06-06,Centre,DS Sig-Noghin,Homme,23,Positif,DENV3,Non,En traitement
+2025-06-03,Centre,DS Sig-Noghin,Femme,34,Positif,DENV2,Non,Inconnue
+2025-06-12,Centre,DS Sig-Noghin,Femme,47,Négatif,DENV2,Non,Inconnue
+2025-06-21,Centre,DS Sig-Noghin,Femme,21,Négatif,DENV2,Non,Guéri
+2025-06-18,Centre,DS Sig-Noghin,Femme,32,Négatif,DENV2,Non,Inconnue
+2025-06-03,Centre,DS Sig-Noghin,Homme,47,Positif,DENV2,Oui,En traitement
+2025-06-09,Centre,DS Sig-Noghin,Femme,23,Positif,DENV3,Non,Inconnue
+2025-06-05,Centre,DS Sig-Noghin,Femme,31,Positif,DENV2,Non,En traitement
+2025-06-05,Centre,DS Sig-Noghin,Homme,37,Positif,DENV2,Non,En traitement
+2025-06-24,Centre,DS Sig-Noghin,Femme,24,Négatif,DENV3,Non,En traitement
+2025-06-28,Centre,DS Sig-Noghin,Femme,48,Négatif,DENV2,Oui,Inconnue
+2025-06-26,Centre,DS Sig-Noghin,Homme,9,Négatif,DENV2,Non,En traitement
+2025-06-23,Centre,DS Sig-Noghin,Homme,37,Négatif,DENV2,Non,Guéri
+2025-06-25,Centre,DS Sig-Noghin,Femme,25,Négatif,DENV3,Non,En traitement
+2025-06-17,Centre,DS Sig-Noghin,Femme,6,Négatif,DENV3,Oui,Inconnue
+2025-06-28,Centre,DS Sig-Noghin,Femme,0,Négatif,DENV3,Oui,Guéri
+2025-06-20,Centre,DS Sig-Noghin,Femme,16,Négatif,DENV2,Non,Inconnue
+2025-06-04,Centre,DS Sig-Noghin,Homme,43,Positif,DENV3,Non,Inconnue
+2025-06-19,Centre,DS Sig-Noghin,Femme,43,Négatif,DENV2,Non,Guéri
+2025-06-16,Centre,DS Sig-Noghin,Homme,27,Positif,DENV2,Oui,Inconnue
+2025-06-26,Centre,DS Sig-Noghin,Homme,30,Négatif,DENV3,Non,En traitement
+2025-06-13,Centre,DS Sig-Noghin,Homme,44,Positif,DENV3,Non,Inconnue
+2025-06-25,Centre,DS Sig-Noghin,Homme,17,Négatif,DENV3,Non,Décédé
+2025-06-27,Hauts Bassins,DS Dafra,Homme,34,Négatif,DENV3,Non,Guéri
+2025-06-08,Hauts Bassins,DS Dafra,Femme,50,Positif,DENV3,Oui,En traitement
+2025-06-29,Hauts Bassins,DS Dafra,Femme,24,Positif,DENV3,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Dafra,Femme,19,Positif,DENV2,Oui,Guéri
+2025-06-13,Hauts Bassins,DS Dafra,Homme,30,Positif,DENV3,Non,En traitement
+2025-06-07,Hauts Bassins,DS Dafra,Homme,23,Positif,DENV2,Non,Décédé
+2025-06-29,Hauts Bassins,DS Dafra,Femme,32,Négatif,DENV3,Non,Inconnue
+2025-06-18,Hauts Bassins,DS Dafra,Femme,22,Négatif,DENV2,Non,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Femme,32,Négatif,DENV2,Non,Guéri
+2025-06-21,Hauts Bassins,DS Dafra,Homme,11,Négatif,DENV3,Non,Inconnue
+2025-06-30,Hauts Bassins,DS Dafra,Homme,25,Positif,DENV3,Non,En traitement
+2025-06-08,Hauts Bassins,DS Dafra,Homme,22,Négatif,DENV2,Non,Inconnue
+2025-06-22,Hauts Bassins,DS Dafra,Homme,3,Négatif,DENV2,Non,En traitement
+2025-06-27,Hauts Bassins,DS Dafra,Homme,14,Négatif,DENV3,Oui,Inconnue
+2025-06-07,Hauts Bassins,DS Dafra,Homme,35,Négatif,DENV2,Non,Inconnue
+2025-06-07,Hauts Bassins,DS Dafra,Homme,43,Négatif,DENV3,Non,Guéri
+2025-06-18,Hauts Bassins,DS Dafra,Homme,35,Négatif,DENV2,Non,En traitement
+2025-06-15,Hauts Bassins,DS Dafra,Femme,2,Négatif,DENV3,Oui,En traitement
+2025-06-05,Hauts Bassins,DS Dafra,Femme,3,Positif,DENV2,Non,Inconnue
+2025-06-23,Hauts Bassins,DS Dafra,Homme,25,Négatif,DENV2,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Dafra,Homme,2,Négatif,DENV3,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Dafra,Femme,24,Positif,DENV2,Non,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Homme,27,Négatif,DENV2,Oui,Inconnue
+2025-06-13,Hauts Bassins,DS Dafra,Femme,36,Positif,DENV3,Non,Guéri
+2025-06-13,Hauts Bassins,DS Dafra,Homme,18,Positif,DENV3,Non,Inconnue
+2025-06-09,Hauts Bassins,DS Dafra,Homme,2,Négatif,DENV2,Non,Inconnue
+2025-06-27,Hauts Bassins,DS Dafra,Femme,43,Négatif,DENV3,Oui,Guéri
+2025-06-28,Hauts Bassins,DS Dafra,Homme,14,Positif,DENV2,Non,En traitement
+2025-06-28,Hauts Bassins,DS Dafra,Femme,37,Négatif,DENV3,Oui,Inconnue
+2025-06-17,Hauts Bassins,DS Dafra,Femme,22,Négatif,DENV2,Non,En traitement
+2025-06-23,Hauts Bassins,DS Dafra,Femme,51,Négatif,DENV3,Non,En traitement
+2025-06-15,Hauts Bassins,DS Dafra,Femme,31,Négatif,DENV3,Oui,Inconnue
+2025-06-21,Hauts Bassins,DS Dafra,Homme,24,Positif,DENV3,Oui,Guéri
+2025-06-30,Hauts Bassins,DS Dafra,Femme,10,Négatif,DENV3,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Dafra,Femme,38,Négatif,DENV3,Non,Guéri
+2025-06-27,Hauts Bassins,DS Dafra,Homme,6,Négatif,DENV2,Non,En traitement
+2025-06-24,Hauts Bassins,DS Dafra,Femme,7,Négatif,DENV2,Oui,En traitement
+2025-06-05,Hauts Bassins,DS Dafra,Homme,29,Négatif,DENV3,Non,Guéri
+2025-06-19,Hauts Bassins,DS Dafra,Femme,15,Négatif,DENV2,Non,Inconnue
+2025-06-15,Hauts Bassins,DS Dafra,Homme,15,Positif,DENV3,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Dafra,Femme,15,Négatif,DENV2,Oui,En traitement
+2025-06-01,Hauts Bassins,DS Dafra,Femme,27,Négatif,DENV3,Non,Guéri
+2025-06-09,Hauts Bassins,DS Dafra,Femme,25,Négatif,DENV2,Oui,En traitement
+2025-06-24,Hauts Bassins,DS Dafra,Femme,32,Négatif,DENV3,Oui,En traitement
+2025-06-22,Hauts Bassins,DS Dafra,Homme,9,Négatif,DENV3,Non,Guéri
+2025-06-07,Hauts Bassins,DS Dafra,Femme,23,Négatif,DENV2,Oui,Guéri
+2025-06-22,Hauts Bassins,DS Dafra,Femme,30,Négatif,DENV2,Oui,Guéri
+2025-06-27,Hauts Bassins,DS Dafra,Homme,3,Positif,DENV2,Non,Inconnue
+2025-06-10,Hauts Bassins,DS Dafra,Homme,23,Négatif,DENV3,Non,Inconnue
+2025-06-29,Hauts Bassins,DS Dafra,Femme,22,Négatif,DENV3,Oui,Inconnue
+2025-06-28,Hauts Bassins,DS Dafra,Homme,10,Négatif,DENV2,Oui,En traitement
+2025-06-29,Hauts Bassins,DS Dafra,Femme,25,Positif,DENV3,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Dafra,Femme,18,Négatif,DENV3,Non,Inconnue
+2025-06-30,Hauts Bassins,DS Dafra,Femme,35,Négatif,DENV3,Non,En traitement
+2025-06-02,Hauts Bassins,DS Dafra,Homme,30,Positif,DENV3,Non,Guéri
+2025-06-23,Hauts Bassins,DS Dafra,Homme,36,Positif,DENV2,Oui,Guéri
+2025-06-04,Hauts Bassins,DS Dafra,Homme,0,Négatif,DENV3,Oui,Guéri
+2025-06-17,Hauts Bassins,DS Dafra,Homme,8,Positif,DENV3,Non,En traitement
+2025-06-09,Hauts Bassins,DS Dafra,Femme,23,Positif,DENV3,Non,En traitement
+2025-06-21,Hauts Bassins,DS Dafra,Femme,17,Négatif,DENV2,Non,Inconnue
+2025-06-04,Hauts Bassins,DS Dafra,Homme,61,Négatif,DENV2,Oui,Inconnue
+2025-06-30,Hauts Bassins,DS Dafra,Homme,45,Positif,DENV3,Non,En traitement
+2025-06-23,Hauts Bassins,DS Dafra,Homme,12,Positif,DENV2,Non,Guéri
+2025-06-26,Hauts Bassins,DS Dafra,Homme,9,Négatif,DENV2,Non,Inconnue
+2025-06-04,Hauts Bassins,DS Dafra,Femme,18,Positif,DENV2,Oui,En traitement
+2025-06-03,Hauts Bassins,DS Dafra,Femme,30,Négatif,DENV2,Non,En traitement
+2025-06-22,Hauts Bassins,DS Dafra,Homme,18,Positif,DENV2,Non,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Homme,21,Positif,DENV3,Non,Guéri
+2025-06-26,Hauts Bassins,DS Dafra,Homme,21,Positif,DENV2,Non,En traitement
+2025-06-21,Hauts Bassins,DS Dafra,Homme,14,Négatif,DENV2,Non,En traitement
+2025-06-27,Hauts Bassins,DS Dafra,Homme,26,Négatif,DENV2,Oui,En traitement
+2025-06-14,Hauts Bassins,DS Dafra,Homme,38,Positif,DENV2,Non,Inconnue
+2025-06-23,Hauts Bassins,DS Dafra,Femme,30,Négatif,DENV3,Non,Guéri
+2025-06-14,Hauts Bassins,DS Dafra,Femme,31,Positif,DENV2,Non,Inconnue
+2025-06-07,Hauts Bassins,DS Dafra,Femme,36,Positif,DENV3,Non,Guéri
+2025-06-26,Hauts Bassins,DS Dafra,Homme,32,Négatif,DENV2,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Dafra,Homme,20,Positif,DENV2,Non,En traitement
+2025-06-03,Hauts Bassins,DS Dafra,Femme,25,Positif,DENV2,Non,Inconnue
+2025-06-24,Hauts Bassins,DS Dafra,Homme,18,Positif,DENV2,Non,Inconnue
+2025-06-26,Hauts Bassins,DS Dafra,Homme,22,Positif,DENV3,Oui,Guéri
+2025-06-28,Hauts Bassins,DS Dafra,Femme,9,Négatif,DENV2,Non,Guéri
+2025-06-12,Hauts Bassins,DS Dafra,Homme,25,Positif,DENV3,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Dafra,Femme,7,Positif,DENV2,Non,En traitement
+2025-06-23,Hauts Bassins,DS Dafra,Femme,48,Positif,DENV3,Non,Guéri
+2025-06-14,Hauts Bassins,DS Dafra,Homme,23,Négatif,DENV3,Non,Inconnue
+2025-06-18,Hauts Bassins,DS Dafra,Femme,11,Positif,DENV3,Non,En traitement
+2025-06-01,Hauts Bassins,DS Dafra,Homme,38,Négatif,DENV2,Oui,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Homme,12,Positif,DENV2,Oui,Guéri
+2025-06-25,Hauts Bassins,DS Dafra,Homme,13,Négatif,DENV3,Non,Guéri
+2025-06-17,Hauts Bassins,DS Dafra,Homme,33,Négatif,DENV2,Non,Guéri
+2025-06-24,Hauts Bassins,DS Dafra,Femme,7,Positif,DENV3,Oui,En traitement
+2025-06-12,Hauts Bassins,DS Dafra,Homme,1,Positif,DENV3,Non,Inconnue
+2025-06-16,Hauts Bassins,DS Dafra,Femme,7,Positif,DENV3,Oui,Guéri
+2025-06-12,Hauts Bassins,DS Dafra,Femme,26,Positif,DENV3,Non,Guéri
+2025-06-21,Hauts Bassins,DS Dafra,Homme,33,Négatif,DENV2,Non,Guéri
+2025-06-28,Hauts Bassins,DS Dafra,Homme,40,Négatif,DENV3,Oui,En traitement
+2025-06-06,Hauts Bassins,DS Dafra,Femme,42,Positif,DENV3,Oui,Inconnue
+2025-06-18,Hauts Bassins,DS Dafra,Femme,36,Négatif,DENV3,Non,Inconnue
+2025-06-22,Hauts Bassins,DS Dafra,Femme,44,Négatif,DENV3,Non,Guéri
+2025-06-29,Hauts Bassins,DS Dafra,Femme,17,Positif,DENV3,Oui,En traitement
+2025-06-07,Hauts Bassins,DS Dafra,Homme,40,Négatif,DENV2,Non,En traitement
+2025-06-24,Hauts Bassins,DS Dafra,Homme,33,Positif,DENV3,Non,Inconnue
+2025-06-16,Hauts Bassins,DS Dafra,Homme,54,Positif,DENV2,Non,Guéri
+2025-06-17,Hauts Bassins,DS Dafra,Femme,56,Négatif,DENV3,Non,En traitement
+2025-06-03,Hauts Bassins,DS Dafra,Homme,12,Positif,DENV3,Oui,Inconnue
+2025-06-15,Hauts Bassins,DS Dafra,Femme,10,Positif,DENV3,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Dafra,Femme,3,Positif,DENV2,Non,Inconnue
+2025-06-29,Hauts Bassins,DS Dafra,Homme,10,Négatif,DENV2,Non,En traitement
+2025-06-24,Hauts Bassins,DS Dafra,Femme,32,Négatif,DENV2,Non,Inconnue
+2025-06-11,Hauts Bassins,DS Dafra,Femme,40,Positif,DENV2,Oui,En traitement
+2025-06-21,Hauts Bassins,DS Dafra,Homme,39,Négatif,DENV2,Non,Guéri
+2025-06-19,Hauts Bassins,DS Dafra,Homme,30,Positif,DENV2,Oui,En traitement
+2025-06-06,Hauts Bassins,DS Dafra,Homme,28,Négatif,DENV2,Non,Guéri
+2025-06-01,Hauts Bassins,DS Dafra,Homme,20,Positif,DENV2,Non,En traitement
+2025-06-26,Hauts Bassins,DS Dafra,Homme,15,Négatif,DENV2,Non,En traitement
+2025-06-20,Hauts Bassins,DS Dafra,Homme,6,Positif,DENV2,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Dafra,Homme,31,Négatif,DENV3,Oui,Guéri
+2025-06-10,Hauts Bassins,DS Dafra,Femme,11,Positif,DENV3,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Dafra,Femme,22,Positif,DENV2,Non,En traitement
+2025-06-25,Hauts Bassins,DS Dafra,Femme,23,Positif,DENV2,Non,Guéri
+2025-06-17,Hauts Bassins,DS Dafra,Homme,35,Positif,DENV2,Oui,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Femme,6,Positif,DENV2,Oui,Inconnue
+2025-06-08,Hauts Bassins,DS Dafra,Femme,8,Positif,DENV2,Non,Inconnue
+2025-06-27,Hauts Bassins,DS Dafra,Homme,17,Positif,DENV2,Non,Inconnue
+2025-06-26,Hauts Bassins,DS Dafra,Femme,41,Négatif,DENV3,Non,Inconnue
+2025-06-11,Hauts Bassins,DS Dafra,Homme,31,Positif,DENV3,Non,Inconnue
+2025-06-19,Hauts Bassins,DS Dafra,Homme,44,Négatif,DENV2,Oui,Guéri
+2025-06-22,Hauts Bassins,DS Dafra,Femme,19,Positif,DENV3,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Dafra,Femme,10,Positif,DENV2,Oui,En traitement
+2025-06-22,Hauts Bassins,DS Dafra,Femme,40,Positif,DENV2,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Dafra,Femme,46,Positif,DENV2,Non,Guéri
+2025-06-26,Hauts Bassins,DS Dafra,Homme,18,Positif,DENV3,Non,Guéri
+2025-06-18,Hauts Bassins,DS Dafra,Femme,12,Négatif,DENV3,Oui,Guéri
+2025-06-14,Hauts Bassins,DS Dafra,Femme,24,Négatif,DENV2,Oui,En traitement
+2025-06-02,Hauts Bassins,DS Dafra,Femme,9,Négatif,DENV3,Non,En traitement
+2025-06-03,Hauts Bassins,DS Dafra,Femme,39,Positif,DENV2,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Dafra,Homme,32,Négatif,DENV2,Non,Guéri
+2025-06-22,Hauts Bassins,DS Dafra,Homme,4,Positif,DENV3,Non,Inconnue
+2025-06-15,Hauts Bassins,DS Dafra,Femme,38,Positif,DENV3,Non,Guéri
+2025-06-25,Hauts Bassins,DS Dafra,Homme,11,Négatif,DENV2,Non,En traitement
+2025-06-27,Hauts Bassins,DS Dafra,Femme,41,Positif,DENV3,Non,Inconnue
+2025-06-22,Hauts Bassins,DS Dafra,Homme,42,Négatif,DENV2,Non,Inconnue
+2025-06-25,Hauts Bassins,DS Dafra,Femme,19,Positif,DENV3,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Dafra,Homme,28,Négatif,DENV2,Non,Guéri
+2025-06-12,Hauts Bassins,DS Dafra,Femme,3,Négatif,DENV3,Non,Guéri
+2025-06-14,Hauts Bassins,DS Dafra,Homme,36,Positif,DENV2,Non,Guéri
+2025-06-24,Hauts Bassins,DS Dafra,Homme,26,Positif,DENV3,Non,Guéri
+2025-06-25,Hauts Bassins,DS Dafra,Femme,38,Positif,DENV2,Non,En traitement
+2025-06-16,Hauts Bassins,DS Dafra,Femme,36,Négatif,DENV2,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Dafra,Homme,30,Positif,DENV3,Oui,Guéri
+2025-06-22,Hauts Bassins,DS Dafra,Femme,23,Positif,DENV2,Non,En traitement
+2025-06-02,Hauts Bassins,DS Dafra,Femme,46,Positif,DENV3,Oui,En traitement
+2025-06-28,Hauts Bassins,DS Dafra,Femme,28,Positif,DENV3,Non,Guéri
+2025-06-06,Hauts Bassins,DS Dafra,Homme,56,Positif,DENV2,Oui,Inconnue
+2025-06-04,Hauts Bassins,DS Dafra,Femme,46,Négatif,DENV3,Oui,En traitement
+2025-06-18,Hauts Bassins,DS Dafra,Homme,35,Positif,DENV3,Non,Guéri
+2025-06-19,Hauts Bassins,DS Dafra,Femme,6,Positif,DENV2,Oui,En traitement
+2025-06-08,Hauts Bassins,DS Dafra,Femme,23,Positif,DENV3,Oui,Guéri
+2025-06-26,Hauts Bassins,DS Dafra,Homme,0,Négatif,DENV3,Non,Guéri
+2025-06-04,Hauts Bassins,DS Dafra,Femme,41,Négatif,DENV3,Oui,Guéri
+2025-06-10,Hauts Bassins,DS Dafra,Homme,34,Positif,DENV3,Non,En traitement
+2025-06-29,Hauts Bassins,DS Dafra,Femme,8,Positif,DENV2,Non,Guéri
+2025-06-21,Hauts Bassins,DS Dafra,Femme,28,Positif,DENV2,Non,Inconnue
+2025-06-21,Hauts Bassins,DS Dafra,Femme,42,Positif,DENV3,Oui,Guéri
+2025-06-16,Hauts Bassins,DS Dafra,Femme,40,Positif,DENV3,Non,En traitement
+2025-06-11,Hauts Bassins,DS Dande,Femme,43,Négatif,DENV2,Non,Guéri
+2025-06-05,Hauts Bassins,DS Dande,Femme,53,Négatif,DENV3,Oui,En traitement
+2025-06-15,Hauts Bassins,DS Dande,Femme,55,Négatif,DENV2,Oui,Inconnue
+2025-06-21,Hauts Bassins,DS Dande,Femme,24,Positif,DENV2,Oui,Inconnue
+2025-06-21,Hauts Bassins,DS Dande,Homme,24,Négatif,DENV3,Non,En traitement
+2025-06-03,Hauts Bassins,DS Dande,Homme,25,Négatif,DENV3,Non,Décédé
+2025-06-26,Hauts Bassins,DS Dande,Femme,17,Négatif,DENV3,Non,Guéri
+2025-06-25,Hauts Bassins,DS Dande,Femme,20,Positif,DENV3,Non,En traitement
+2025-06-02,Hauts Bassins,DS Dande,Femme,25,Négatif,DENV3,Non,Inconnue
+2025-06-16,Hauts Bassins,DS Dande,Homme,21,Positif,DENV2,Non,Inconnue
+2025-06-15,Hauts Bassins,DS Dande,Homme,25,Positif,DENV3,Non,Guéri
+2025-06-29,Hauts Bassins,DS Dande,Homme,37,Positif,DENV2,Non,Guéri
+2025-06-08,Hauts Bassins,DS Dande,Femme,42,Négatif,DENV2,Non,Inconnue
+2025-06-09,Hauts Bassins,DS Dande,Homme,23,Positif,DENV3,Non,En traitement
+2025-06-23,Hauts Bassins,DS Dande,Homme,29,Négatif,DENV3,Non,Guéri
+2025-06-08,Hauts Bassins,DS Dande,Homme,27,Négatif,DENV3,Non,Inconnue
+2025-06-14,Hauts Bassins,DS Dande,Homme,30,Positif,DENV2,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Dande,Homme,22,Négatif,DENV3,Non,Inconnue
+2025-06-18,Hauts Bassins,DS Dande,Femme,2,Positif,DENV3,Non,En traitement
+2025-06-12,Hauts Bassins,DS Dande,Homme,26,Positif,DENV3,Non,En traitement
+2025-06-12,Hauts Bassins,DS Dande,Homme,13,Négatif,DENV3,Non,Guéri
+2025-06-01,Hauts Bassins,DS Dande,Homme,1,Négatif,DENV3,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Dande,Femme,23,Positif,DENV3,Non,Guéri
+2025-06-01,Hauts Bassins,DS Dande,Femme,17,Positif,DENV3,Oui,Inconnue
+2025-06-06,Hauts Bassins,DS Dande,Femme,13,Positif,DENV3,Non,Guéri
+2025-06-05,Hauts Bassins,DS Dande,Homme,33,Positif,DENV3,Oui,Guéri
+2025-06-27,Hauts Bassins,DS Dande,Homme,29,Négatif,DENV2,Oui,En traitement
+2025-06-12,Hauts Bassins,DS Dande,Homme,12,Négatif,DENV3,Oui,Décédé
+2025-06-18,Hauts Bassins,DS Dande,Femme,11,Positif,DENV2,Non,En traitement
+2025-06-19,Hauts Bassins,DS Do,Femme,14,Positif,DENV2,Non,En traitement
+2025-06-05,Hauts Bassins,DS Do,Homme,20,Négatif,DENV3,Non,Guéri
+2025-06-15,Hauts Bassins,DS Do,Homme,1,Positif,DENV2,Non,Inconnue
+2025-06-03,Hauts Bassins,DS Do,Homme,31,Négatif,DENV3,Non,Inconnue
+2025-06-15,Hauts Bassins,DS Do,Homme,21,Négatif,DENV2,Non,Inconnue
+2025-06-07,Hauts Bassins,DS Do,Homme,2,Négatif,DENV3,Non,Inconnue
+2025-06-20,Hauts Bassins,DS Do,Femme,5,Positif,DENV2,Non,En traitement
+2025-06-09,Hauts Bassins,DS Do,Homme,16,Positif,DENV2,Non,Inconnue
+2025-06-10,Hauts Bassins,DS Do,Homme,36,Positif,DENV3,Non,En traitement
+2025-06-15,Hauts Bassins,DS Do,Femme,17,Positif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Do,Femme,19,Positif,DENV3,Non,Guéri
+2025-06-02,Hauts Bassins,DS Do,Femme,60,Positif,DENV2,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Do,Homme,31,Positif,DENV3,Non,En traitement
+2025-06-29,Hauts Bassins,DS Do,Femme,11,Négatif,DENV2,Non,Inconnue
+2025-06-16,Hauts Bassins,DS Do,Homme,0,Positif,DENV3,Non,En traitement
+2025-06-01,Hauts Bassins,DS Do,Homme,39,Négatif,DENV3,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Do,Homme,22,Négatif,DENV3,Oui,Inconnue
+2025-06-25,Hauts Bassins,DS Do,Homme,22,Négatif,DENV3,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Do,Homme,52,Négatif,DENV2,Non,En traitement
+2025-06-22,Hauts Bassins,DS Do,Homme,28,Négatif,DENV3,Non,Inconnue
+2025-06-04,Hauts Bassins,DS Do,Homme,33,Négatif,DENV3,Oui,Guéri
+2025-06-25,Hauts Bassins,DS Do,Femme,2,Négatif,DENV2,Non,Décédé
+2025-06-22,Hauts Bassins,DS Do,Femme,14,Positif,DENV2,Non,Guéri
+2025-06-16,Hauts Bassins,DS Do,Femme,31,Négatif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Do,Femme,26,Positif,DENV2,Oui,Inconnue
+2025-06-17,Hauts Bassins,DS Do,Femme,39,Négatif,DENV2,Non,Inconnue
+2025-06-11,Hauts Bassins,DS Do,Femme,23,Positif,DENV2,Non,En traitement
+2025-06-11,Hauts Bassins,DS Do,Homme,27,Positif,DENV3,Non,Inconnue
+2025-06-29,Hauts Bassins,DS Do,Homme,26,Positif,DENV2,Non,En traitement
+2025-06-22,Hauts Bassins,DS Do,Homme,5,Positif,DENV2,Non,Guéri
+2025-06-03,Hauts Bassins,DS Do,Femme,19,Négatif,DENV3,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Do,Femme,12,Positif,DENV2,Oui,Inconnue
+2025-06-09,Hauts Bassins,DS Do,Femme,19,Négatif,DENV3,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Do,Femme,38,Négatif,DENV2,Non,Inconnue
+2025-06-27,Hauts Bassins,DS Do,Femme,5,Positif,DENV3,Non,Inconnue
+2025-06-04,Hauts Bassins,DS Do,Femme,30,Négatif,DENV2,Non,Guéri
+2025-06-06,Hauts Bassins,DS Do,Femme,25,Négatif,DENV2,Non,Inconnue
+2025-06-10,Hauts Bassins,DS Do,Femme,4,Négatif,DENV2,Non,Guéri
+2025-06-18,Hauts Bassins,DS Do,Femme,5,Positif,DENV2,Non,En traitement
+2025-06-17,Hauts Bassins,DS Do,Homme,16,Positif,DENV2,Oui,Guéri
+2025-06-04,Hauts Bassins,DS Do,Homme,20,Négatif,DENV2,Non,Inconnue
+2025-06-01,Hauts Bassins,DS Do,Femme,27,Négatif,DENV2,Oui,Guéri
+2025-06-14,Hauts Bassins,DS Do,Femme,36,Négatif,DENV2,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Do,Homme,27,Négatif,DENV3,Non,Inconnue
+2025-06-12,Hauts Bassins,DS Do,Homme,7,Négatif,DENV2,Oui,En traitement
+2025-06-23,Hauts Bassins,DS Do,Femme,16,Négatif,DENV3,Non,En traitement
+2025-06-14,Hauts Bassins,DS Do,Femme,9,Négatif,DENV3,Non,En traitement
+2025-06-19,Hauts Bassins,DS Do,Femme,2,Négatif,DENV3,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Do,Femme,40,Positif,DENV3,Non,En traitement
+2025-06-21,Hauts Bassins,DS Do,Femme,27,Négatif,DENV2,Oui,Guéri
+2025-06-20,Hauts Bassins,DS Do,Homme,49,Positif,DENV2,Non,Guéri
+2025-06-19,Hauts Bassins,DS Do,Homme,30,Négatif,DENV3,Non,En traitement
+2025-06-15,Hauts Bassins,DS Do,Homme,42,Négatif,DENV3,Non,Guéri
+2025-06-16,Hauts Bassins,DS Do,Femme,22,Positif,DENV2,Oui,Guéri
+2025-06-12,Hauts Bassins,DS Do,Femme,36,Positif,DENV3,Non,Guéri
+2025-06-28,Hauts Bassins,DS Do,Femme,25,Positif,DENV2,Non,Guéri
+2025-06-06,Hauts Bassins,DS Do,Homme,16,Positif,DENV3,Non,En traitement
+2025-06-10,Hauts Bassins,DS Do,Femme,54,Négatif,DENV2,Non,Guéri
+2025-06-07,Hauts Bassins,DS Do,Homme,3,Négatif,DENV2,Non,Inconnue
+2025-06-04,Hauts Bassins,DS Do,Homme,18,Positif,DENV2,Oui,En traitement
+2025-06-25,Hauts Bassins,DS Do,Homme,16,Positif,DENV2,Oui,Guéri
+2025-06-21,Hauts Bassins,DS Do,Femme,4,Positif,DENV3,Oui,Guéri
+2025-06-02,Hauts Bassins,DS Do,Homme,12,Positif,DENV3,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Do,Homme,9,Positif,DENV2,Oui,Inconnue
+2025-06-18,Hauts Bassins,DS Do,Femme,12,Négatif,DENV3,Non,En traitement
+2025-06-09,Hauts Bassins,DS Do,Femme,9,Positif,DENV3,Oui,En traitement
+2025-06-26,Hauts Bassins,DS Do,Homme,34,Positif,DENV3,Non,En traitement
+2025-06-15,Hauts Bassins,DS Do,Femme,45,Positif,DENV2,Oui,Guéri
+2025-06-09,Hauts Bassins,DS Do,Femme,5,Positif,DENV2,Oui,Inconnue
+2025-06-23,Hauts Bassins,DS Do,Homme,38,Positif,DENV2,Oui,En traitement
+2025-06-30,Hauts Bassins,DS Do,Femme,30,Négatif,DENV3,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Do,Femme,3,Positif,DENV3,Oui,Inconnue
+2025-06-19,Hauts Bassins,DS Do,Femme,42,Positif,DENV2,Oui,Inconnue
+2025-06-22,Hauts Bassins,DS Do,Femme,4,Négatif,DENV3,Non,Guéri
+2025-06-28,Hauts Bassins,DS Do,Femme,6,Positif,DENV3,Non,En traitement
+2025-06-08,Hauts Bassins,DS Do,Femme,14,Négatif,DENV3,Non,Guéri
+2025-06-15,Hauts Bassins,DS Do,Femme,38,Positif,DENV2,Oui,Inconnue
+2025-06-20,Hauts Bassins,DS Do,Homme,38,Positif,DENV2,Non,En traitement
+2025-06-28,Hauts Bassins,DS Do,Femme,21,Négatif,DENV2,Non,En traitement
+2025-06-02,Hauts Bassins,DS Do,Femme,47,Positif,DENV3,Oui,Inconnue
+2025-06-02,Hauts Bassins,DS Do,Homme,33,Positif,DENV2,Non,Guéri
+2025-06-28,Hauts Bassins,DS Do,Homme,18,Négatif,DENV3,Non,Inconnue
+2025-06-09,Hauts Bassins,DS Do,Femme,3,Positif,DENV3,Oui,En traitement
+2025-06-03,Hauts Bassins,DS Do,Homme,3,Négatif,DENV3,Non,Inconnue
+2025-06-14,Hauts Bassins,DS Do,Femme,30,Négatif,DENV2,Non,Guéri
+2025-06-23,Hauts Bassins,DS Do,Homme,27,Négatif,DENV2,Non,Inconnue
+2025-06-12,Hauts Bassins,DS Do,Homme,11,Positif,DENV2,Oui,Inconnue
+2025-06-23,Hauts Bassins,DS Do,Femme,34,Négatif,DENV2,Non,Décédé
+2025-06-02,Hauts Bassins,DS Do,Femme,25,Positif,DENV2,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Do,Femme,24,Négatif,DENV2,Non,Guéri
+2025-06-04,Hauts Bassins,DS Do,Femme,25,Positif,DENV3,Non,En traitement
+2025-06-23,Hauts Bassins,DS Do,Femme,40,Positif,DENV2,Oui,En traitement
+2025-06-09,Hauts Bassins,DS Do,Homme,16,Positif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Do,Homme,29,Négatif,DENV2,Non,En traitement
+2025-06-21,Hauts Bassins,DS Do,Femme,27,Négatif,DENV3,Non,Inconnue
+2025-06-25,Hauts Bassins,DS Do,Femme,38,Positif,DENV3,Non,Guéri
+2025-06-08,Hauts Bassins,DS Do,Femme,27,Positif,DENV2,Non,En traitement
+2025-06-10,Hauts Bassins,DS Do,Femme,27,Positif,DENV2,Oui,Inconnue
+2025-06-04,Hauts Bassins,DS Hounde,Femme,42,Négatif,DENV2,Oui,Guéri
+2025-06-08,Hauts Bassins,DS Hounde,Femme,18,Négatif,DENV3,Non,Inconnue
+2025-06-14,Hauts Bassins,DS Hounde,Femme,35,Négatif,DENV3,Oui,En traitement
+2025-06-02,Hauts Bassins,DS Hounde,Femme,2,Négatif,DENV3,Non,En traitement
+2025-06-03,Hauts Bassins,DS Hounde,Femme,40,Positif,DENV2,Non,En traitement
+2025-06-02,Hauts Bassins,DS Hounde,Homme,8,Positif,DENV3,Non,Inconnue
+2025-06-10,Hauts Bassins,DS Hounde,Femme,32,Négatif,DENV2,Non,Inconnue
+2025-06-01,Hauts Bassins,DS Hounde,Homme,1,Négatif,DENV2,Non,Guéri
+2025-06-24,Hauts Bassins,DS Hounde,Homme,44,Positif,DENV2,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Hounde,Femme,18,Positif,DENV2,Oui,Inconnue
+2025-06-17,Hauts Bassins,DS Hounde,Homme,46,Négatif,DENV3,Oui,Décédé
+2025-06-22,Hauts Bassins,DS Hounde,Homme,2,Négatif,DENV3,Non,Guéri
+2025-06-19,Hauts Bassins,DS Hounde,Homme,35,Positif,DENV2,Oui,Inconnue
+2025-06-21,Hauts Bassins,DS Hounde,Femme,48,Positif,DENV3,Oui,Inconnue
+2025-06-08,Hauts Bassins,DS Hounde,Femme,27,Positif,DENV2,Non,Inconnue
+2025-06-05,Hauts Bassins,DS Hounde,Femme,25,Négatif,DENV2,Non,Décédé
+2025-06-06,Hauts Bassins,DS Hounde,Femme,20,Positif,DENV2,Non,En traitement
+2025-06-25,Hauts Bassins,DS Hounde,Homme,7,Positif,DENV3,Oui,Inconnue
+2025-06-19,Hauts Bassins,DS Hounde,Homme,8,Positif,DENV2,Non,Inconnue
+2025-06-03,Hauts Bassins,DS Hounde,Femme,44,Négatif,DENV3,Oui,Guéri
+2025-06-09,Hauts Bassins,DS Hounde,Femme,58,Négatif,DENV3,Oui,Inconnue
+2025-06-27,Hauts Bassins,DS Hounde,Homme,34,Positif,DENV3,Oui,En traitement
+2025-06-10,Hauts Bassins,DS Hounde,Homme,1,Négatif,DENV3,Oui,Inconnue
+2025-06-26,Hauts Bassins,DS Hounde,Femme,43,Positif,DENV2,Oui,Inconnue
+2025-06-20,Hauts Bassins,DS Hounde,Homme,17,Positif,DENV2,Non,Inconnue
+2025-06-22,Hauts Bassins,DS Hounde,Homme,34,Positif,DENV2,Non,Inconnue
+2025-06-10,Hauts Bassins,DS Hounde,Homme,36,Positif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Hounde,Homme,29,Négatif,DENV2,Non,Inconnue
+2025-06-17,Hauts Bassins,DS Hounde,Homme,20,Positif,DENV2,Oui,En traitement
+2025-06-28,Hauts Bassins,DS Hounde,Femme,11,Positif,DENV3,Oui,Inconnue
+2025-06-14,Hauts Bassins,DS Hounde,Femme,19,Négatif,DENV3,Oui,Guéri
+2025-06-08,Hauts Bassins,DS Hounde,Femme,28,Négatif,DENV2,Non,Décédé
+2025-06-17,Hauts Bassins,DS Hounde,Homme,31,Positif,DENV2,Non,Décédé
+2025-06-04,Hauts Bassins,DS Hounde,Homme,58,Positif,DENV3,Oui,Guéri
+2025-06-16,Hauts Bassins,DS Hounde,Homme,40,Négatif,DENV2,Non,En traitement
+2025-06-24,Hauts Bassins,DS Hounde,Homme,37,Négatif,DENV3,Non,Guéri
+2025-06-14,Hauts Bassins,DS Hounde,Homme,28,Positif,DENV3,Non,Décédé
+2025-06-24,Hauts Bassins,DS Hounde,Femme,10,Positif,DENV2,Non,En traitement
+2025-06-29,Hauts Bassins,DS Hounde,Homme,20,Positif,DENV3,Non,Décédé
+2025-06-29,Hauts Bassins,DS Karangasso Vigue,Femme,30,Positif,DENV2,Oui,En traitement
+2025-06-23,Hauts Bassins,DS Karangasso Vigue,Femme,43,Négatif,DENV3,Oui,Inconnue
+2025-06-19,Hauts Bassins,DS Karangasso Vigue,Femme,33,Positif,DENV2,Non,En traitement
+2025-06-18,Hauts Bassins,DS Karangasso Vigue,Homme,62,Négatif,DENV3,Non,Guéri
+2025-06-22,Hauts Bassins,DS Karangasso Vigue,Femme,14,Positif,DENV3,Non,En traitement
+2025-06-07,Hauts Bassins,DS Karangasso Vigue,Homme,19,Négatif,DENV3,Oui,En traitement
+2025-06-06,Hauts Bassins,DS Karangasso Vigue,Homme,13,Négatif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Karangasso Vigue,Femme,14,Positif,DENV2,Non,Guéri
+2025-06-07,Hauts Bassins,DS Karangasso Vigue,Homme,14,Positif,DENV3,Non,En traitement
+2025-06-30,Hauts Bassins,DS Karangasso Vigue,Femme,11,Négatif,DENV3,Non,Inconnue
+2025-06-07,Hauts Bassins,DS Karangasso Vigue,Femme,39,Positif,DENV3,Non,Inconnue
+2025-06-09,Hauts Bassins,DS Karangasso Vigue,Homme,24,Positif,DENV2,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Karangasso Vigue,Homme,2,Positif,DENV2,Non,En traitement
+2025-06-19,Hauts Bassins,DS Karangasso Vigue,Homme,58,Positif,DENV2,Non,Inconnue
+2025-06-13,Hauts Bassins,DS Léna,Femme,0,Positif,DENV2,Non,En traitement
+2025-06-06,Hauts Bassins,DS Léna,Femme,48,Négatif,DENV3,Non,Guéri
+2025-06-27,Hauts Bassins,DS Léna,Homme,19,Négatif,DENV3,Non,Guéri
+2025-06-15,Hauts Bassins,DS Léna,Homme,25,Positif,DENV2,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Léna,Femme,35,Négatif,DENV2,Non,Guéri
+2025-06-07,Hauts Bassins,DS Léna,Femme,6,Négatif,DENV2,Non,Guéri
+2025-06-23,Hauts Bassins,DS N'Dorola,Homme,3,Négatif,DENV2,Oui,En traitement
+2025-06-13,Hauts Bassins,DS N'Dorola,Homme,19,Positif,DENV2,Oui,Guéri
+2025-06-18,Hauts Bassins,DS N'Dorola,Femme,45,Négatif,DENV3,Non,Guéri
+2025-06-19,Hauts Bassins,DS N'Dorola,Femme,13,Négatif,DENV3,Oui,En traitement
+2025-06-14,Hauts Bassins,DS N'Dorola,Homme,46,Négatif,DENV3,Non,En traitement
+2025-06-06,Hauts Bassins,DS N'Dorola,Homme,33,Positif,DENV2,Oui,Guéri
+2025-06-21,Hauts Bassins,DS N'Dorola,Homme,29,Positif,DENV3,Non,Guéri
+2025-06-17,Hauts Bassins,DS N'Dorola,Homme,6,Négatif,DENV2,Non,Guéri
+2025-06-09,Hauts Bassins,DS N'Dorola,Homme,24,Négatif,DENV2,Non,Inconnue
+2025-06-16,Hauts Bassins,DS N'Dorola,Homme,16,Négatif,DENV2,Non,Inconnue
+2025-06-16,Hauts Bassins,DS N'Dorola,Femme,4,Négatif,DENV2,Non,En traitement
+2025-06-26,Hauts Bassins,DS N'Dorola,Femme,23,Négatif,DENV3,Non,Guéri
+2025-06-21,Hauts Bassins,DS N'Dorola,Homme,20,Positif,DENV2,Oui,En traitement
+2025-06-11,Hauts Bassins,DS N'Dorola,Femme,24,Positif,DENV3,Non,En traitement
+2025-06-29,Hauts Bassins,DS N'Dorola,Homme,6,Négatif,DENV2,Non,Inconnue
+2025-06-05,Hauts Bassins,DS N'Dorola,Femme,11,Positif,DENV2,Oui,Guéri
+2025-06-10,Hauts Bassins,DS N'Dorola,Homme,24,Négatif,DENV2,Non,Guéri
+2025-06-25,Hauts Bassins,DS N'Dorola,Homme,35,Positif,DENV3,Oui,En traitement
+2025-06-26,Hauts Bassins,DS N'Dorola,Homme,23,Positif,DENV3,Non,En traitement
+2025-06-06,Hauts Bassins,DS N'Dorola,Femme,37,Négatif,DENV2,Non,Guéri
+2025-06-16,Hauts Bassins,DS N'Dorola,Femme,39,Négatif,DENV2,Non,Guéri
+2025-06-27,Hauts Bassins,DS N'Dorola,Femme,35,Positif,DENV3,Non,En traitement
+2025-06-10,Hauts Bassins,DS N'Dorola,Femme,31,Négatif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS N'Dorola,Femme,39,Positif,DENV3,Oui,Inconnue
+2025-06-17,Hauts Bassins,DS N'Dorola,Homme,25,Négatif,DENV3,Non,Inconnue
+2025-06-22,Hauts Bassins,DS N'Dorola,Homme,4,Positif,DENV3,Non,Guéri
+2025-06-25,Hauts Bassins,DS N'Dorola,Homme,21,Négatif,DENV2,Oui,En traitement
+2025-06-06,Hauts Bassins,DS N'Dorola,Femme,26,Négatif,DENV3,Non,Inconnue
+2025-06-27,Hauts Bassins,DS N'Dorola,Femme,40,Positif,DENV3,Non,En traitement
+2025-06-30,Hauts Bassins,DS N'Dorola,Homme,24,Négatif,DENV2,Non,Guéri
+2025-06-06,Hauts Bassins,DS N'Dorola,Femme,28,Positif,DENV2,Non,En traitement
+2025-06-13,Hauts Bassins,DS N'Dorola,Femme,14,Négatif,DENV2,Non,Guéri
+2025-06-04,Hauts Bassins,DS N'Dorola,Femme,24,Négatif,DENV3,Non,En traitement
+2025-06-02,Hauts Bassins,DS N'Dorola,Femme,16,Positif,DENV2,Non,En traitement
+2025-06-03,Hauts Bassins,DS N'Dorola,Homme,44,Positif,DENV3,Non,Inconnue
+2025-06-12,Hauts Bassins,DS N'Dorola,Homme,1,Positif,DENV2,Oui,Inconnue
+2025-06-15,Hauts Bassins,DS N'Dorola,Femme,35,Négatif,DENV3,Oui,En traitement
+2025-06-02,Hauts Bassins,DS N'Dorola,Femme,32,Négatif,DENV2,Non,Inconnue
+2025-06-21,Hauts Bassins,DS N'Dorola,Femme,7,Positif,DENV3,Oui,Guéri
+2025-06-08,Hauts Bassins,DS N'Dorola,Homme,1,Positif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS N'Dorola,Femme,0,Positif,DENV3,Oui,En traitement
+2025-06-26,Hauts Bassins,DS N'Dorola,Femme,67,Positif,DENV3,Non,En traitement
+2025-06-11,Hauts Bassins,DS N'Dorola,Homme,26,Positif,DENV2,Non,En traitement
+2025-06-23,Hauts Bassins,DS N'Dorola,Homme,7,Positif,DENV3,Oui,Inconnue
+2025-06-28,Hauts Bassins,DS N'Dorola,Homme,35,Positif,DENV3,Non,Inconnue
+2025-06-18,Hauts Bassins,DS N'Dorola,Femme,27,Négatif,DENV3,Oui,Inconnue
+2025-06-08,Hauts Bassins,DS N'Dorola,Femme,57,Négatif,DENV3,Non,En traitement
+2025-06-29,Hauts Bassins,DS N'Dorola,Homme,37,Négatif,DENV3,Non,Inconnue
+2025-06-22,Hauts Bassins,DS N'Dorola,Femme,33,Positif,DENV2,Oui,Inconnue
+2025-06-23,Hauts Bassins,DS N'Dorola,Femme,25,Négatif,DENV3,Non,Guéri
+2025-06-06,Hauts Bassins,DS N'Dorola,Homme,32,Positif,DENV2,Non,Guéri
+2025-06-25,Hauts Bassins,DS N'Dorola,Femme,17,Négatif,DENV2,Non,Guéri
+2025-06-11,Hauts Bassins,DS N'Dorola,Homme,23,Positif,DENV2,Non,Inconnue
+2025-06-17,Hauts Bassins,DS N'Dorola,Homme,27,Négatif,DENV2,Non,Guéri
+2025-06-08,Hauts Bassins,DS N'Dorola,Homme,46,Négatif,DENV3,Oui,En traitement
+2025-06-12,Hauts Bassins,DS N'Dorola,Homme,18,Négatif,DENV2,Oui,Inconnue
+2025-06-11,Hauts Bassins,DS N'Dorola,Femme,21,Négatif,DENV3,Oui,En traitement
+2025-06-02,Hauts Bassins,DS N'Dorola,Homme,18,Positif,DENV2,Oui,En traitement
+2025-06-04,Hauts Bassins,DS N'Dorola,Homme,29,Négatif,DENV2,Oui,En traitement
+2025-06-05,Hauts Bassins,DS N'Dorola,Femme,13,Positif,DENV3,Non,Guéri
+2025-06-28,Hauts Bassins,DS N'Dorola,Femme,15,Négatif,DENV3,Oui,Inconnue
+2025-06-25,Hauts Bassins,DS N'Dorola,Homme,44,Positif,DENV3,Non,Inconnue
+2025-06-24,Hauts Bassins,DS N'Dorola,Femme,44,Positif,DENV3,Non,En traitement
+2025-06-12,Hauts Bassins,DS N'Dorola,Homme,27,Positif,DENV2,Non,Guéri
+2025-06-02,Hauts Bassins,DS Orodara,Femme,42,Positif,DENV2,Non,En traitement
+2025-06-22,Hauts Bassins,DS Orodara,Homme,4,Négatif,DENV3,Non,En traitement
+2025-06-15,Hauts Bassins,DS Orodara,Homme,28,Négatif,DENV3,Non,Inconnue
+2025-06-06,Hauts Bassins,DS Orodara,Homme,26,Positif,DENV3,Non,Guéri
+2025-06-08,Hauts Bassins,DS Orodara,Femme,42,Positif,DENV3,Non,Guéri
+2025-06-16,Hauts Bassins,DS Orodara,Femme,23,Positif,DENV3,Non,Guéri
+2025-06-23,Hauts Bassins,DS Orodara,Homme,16,Négatif,DENV2,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Orodara,Homme,30,Négatif,DENV3,Non,En traitement
+2025-06-07,Hauts Bassins,DS Orodara,Femme,34,Positif,DENV2,Non,En traitement
+2025-06-23,Hauts Bassins,DS Orodara,Homme,15,Positif,DENV3,Non,Guéri
+2025-06-20,Hauts Bassins,DS Orodara,Femme,9,Négatif,DENV2,Non,Guéri
+2025-06-30,Hauts Bassins,DS Orodara,Femme,16,Positif,DENV2,Non,En traitement
+2025-06-13,Hauts Bassins,DS Orodara,Femme,18,Positif,DENV2,Non,Guéri
+2025-06-07,Hauts Bassins,DS Orodara,Homme,29,Négatif,DENV2,Non,En traitement
+2025-06-19,Hauts Bassins,DS Orodara,Femme,39,Négatif,DENV3,Non,Inconnue
+2025-06-08,Hauts Bassins,DS Orodara,Homme,43,Positif,DENV2,Non,Guéri
+2025-06-03,Hauts Bassins,DS Orodara,Homme,6,Positif,DENV3,Non,En traitement
+2025-06-08,Hauts Bassins,DS Orodara,Femme,36,Négatif,DENV2,Oui,Inconnue
+2025-06-01,Hauts Bassins,DS Orodara,Femme,1,Positif,DENV2,Non,En traitement
+2025-06-22,Hauts Bassins,DS Orodara,Homme,5,Négatif,DENV2,Non,Guéri
+2025-06-22,Hauts Bassins,DS Orodara,Femme,19,Positif,DENV3,Oui,Inconnue
+2025-06-03,Hauts Bassins,DS Orodara,Femme,17,Négatif,DENV3,Non,Inconnue
+2025-06-02,Hauts Bassins,DS Orodara,Homme,37,Positif,DENV3,Non,Guéri
+2025-06-02,Hauts Bassins,DS Orodara,Homme,12,Positif,DENV3,Non,Inconnue
+2025-06-26,Hauts Bassins,DS Orodara,Homme,12,Positif,DENV3,Oui,En traitement
+2025-06-09,Hauts Bassins,DS Orodara,Homme,16,Négatif,DENV3,Oui,Guéri
+2025-06-13,Hauts Bassins,DS Orodara,Homme,4,Négatif,DENV2,Non,Inconnue
+2025-06-19,Hauts Bassins,DS Orodara,Femme,21,Négatif,DENV3,Oui,En traitement
+2025-06-18,Hauts Bassins,DS Orodara,Homme,31,Positif,DENV2,Non,Inconnue
+2025-06-29,Hauts Bassins,DS Orodara,Femme,45,Négatif,DENV2,Non,En traitement
+2025-06-04,Hauts Bassins,DS Orodara,Homme,42,Positif,DENV2,Non,Guéri
+2025-06-21,Hauts Bassins,DS Orodara,Femme,22,Positif,DENV3,Oui,Inconnue
+2025-06-30,Hauts Bassins,DS Orodara,Homme,4,Négatif,DENV2,Non,Inconnue
+2025-06-16,Hauts Bassins,DS Orodara,Femme,36,Positif,DENV2,Non,Guéri
+2025-06-14,Hauts Bassins,DS Orodara,Homme,24,Positif,DENV3,Non,Inconnue
+2025-06-28,Hauts Bassins,DS Orodara,Femme,14,Négatif,DENV2,Oui,En traitement

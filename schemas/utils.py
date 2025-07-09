@@ -10,7 +10,7 @@ from datetime import datetime, date, timedelta
 import os
 from fastapi.responses import StreamingResponse, JSONResponse
 from sqlalchemy import and_, func, or_, not_
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from sqlalchemy.sql import case, extract
 from calendar import month_name
 from reportlab.lib.pagesizes import letter, A4
@@ -19,6 +19,76 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
+
+
+def get_time_series_data(
+    date_debut: Optional[str] = None,
+    date_fin: Optional[str] = None,
+    frequence: str = "W",  # "W" pour semaine, "M" pour mois
+    region: str = "Toutes",
+    district: str = "Toutes",
+
+    db: Session = Depends(get_db)
+) -> list:
+    """
+    Génère des données de série temporelle pour l'épidémiologie de la dengue.
+    Retourne une liste de dictionnaires par période.
+    """
+    # 1. Récupérer les données filtrées
+    query = db.query(models.ModelCasDengue)
+    if date_debut:
+        query = query.filter(models.ModelCasDengue.date_consultation >= date_debut)
+    if date_fin:
+        query = query.filter(models.ModelCasDengue.date_consultation <= date_fin)
+    if region != "Toutes":
+        query = query.filter(models.ModelCasDengue.region == region.capitalize())
+    if district != "Toutes":
+        query = query.filter(models.ModelCasDengue.district == district.capitalize())
+    cas_data = query.all()
+    if not cas_data:
+        return []
+
+    # 2. DataFrame
+    df = pd.DataFrame([
+        {
+            'date_consultation': cas.date_consultation,
+            'resultat_test': cas.resultat_test,
+            'hospitalise': cas.hospitalise,
+            'issue': cas.issue,
+        }
+        for cas in cas_data
+    ])
+    df['date_consultation'] = pd.to_datetime(df['date_consultation'])
+    
+    # 3. Grouper par période
+    if frequence == "W":
+        df['periode'] = df['date_consultation'].dt.to_period('W').apply(lambda p: str(p))
+    elif frequence == "M":
+        df['periode'] = df['date_consultation'].dt.to_period('M').apply(lambda p: str(p))
+    else:
+        raise ValueError("Fréquence non supportée. Utilisez 'W' ou 'M'.")
+
+    # 4. Calculs par période
+    result = []
+    for periode, group in df.groupby('periode'):
+        total = len(group)
+        positifs = (group['resultat_test'] == 'Positif').sum()
+        hospitalises = (group['hospitalise'] == 'Oui').sum()
+        deces = (group['issue'] == 'Décédé').sum()
+        gueris = (group['issue'] == 'Guéri').sum()
+        en_traitement = (group['issue'] == 'En traitement').sum()
+        inconnue = (group['issue'] == 'Inconnue').sum()
+        result.append({
+            'periode': str(periode),
+            'total_cas': int(total),
+            'cas_positifs': int(positifs),
+            'hospitalisations': int(hospitalises),
+            'deces': int(deces),
+            'gueris': int(gueris),
+            'en_traitement': int(en_traitement),
+            'inconnue': int(inconnue)
+        })
+    return result
 
 
 "======== Fonction pour vérifier et corriger le CSV ========"
@@ -214,9 +284,11 @@ def exporter_donnees(
         query = query.filter(models.ModelCasDengue.date_consultation <= date_fin)
 
     if region != "Toutes":
+        region = region.capitalize()
         query = query.filter(models.ModelCasDengue.region == region)
 
     if districts:
+        districts = [district.capitalize() for district in districts]
         query = query.filter(models.ModelCasDengue.district.in_(districts))
 
     if limit:
@@ -321,10 +393,12 @@ def series_hebd_mensuelles(
     )
     # Filtrer par région et district si spécifié
     if region != "Toutes":
+        region = region.capitalize()
         cas = cas.filter(models.ModelCasDengue.region == region)
     
     if district != "Toutes":
-            cas = cas.filter(models.ModelCasDengue.district == district)
+        district = district.capitalize()
+        cas = cas.filter(models.ModelCasDengue.district == district)
 
     # Exécuter la requête
     cas = cas.all()
@@ -399,10 +473,12 @@ def statistiques_base(
     
     # Filtrer par région et district si spécifié
     if region != "Toutes":
+        region = region.capitalize()
         cas = cas.filter(models.ModelCasDengue.region == region)
     
     if district != "Toutes":
-            cas = cas.filter(models.ModelCasDengue.district == district)
+        district = district.capitalize()
+        cas = cas.filter(models.ModelCasDengue.district == district)
 
     # Exécuter la requête
     cas = cas.all()
@@ -542,6 +618,7 @@ def get_stats(db: Session = Depends(get_db)):
             "growth_deaths": growth(stats_year["total_deaths"], stats_last_year["total_deaths"]),
             "growth_positives": growth(stats_year["total_positives"], stats_last_year["total_positives"]),
             "growth_hospitalized": growth(stats_year["total_hospitalized"], stats_last_year["total_hospitalized"]),
+            "growth_variants": growth(stats_year["variants"], stats_last_year["variants"]),
         },
         "semaine_en_cours": {
             **stats_week,
@@ -549,6 +626,7 @@ def get_stats(db: Session = Depends(get_db)):
             "growth_deaths": growth(stats_week["total_deaths"], stats_last_week["total_deaths"]),
             "growth_positives": growth(stats_week["total_positives"], stats_last_week["total_positives"]),
             "growth_hospitalized": growth(stats_week["total_hospitalized"], stats_last_week["total_hospitalized"]),
+            "growth_variants": growth(stats_week["variants"], stats_last_week["variants"]),
         }
     }
 
@@ -584,8 +662,10 @@ def hebdo_data(
         query = query.filter(func.extract("month", models.ModelCasDengue.date_consultation) == mois)
 
     if region != "Toutes":
+        region = region.capitalize()
         query = query.filter(models.ModelCasDengue.region == region)
     if district != "Toutes":
+        district = district.capitalize()
         query = query.filter(models.ModelCasDengue.district == district)
 
     resultats = query.group_by("semaine", "num_semaine", "annee").order_by("semaine").all()
@@ -626,8 +706,10 @@ def mensuel_data(
     )
 
     if region != "Toutes":
+        region = region.capitalize()
         query = query.filter(models.ModelCasDengue.region == region)
     if district != "Toutes":
+        district = district.capitalize()
         query = query.filter(models.ModelCasDengue.district == district)
 
     resultats = query.group_by("mois").order_by("mois").all()
@@ -796,8 +878,10 @@ def calculer_indicateurs_epidemiologiques(
     
     # Appliquer les filtres géographiques
     if region != "Toutes":
+        region = region.capitalize()
         query = query.filter(models.ModelCasDengue.region == region)
     if district != "Toutes":
+        district = district.capitalize()
         query = query.filter(models.ModelCasDengue.district == district)
     
     # Récupérer tous les cas
@@ -951,8 +1035,8 @@ def sauvegarder_alertes(
         alerte_existante = db.query(models.AlertLog).filter(
             and_(
                 models.AlertLog.message.like(f"%{alerte['type']}%"),
-                models.AlertLog.region == (region if region != "Toutes" else None),
-                models.AlertLog.district == (district if district != "Toutes" else None),
+                models.AlertLog.region == (region.capitalize() if region != "Toutes" else None),
+                models.AlertLog.district == (district.capitalize() if district != "Toutes" else None),
                 models.AlertLog.created_at >= datetime.now() - timedelta(hours=24)
             )
         ).first()
@@ -965,8 +1049,8 @@ def sauvegarder_alertes(
                 severity=alerte["niveau"],
                 status="1",
                 message=alerte["message"],
-                region=region if region != "Toutes" else None,
-                district=district if district != "Toutes" else None,
+                region=region.capitalize() if region != "Toutes" else None,
+                district=district.capitalize() if district != "Toutes" else None,
                 notification_type=alerte["niveau"],
                 recipient=usermail,
                 created_at=datetime.now()
@@ -1375,6 +1459,32 @@ def generer_pdf_rapport_erreurs(rapport_global: dict) -> bytes:
     doc.build(story)
     buffer.seek(0)
     return buffer.getvalue()
+
+#Data 
+def data(date_debut, date_fin, region, district, limit, page, db):
+
+    
+    query = db.query(models.ModelCasDengue)
+    query = query.filter(
+        models.ModelCasDengue.date_consultation >= date_debut, 
+        ) if date_debut else query
+    
+    if date_fin :
+        query = query.filter(
+            models.ModelCasDengue.date_consultation <= date_fin
+        )
+    
+    if region :
+        region = region.capitalize()
+        query = query.filter(models.ModelCasDengue.region == region)
+    if district :
+        district = district.capitalize()
+        query = query.filter(models.ModelCasDengue.district == district)
+    if limit :
+        query = query.limit(limit)
+    if page :
+        query = query.offset((page - 1) * limit)
+    return query.all()
 
 
 
