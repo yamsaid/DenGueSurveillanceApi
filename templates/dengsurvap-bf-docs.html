@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Professionnelle - Package dengsurvap-bf</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦟</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.8;
+            color: #2d3748;
+            background-color: #f7fafc;
+            scroll-behavior: smooth;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #fff 0%, #fff 100%);
+            background-size: 200% 200%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-weight: 600;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        nav {
+            background: #1e293b;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #e4e4e7;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a:hover {
+            background-color: #34495e;
+        }
+        
+        main {
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        h4 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, #f0f9ff, #e0f2fe);
+            border-left: 4px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        code {
+            background: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h4 {
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc a {
+            color: #f0f2f4;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .migration-notice {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .migration-notice h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+        
+        .method-signature {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .parameter-table {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        .parameter-table th {
+            background: #e9ecef;
+        }
+        
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="position: relative;">
+        <div style="position: absolute; top: 0; right: 0; padding: 1rem; background: #4f46e5; color: white; border-bottom-left-radius: 8px; font-weight: 500;">
+            Version 0.2.0
+        </div>
+        
+        
+        <nav>
+            <ul>
+                <li><a href="#vue-ensemble">Vue d'ensemble</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#guide-utilisation">Guide d'utilisation</a></li>
+                <li><a href="#api-reference">API de référence</a></li>
+                <li><a href="#migration">Migration</a></li>
+                <li><a href="#exemples">Exemples</a></li>
+                <li><a href="#deploiement">Déploiement</a></li>
+            </ul>
+        </nav>
+        
+        <main>
+            
+            <section id="vue-ensemble">
+                
+                <h2>🎯 Vue d'ensemble</h2>
+                
+                <p>Le package <code>dengsurvap-bf</code> est un client Python officiel pour l'API de surveillance de la dengue Appi, la plateforme de surveillance de dengue au Burkina Faso. Il fournit une interface complète et intuitive pour accéder aux données épidémiologiques, gérer les alertes et effectuer des analyses avancées.</p>
+                
+                <div class="highlight">
+                    <h4>🚀 Caractéristiques principales</h4>
+                    <ul>
+                        <li><strong>Interface intuitive</strong> avec validation automatique des données</li>
+                        <li><strong>Gestion d'erreurs robuste</strong> avec exceptions spécialisées</li>
+                        <li><strong>Cache intelligent</strong> pour optimiser les performances</li>
+                        <li><strong>Support multi-formats</strong> (CSV, JSON, xlsx, PDF)</li>
+                        <li><strong>Analyses épidémiologiques avancées</strong></li>
+                        <li><strong>Système d'alertes configurable</strong></li>
+                        <li><strong>CLI intégré</strong> pour utilisation en ligne de commande</li>
+                        <li><strong>Tests complets</strong> avec couverture élevée</li>
+                    </ul>
+                </div>
+                
+                <h3>🏗️ Architecture du package</h3>
+                
+                <p>Le package est structuré de manière modulaire pour faciliter la maintenance et l'extension des fonctionnalités :</p>
+                
+                <div class="code-block">
+                    <pre><code>dengsurvap-bf/
+├── dengsurvab/
+│   ├── __init__.py          # Point d'entrée principal
+│   ├── client.py            # Client principal AppiClient
+│   ├── models.py            # Modèles Pydantic
+│   ├── exceptions.py        # Exceptions personnalisées
+│   ├── analytics.py         # Outils d'analyse
+│   ├── alerts.py            # Gestion des alertes
+│   ├── auth.py              # Authentification
+│   ├── export.py            # Export de données
+│   └── cli.py               # Interface CLI
+├── tests/                   # Tests unitaires
+├── examples/                # Exemples d'utilisation
+├── pyproject.toml          # Configuration du projet
+└── README.md               # Documentation de base</code></pre>
+                </div>
+                
+                <h3>📊 Flux de données</h3>
+                
+                <p>Le flux de données suit une architecture en couches bien définie :</p>
+                
+                <div class="code-block">
+                    <pre><code>Utilisateur → AppiClient → API Appi → Données épidémiologiques
+                ↓
+        Modules spécialisés:
+        - Analytics (analyses)
+        - Alerts (alertes)
+        - Export (export)
+        - Auth (authentification)</code></pre>
+                </div>
+            </section>
+            
+            <section id="installation">
+                <h2>🚀 Installation et configuration</h2>
+                
+                <h3>Installation de base</h3>
+                
+                <p>Pour utiliser le client Appi Dengue, commencez par installer le package Python. L'installation standard suffit pour accéder à toutes les fonctionnalités principales (connexion, récupération de données, alertes, export).</p>
+                
+                <div class="code-block">
+                    <pre><code>pip install dengsurvap-bf</code></pre>
+                </div>
+                
+                <h3>Installation avec fonctionnalités avancées</h3>
+                
+                <p>Si vous souhaitez réaliser des analyses statistiques avancées ou des visualisations, ajoutez l'option <code>[analysis]</code> pour installer les dépendances supplémentaires (pandas, matplotlib, seaborn, etc.).</p>
+                
+                <div class="code-block">
+                    <pre><code>pip install dengsurvap-bf[analysis]</code></pre>
+                </div>
+                
+                <h3>Configuration par variables d'environnement</h3>
+                
+                <p>Configurer le client via des variables d'environnement est la méthode recommandée pour sécuriser vos identifiants. Cela évite de stocker des informations sensibles dans le code source et permet de changer facilement de configuration sans modifier vos scripts.</p>
+                
+                <div class="code-block">
+                    <pre><code>export APPI_BASE_URL="https://votre-api-appi.com"
+export APPI_API_KEY="votre-clé-api"</code></pre>
+                </div>
+                
+                <h3>Configuration programmatique</h3>
+                
+                <p>Vous pouvez aussi configurer le client directement dans votre code Python, en utilisant les variables d'environnement ou en passant les paramètres manuellement. Cette méthode est utile pour les scripts portables ou les environnements où la configuration par variables d'environnement n'est pas possible.</p>
+                
+                <div class="code-block">
+                    <pre><code>from dengsurvab import AppiClient
+
+client = AppiClient(
+    base_url="https://votre-api-appi.com",
+    api_key="votre-clé-api"
+)</code></pre>
+                </div>
+            </section>
+            
+            <section id="guide-utilisation">
+                <h2>📖 Guide d'utilisation</h2>
+                
+                <p>Ce guide vous accompagne pas à pas pour démarrer avec le client Appi Dengue. Vous apprendrez à vous connecter à l'API, à récupérer et exporter des données, et à utiliser les principales fonctionnalités du package. Chaque exemple est conçu pour être directement réutilisable dans vos propres scripts ou notebooks.</p>
+                
+                <h3>Connexion à l'API</h3>
+                
+                <p>Avant toute opération, il est nécessaire d'initialiser le client avec l'URL de l'API et, si besoin, une clé API. L'authentification permet d'accéder aux données sécurisées et de personnaliser l'expérience selon le profil utilisateur (droits, préférences, etc.).</p>
+                
+                <div class="code-block">
+                    <pre><code>from dengsurvab import AppiClient
+
+# Initialisation du client
+client = AppiClient(
+    base_url="https://votre-api-appi.com",
+    api_key="votre-clé-api"
+)
+
+# Authentification
+client.authenticate("votre-email", "votre-mot-de-passe")</code></pre>
+                </div>
+                
+                <h3>Récupération des données</h3>
+                
+                <p>Le client permet de récupérer facilement les cas de dengue, les indicateurs épidémiologiques par période, et d'autres informations utiles pour l'analyse ou la veille sanitaire. Utilisez les filtres (dates, région, district, etc.) pour cibler précisément les données qui vous intéressent. Ces méthodes sont adaptées aussi bien à l'exploration rapide qu'à l'intégration dans des pipelines d'analyse.</p>
+                
+                <div class="code-block">
+                    <pre><code># Récupération des cas de dengue
+cas = client.get_cas_dengue(
+    annee=2024,
+    mois=1,
+    region="Centre"
+)
+
+# Récupération des statistiques
+stats = client.get_stats()
+
+# Données par période
+donnees = client.donnees_par_periode(
+    date_debut="2024-01-01",
+    date_fin="2024-12-31",
+    region="Centre",
+    frequence="W"  # W pour semaine, M pour mois
+)</code></pre>
+                </div>
+                
+                <h3>Export de données</h3>
+                
+                <p>Pour sauvegarder ou partager les données, utilisez la classe <code>DataExporter</code> ou directement la classe <code>AppiClient</code>. Elles permettent d'exporter les résultats dans différents formats (CSV, JSON, Excel) adaptés à vos besoins : archivage, reporting, import dans d'autres outils, ou analyse avancée avec pandas. L'export direct en DataFrame facilite l'intégration avec l'écosystème Python scientifique.</p>
+                
+                <div class="code-block">
+                    <pre><code># Export en CSV
+client.save_to_file(
+    data=cas,
+    filename="cas_dengue_2024.csv",
+    format="csv"
+)
+
+# Export en Excel
+client.save_to_file(
+    data=cas,
+    filename="cas_dengue_2024.xlsx",
+    format="xlsx"
+)
+
+# Export en DataFrame pandas
+df = client.data(date_debut="2024-01-01", date_fin="2025-07-01", region="Centre", page=1, limit=2000)</code></pre>
+                </div>
+                
+                <h3>Gestion des alertes</h3>
+                
+                <p>Le système d'alertes intégré vous aide à surveiller automatiquement les seuils critiques (taux de positivité, hospitalisations, décès, etc.), à configurer des notifications, et à suivre l'évolution des risques sanitaires. C'est un outil clé pour la veille épidémiologique et la prise de décision rapide.</p>
+                
+                <div class="code-block">
+                    <pre><code># Récupération des alertes
+alertes = client.alertes(
+    limit=10,
+    severity="critical",
+    status="active"
+)
+
+# Configuration des seuils
+client.configurer_seuils(
+    seuil_positivite=50.0,
+    seuil_hospitalisation=15.0,
+    seuil_deces=2.0
+)</code></pre>
+                </div>
+                
+                <h3>🚀 Commande CLI rapide : dab</h3>
+                
+                <p>La CLI <code>dab</code> permet d'automatiser et de simplifier toutes les opérations courantes (authentification, export, alertes, etc.) directement depuis le terminal, sans écrire de code Python. Elle est idéale pour les scripts, l'intégration continue, ou pour les utilisateurs non-développeurs qui souhaitent accéder rapidement aux données.</p>
+                
+                <h4>Commandes disponibles</h4>
+                
+                <table class="parameter-table">
+                    <thead>
+                        <tr>
+                            <th>Commande</th>
+                            <th>Description</th>
+                            <th>Exemple</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>dab stats</code></td>
+                            <td>Afficher les statistiques générales</td>
+                            <td><code>dab stats</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab cas</code></td>
+                            <td>Récupérer les cas de dengue</td>
+                            <td><code>dab cas --region Centre --limit 20</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab alertes</code></td>
+                            <td>Gérer les alertes</td>
+                            <td><code>dab alertes --severity critical --limit 10</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab export</code></td>
+                            <td>Exporter les données</td>
+                            <td><code>dab export --format csv --output donnees.csv</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab auth</code></td>
+                            <td>Authentification</td>
+                            <td><code>dab auth --email user@example.com --password password</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab regions</code></td>
+                            <td>Lister les régions</td>
+                            <td><code>dab regions</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab districts</code></td>
+                            <td>Lister les districts</td>
+                            <td><code>dab districts --region Centre</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab resumer</code></td>
+                            <td>Résumé statistique et structurel</td>
+                            <td><code>dab resumer --annee 2024 --region Centre --detail</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab graph_desc</code></td>
+                            <td>Visualisation descriptive</td>
+                            <td><code>dab graph_desc --save-dir ./figures --max-modalites 15</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>dab evolution</code></td>
+                            <td>Analyse temporelle</td>
+                            <td><code>dab evolution --by sexe --frequence M --taux-croissance</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4>Exemples d'utilisation avancée</h4>
+                
+                <div class="code-block">
+                    <pre><code># Authentification
+dab auth --email user@example.com --password password
+
+# Résumé détaillé pour une région
+dab resumer --annee 2024 --region Centre --detail --max-lignes 20
+
+# Génération de graphiques avec sauvegarde
+dab graph_desc --date-debut 2024-01-01 --date-fin 2024-12-31 --save-dir ./figures --boxplot-age
+
+# Analyse temporelle par sexe avec taux de croissance
+dab evolution --by sexe --frequence M --taux-croissance --max-graph 8
+
+# Export de données avec filtres
+dab export --format csv --output cas_dengue.csv --annee 2024 --region Centre
+
+# Récupération d'alertes critiques
+dab alertes --severity critical --limit 10 --output alertes.csv</code></pre>
+                </div>
+                
+                <h3>📊 Utilisation avancée avec DataFrame</h3>
+                
+                <p>Pour l'analyse de données, il est souvent plus pratique d'obtenir directement un DataFrame pandas. Les méthodes <code>data</code>, <code>export_to_dataframe</code>, <code>alertes</code>, et <code>alertes_to_dataframe</code> permettent d'intégrer les données dans vos workflows analytiques Python, facilitant ainsi la visualisation, le traitement statistique et la modélisation.</p>
+                
+                <div class="code-block">
+                    <pre><code># Récupération en DataFrame
+df_cas = client.data(annee=2024, region="Centre")
+
+# Analyse avec pandas
+print(df_cas.describe())
+print(df_cas.groupby('region')['cas'].sum())</code></pre>
+                </div>
+            </section>
+            
+            <section id="migration">
+                <h2>🔄 Migration et nouvelles méthodes</h2>
+                
+                <div class="migration-notice">
+                    <h3>🚨 MIGRATION : Nouvelle API d'analyse avancée</h3>
+                    <p>Depuis la version 0.2.0, les méthodes <code>resume</code> et <code>resume_display</code> sont supprimées et remplacées par trois méthodes puissantes et flexibles :</p>
+                    <ul>
+                        <li><code>client.resumer(...)</code> : résumé statistique et structurel de la base</li>
+                        <li><code>client.graph_desc(...)</code> : visualisation descriptive (camemberts, barres, histogrammes)</li>
+                        <li><code>client.evolution(...)</code> : analyse temporelle (par semaine/mois, par sous-groupes, avec taux de croissance)</li>
+                    </ul>
+                </div>
+                
+                <h3>Migration rapide</h3>
+                
+                <p>Pour migrer vers la nouvelle API, remplacez simplement les anciennes méthodes par les nouvelles :</p>
+                
+                <table class="parameter-table">
+                    <thead>
+                        <tr>
+                            <th>Ancienne méthode</th>
+                            <th>Nouvelle méthode</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>client.resume(...)</code></td>
+                            <td><code>client.resumer(...)</code></td>
+                            <td>Résumé statistique et structurel</td>
+                        </tr>
+                        <tr>
+                            <td><code>client.resume_display(...)</code></td>
+                            <td><code>client.graph_desc(...)</code> ou <code>client.evolution(...)</code></td>
+                            <td>Visualisation descriptive ou analyse temporelle</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Exemples d'utilisation des nouvelles méthodes</h3>
+                
+                <div class="code-block">
+                    <pre><code># Résumé statistique et structurel
+client.resumer(annee=2024, region="Centre", detail=True)
+
+# Visualisation descriptive
+client.graph_desc(
+    date_debut="2024-01-01", 
+    date_fin="2024-12-31", 
+    save_dir="./figures"
+)
+
+# Analyse temporelle avancée
+client.evolution(
+    by="sexe", 
+    frequence="M", 
+    taux_croissance=True, 
+    max_graph=6
+)</code></pre>
+                </div>
+                
+                <h3>Description détaillée des nouvelles méthodes</h3>
+                
+                <h4>client.resumer(...)</h4>
+                <p>Affiche un résumé enrichi : période de couverture, nombre d'observations, régions, districts, dernière mise à jour, statistiques quantitatives et qualitatives, détail des modalités.</p>
+                <p><strong>Principaux paramètres :</strong> <code>annee</code>, <code>region</code>, <code>district</code>, <code>date_debut</code>, <code>date_fin</code>, <code>detail</code>, <code>max_lignes</code>.</p>
+                
+                <h4>client.graph_desc(...)</h4>
+                <p>Génère des graphiques pour chaque variable d'intérêt (camemberts, barres, histogramme/boxplot pour l'âge).</p>
+                <p><strong>Principaux paramètres :</strong> <code>save_dir</code>, <code>max_modalites</code>, <code>boxplot_age</code>, <code>annee</code>, <code>region</code>, <code>district</code>, <code>date_debut</code>, <code>date_fin</code>.</p>
+                
+                <h4>client.evolution(...)</h4>
+                <p>Analyse l'évolution des variables cibles (issue, hospitalisation, resultat_test) par semaine ou mois, globalement ou par sous-groupes.</p>
+                <p><strong>Principaux paramètres :</strong> <code>by</code>, <code>frequence</code> ('W' ou 'M'), <code>taux_croissance</code>, <code>max_graph</code>, <code>annee</code>, <code>region</code>, <code>district</code>, <code>date_debut</code>, <code>date_fin</code>.</p>
+            </section>
+            
+            <section id="api-reference">
+                <h2>🔌 API de référence</h2>
+                
+                <h3>Classe AppiClient</h3>
+                
+                <p>La classe <code>AppiClient</code> est le point d'entrée principal du package. Elle gère l'authentification, la connexion à l'API et fournit des méthodes pour accéder aux différentes fonctionnalités.</p>
+                
+                <h4>Méthodes d'authentification</h4>
+                
+                <div class="method-signature">
+                    <code>def authenticate(self, email: str, password: str) -> Dict[str, Any]</code>
+                </div>
+                <p>Authentifie l'utilisateur et récupère un token JWT.</p>
+                
+                <div class="method-signature">
+                    <code>def logout(self) -> bool</code>
+                </div>
+                <p>Déconnecte l'utilisateur et invalide le token.</p>
+                
+                <div class="method-signature">
+                    <code>def get_profile(self) -> User</code>
+                </div>
+                <p>Récupère le profil de l'utilisateur connecté.</p>
+                
+                <h4>Méthodes de données</h4>
+                
+                <div class="method-signature">
+                    <code>def get_cas_dengue(self, annee: int = date.today().year, mois: int = date.today().month, region: Optional[str] = None, district: Optional[str] = None) -> List[CasDengue]</code>
+                </div>
+                <p>Récupère les cas de dengue selon les critères.</p>
+                
+                <div class="method-signature">
+                    <code>def get_stats(self) -> Statistiques</code>
+                </div>
+                <p>Récupère les statistiques générales.</p>
+                
+                <div class="method-signature">
+                    <code>def donnees_par_periode(self, date_debut: str, date_fin: str, region: str = "Toutes", district: str = "Toutes", frequence: str = "W") -> List[IndicateurHebdo]</code>
+                </div>
+                <p>Récupère les indicateurs hebdomadaires ou mensuelles. <code>frequence</code> : <code>W</code> pour Semaine et <code>M</code> pour Mois.</p>
+                
+                <h4>Nouvelles méthodes d'analyse (version 0.2.0+)</h4>
+                
+                <div class="method-signature">
+                    <code>def resumer(self, annee: Optional[int] = None, region: Optional[str] = None, district: Optional[str] = None, date_debut: Optional[str] = None, date_fin: Optional[str] = None, detail: bool = False, max_lignes: int = 10) -> None</code>
+                </div>
+                <p>Affiche un résumé statistique et structurel de la base de données avec des informations détaillées sur la période de couverture, les observations, et les statistiques.</p>
+                
+                <div class="method-signature">
+                    <code>def graph_desc(self, annee: Optional[int] = None, region: Optional[str] = None, district: Optional[str] = None, date_debut: Optional[str] = None, date_fin: Optional[str] = None, save_dir: Optional[str] = None, max_modalites: int = 10, boxplot_age: bool = True) -> None</code>
+                </div>
+                <p>Génère des graphiques descriptifs pour chaque variable d'intérêt, adaptant automatiquement le type de graphique selon la nature de la variable.</p>
+                
+                <div class="method-signature">
+                    <code>def evolution(self, by: Optional[str] = None, frequence: str = "W", taux_croissance: bool = False, max_graph: int = 6, annee: Optional[int] = None, region: Optional[str] = None, district: Optional[str] = None, date_debut: Optional[str] = None, date_fin: Optional[str] = None) -> None</code>
+                </div>
+                <p>Analyse l'évolution temporelle des variables cibles avec options de sous-groupes et calcul de taux de croissance.</p>
+                
+                <h4>Méthodes d'alertes</h4>
+                
+                <div class="method-signature">
+                    <code>def get_alertes(self, limit: int = 10, severity: Optional[str] = None, status: Optional[str] = None, region: Optional[str] = None, district: Optional[str] = None, date_debut: Optional[str] = None, date_fin: Optional[str] = None) -> List[AlertLog]</code>
+                </div>
+                <p>Récupère les alertes selon les critères spécifiés.</p>
+                
+                <div class="method-signature">
+                    <code>def configurer_seuils(self, **kwargs) -> Dict[str, Any]</code>
+                </div>
+                <p>Configure les seuils d'alerte pour différents indicateurs.</p>
+                
+                <h4>Méthodes d'export</h4>
+                
+                <div class="method-signature">
+                    <code>def save_to_file(self,
+                        filepath: Optional[str] = None,
+                        date_debut: Optional[str] = None,
+                        date_fin: Optional[str] = None,
+                        region: Optional[str] = None,
+                        district: Optional[str] = None,
+                        limit: Optional[int] = None,
+                        page: Optional[int] = None,
+                        format: str = "csv") -> bool</code>
+                </div>
+                <p>Exporte les données au format CSV ou Excel.</p>
+                
+                <div class="method-signature">
+                    <code>def data(self, date_debut: str, date_fin: str, region: str = "Toutes", district: str = "Toutes", frequence: str = "W", page: int = 1, limit: int = 2000) -> pd.DataFrame</code>
+                </div>
+                <p>Récupère les données selon les critères spécifiés.</p>
+            </section>
+            
+            <section id="exemples">
+                <h2>💡 Exemples d'utilisation</h2>
+                
+                <h3>Exemple complet d'analyse épidémiologique</h3>
+                
+                <div class="code-block">
+                    <pre><code>from dengsurvab import AppiClient
+
+# Initialisation et authentification
+client = AppiClient(base_url="https://api-appi.com")
+client.authenticate("user@example.com", "password")
+
+# Résumé de la base de données
+client.resumer(annee=2024, region="Centre", detail=True)
+
+# Visualisation descriptive
+client.graph_desc(
+    date_debut="2024-01-01",
+    date_fin="2024-12-31",
+    save_dir="./figures"
+)
+
+# Analyse temporelle
+client.evolution(
+    by="sexe",
+    frequence="M",
+    taux_croissance=True,
+    max_graph=6
+)
+
+# Export des données
+cas = client.get_cas_dengue(annee=2024, region="Centre")
+client.save_to_file(cas, "cas_dengue_2024.csv", format="csv")</code></pre>
+                </div>
+                
+                <h3>Exemple de gestion des alertes</h3>
+                
+                <div class="code-block">
+                    <pre><code># Configuration des seuils
+client.configurer_seuils(
+    seuil_positivite=50.0,
+    seuil_hospitalisation=15.0,
+    seuil_deces=2.0
+)
+
+# Récupération des alertes critiques
+alertes_critiques = client.get_alertes(
+    severity="critical",
+    status="active",
+    limit=10
+)
+
+# Vérification automatique
+resultat_verification = client.verifier_alertes(
+    date_debut="2024-01-01",
+    date_fin="2024-12-31",
+    region="Centre"
+)</code></pre>
+                </div>
+                
+                <h3>Exemple d'utilisation CLI</h3>
+                
+                <div class="code-block">
+                    <pre><code># Authentification
+dab auth --email user@example.com --password password
+
+# Export de données
+dab export --format csv --output cas_dengue.csv --annee 2024 --region Centre
+
+# Récupération d'alertes
+dab alerts --severity critical --limit 10 --output alertes.csv
+
+# Résumé de la base
+dab resumer --annee 2024 --region Centre --detail</code></pre>
+                </div>
+            </section>
+            
+
+            <section id="deploiement">
+                <h2>🚀 Déploiement (Cette section s'adresse aux contributeurs)</h2>
+                
+                <h3>Préparation du package</h3>
+                
+                <p>Avant de déployer le package, assurez-vous que tous les tests passent et que la documentation est à jour :</p>
+                
+                <div class="code-block">
+                    <pre><code># Tests
+pytest --maxfail=1 --disable-warnings
+
+# Linting
+flake8 dengsurvab/
+
+# Typage
+mypy dengsurvab/
+
+# Build
+python -m build</code></pre>
+                </div>
+                
+                <h3>Déploiement sur TestPyPI</h3>
+                
+                <p>Pour tester le package avant le déploiement officiel, utilisez TestPyPI :</p>
+                
+                <div class="code-block">
+                    <pre><code># Upload vers TestPyPI
+twine upload --repository testpypi dist/*
+
+# Installation depuis TestPyPI
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple dengsurvap-bf</code></pre>
+                </div>
+                
+                <h3>Déploiement sur PyPI</h3>
+                
+                <p>Une fois les tests validés, déployez sur PyPI officiel :</p>
+                
+                <div class="code-block">
+                    <pre><code># Upload vers PyPI
+twine upload dist/*
+
+# Installation depuis PyPI
+pip install dengsurvap-bf</code></pre>
+                </div>
+                
+                <h3>Configuration des tokens</h3>
+                
+                <p>Pour l'upload vers PyPI, vous aurez besoin de tokens d'authentification :</p>
+                
+                <div class="success">
+                    <h4>✅ Bonnes pratiques</h4>
+                    <ul>
+                        <li>Utilisez des tokens API plutôt que des mots de passe</li>
+                        <li>Générez des tokens spécifiques pour TestPyPI et PyPI</li>
+                        <li>Stockez les tokens de manière sécurisée (variables d'environnement)</li>
+                        <li>Testez toujours sur TestPyPI avant PyPI officiel</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="troubleshooting">
+                <h2>🐛 Dépannage</h2>
+                
+                <h3>Erreurs d'authentification</h3>
+                
+                <div class="warning">
+                    <h4>⚠️ Problème : 401 Unauthorized</h4>
+                    <p><strong>Cause :</strong> Token invalide ou expiré</p>
+                    <p><strong>Solution :</strong> Régénérez un token sur TestPyPI/PyPI et utilisez-le avec le username <code>__token__</code></p>
+                </div>
+                
+                <h3>Erreurs de connexion</h3>
+                
+                <div class="warning">
+                    <h4>⚠️ Problème : Connection Error</h4>
+                    <p><strong>Cause :</strong> URL de l'API incorrecte ou serveur inaccessible</p>
+                    <p><strong>Solution :</strong> Vérifiez l'URL de l'API et votre connexion internet</p>
+                </div>
+                
+                <h3>Erreurs de validation</h3>
+                
+                <div class="warning">
+                    <h4>⚠️ Problème : ValidationError</h4>
+                    <p><strong>Cause :</strong> Données reçues ne correspondent pas aux modèles Pydantic</p>
+                    <p><strong>Solution :</strong> Vérifiez la structure des données ou mettez à jour les modèles</p>
+                </div>
+                
+                <h3>Problèmes d'installation</h3>
+                
+                <div class="code-block">
+                    <pre><code># Désinstaller le package
+pip uninstall dengsurvap-bf
+
+# Réinstaller depuis TestPyPI
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple dengsurvap-bf
+
+# Ou installer en mode développement
+pip install -e .</code></pre>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 - Package dengsurvap-bf - Client Python officiel pour l'API de surveillance de la dengue Appi</p>
+            <p>Documentation générée automatiquement - Version 0.2.0</p>
+        </footer>
+    </div>
+</body>
+</html> 

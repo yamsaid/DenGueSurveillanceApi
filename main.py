@@ -1409,20 +1409,28 @@ async def obtenir_logs_alertes(
 
 @app.get("/api/data/mensuels")
 def data_mensuels(
-    annee: int = Query(datetime.now().year, description="Année à filtrer"),
-    region: str = Query("Toutes", description="Région à filtrer"),
-    district: str = Query("Toutes", description="District à filtrer"),
+    annee: Optional[str] = Query(None, description="Année à filtrer"),
+    region: Optional[str] = Query("Toutes", description="Région à filtrer"),
+    district: Optional[str] = Query("Toutes", description="District à filtrer"),
     db: Session = Depends(get_db)
 ):
-    # Validation des paramètres
-    if annee is None or str(annee) == "undefined":
-        annee = date.today().year
-    if region is None or str(region) == "undefined":
-        region = "Toutes"
-    if district is None or str(district) == "undefined":
-        district = "Toutes"
+    # Validation et conversion des paramètres
+    annee_int = date.today().year
+    if annee and annee != "undefined":
+        try:
+            annee_int = int(annee)
+        except ValueError:
+            annee_int = date.today().year
     
-    return utils.mensuel_data(annee, region, district, db)
+    region_str = "Toutes"
+    if region and region != "undefined":
+        region_str = region
+    
+    district_str = "Toutes"
+    if district and district != "undefined":
+        district_str = district
+    
+    return utils.mensuel_data(annee_int, region_str, district_str, db)
 
 
 @app.get("/api/dashboard", response_class=HTMLResponse)
@@ -1439,15 +1447,30 @@ def show_dashboard(request: Request, db: Session = Depends(get_db), current_user
 
 @app.get("/api/data/hebdomadaires")
 def data_hebdomadaires(
-    region : Optional[str] = None, 
-    annee : Optional[int] = None, 
-    mois : Optional[int] = None, 
-    district : Optional[str] = None,
+    region : Optional[str] = Query(None), 
+    annee : Optional[str] = Query(None), 
+    mois : Optional[str] = Query(None), 
+    district : Optional[str] = Query(None),
     db: Session = Depends(get_db)
     ):
     
     try:
-        result = utils.hebdo_data(annee, mois, region, district, db)
+        # Conversion et validation des paramètres
+        annee_int = None
+        if annee and annee != "undefined":
+            try:
+                annee_int = int(annee)
+            except ValueError:
+                annee_int = None
+        
+        mois_int = None
+        if mois and mois != "undefined":
+            try:
+                mois_int = int(mois)
+            except ValueError:
+                mois_int = None
+        
+        result = utils.hebdo_data(annee_int, mois_int, region, district, db)
         return safe_json_response(result)
     except Exception as e:
         return {
@@ -2289,3 +2312,12 @@ def get_derniere_soumission(db: Session = Depends(get_db)):
             return {"statut": True, "derniere_mise_a_jour": None, "message": "Aucune soumission trouvée."}
     except Exception as e:
         return {"statut": False,"message":f"Erreur lors de la récupération de la dernière soumission: {str(e)}"}
+    
+# la documentation du package dengsurvap-bf
+
+@app.get("/api/documentation-dengsurvap-bf", response_class=HTMLResponse)
+def documentation_dengsurvap_bf(request: Request):
+    """Affiche la page de documentation du package dengsurvap-bf"""
+    return templates.TemplateResponse("dengsurvap-bf-docs.html", {
+        "request": request,
+    })

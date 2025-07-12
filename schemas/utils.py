@@ -699,6 +699,10 @@ def hebdo_data(
         annee = date.today().year
     if mois is None or str(mois) == "undefined" or mois == 0:
         mois = None
+    if region in ["Toutes", "toutes", "Tout", "tout", "Tous", "tous", "Toutes les régions", "toutes les régions"]:
+        region = None
+    if district in ["Toutes", "toutes", "Tout", "tout", "Tous", "tous", "Tous les districts", "tous les districts"]:
+        district = None
     
     # Construire la requête de base
     query = db.query(
