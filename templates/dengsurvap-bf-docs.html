@@ -413,18 +413,15 @@
                 
                 <h3>Installation de base</h3>
                 
-                <p>Pour utiliser le client Appi Dengue, commencez par installer le package Python. L'installation standard suffit pour accéder à toutes les fonctionnalités principales (connexion, récupération de données, alertes, export).</p>
+                <p>Pour utiliser le client Appi Dengue, commencez par installer le package Python.</p>
                 
                 <div class="code-block">
-                    <pre><code>pip install dengsurvap-bf</code></pre>
+                    <pre><code>pip install --index-url https://test.pypi.org/simple/ dengsurvap-bf==0.2.3</code></pre>
                 </div>
                 
-                <h3>Installation avec fonctionnalités avancées</h3>
-                
-                <p>Si vous souhaitez réaliser des analyses statistiques avancées ou des visualisations, ajoutez l'option <code>[analysis]</code> pour installer les dépendances supplémentaires (pandas, matplotlib, seaborn, etc.).</p>
-                
+                <p>Pour vérifier l'installation, vous pouvez exécuter la commande suivante :</p>
                 <div class="code-block">
-                    <pre><code>pip install dengsurvap-bf[analysis]</code></pre>
+                    <pre><code>dab --help</code></pre>  
                 </div>
                 
                 <h3>Configuration par variables d'environnement</h3>
@@ -811,8 +808,10 @@ client.evolution(
             </section>
             
             <section id="exemples">
-                <h2>💡 Exemples d'utilisation</h2>
                 
+                <h2>💡 Exemples d'utilisation</h2>
+                <h3>Vous retrouverer un script notebook sur github montrant l'utilisation pratique.</h3>
+                <a href="https://github.com/yamsaid/dengsurvap-bf/tree/main/examples"></a>
                 <h3>Exemple complet d'analyse épidémiologique</h3>
                 
                 <div class="code-block">
