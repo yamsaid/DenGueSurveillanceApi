@@ -1,4 +1,4 @@
-# Système Intelligent de Surveillance, Prédiction et Alerte Dengue
+# Système Intelligent de Surveillance, Prédiction et Alerte Dengue ( SIS-PAD )
 
 Ce projet est une application web de surveillance épidémiologique intelligente dédiée à la dengue.
 Elle combine des méthodes classiques de surveillance sanitaire avec des techniques de machine learning
